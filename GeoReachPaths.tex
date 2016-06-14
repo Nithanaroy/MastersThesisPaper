@@ -1,0 +1,66 @@
+\documentclass{sig-alternate-05-2015}
+
+\usepackage{graphicx} % for images
+\graphicspath{ {./images/} }
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{multicol}
+\usepackage[paperwidth=8.5in, paperheight=11in, margin=0.5in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{caption} % for subfigures
+\usepackage{subcaption} % for subfigures
+
+\newtheorem{lemma}{Lemma}
+
+\begin{document}
+\linespread{1.25}
+
+\title{\LARGE \bf RangeReachPaths: Socio-Spatial Top-k Shortest Paths Search}
+
+\numberofauthors{2} 
+\author{
+% 1st. author
+\alignauthor
+Nitin Pasumarthy\\
+       \affaddr{Arizona State University}\\
+       \affaddr{Tempe, AZ}\\
+       \email{npasumar@asu.edu}
+% 2nd. author
+\alignauthor
+Mohamed Sarwat\\
+       \affaddr{Arizona State University}\\
+       \affaddr{Tempe, AZ}\\
+       \email{sarwat@asu.edu}
+}
+
+\maketitle
+\begin{abstract}
+TODO
+\end{abstract}
+
+\printccsdesc
+
+\keywords{socio-spatial; graphs; shortest paths; top-k; landmarks}
+
+\input{Introduction}
+
+\input{Related_Work}
+
+\input{Problem_Statement}
+
+\input{Solution}
+
+\input{Experiment}
+
+\input{Conclusion}
+
+\bibliography{reference}
+\bibliographystyle{plain}
+
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\end{document}
