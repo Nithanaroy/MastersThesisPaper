@@ -391,10 +391,9 @@ The algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vert
 % \end{multicols}
 % \end{algorithm*}
 
-\begin{algorithm*}[t]
+\begin{algorithm}[t]
 \caption{RangeReachPaths}
 \label{alg3}
-\begin{multicols}{2}
 \begin{algorithmic}[1]
 \Function{RRP}{G, s, R, K}
 	\State $nearest\_vertices \gets []$
@@ -403,9 +402,9 @@ The algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vert
 	\While{Q is not empty}
 		\State $v \gets \Call{EXTRACT\_MIN}{Q}$
 		
-		\If{\Call{LIES\_IN}{v, R}}
-			\State $nearest\_vertices << v$ \Comment{add v to set}
-			\State $best\_index \gets best\_index + 1$
+		\If{v lies in R}
+			\State nearest\_vertices $<<$ v \Comment{add v to set}
+			\State best\_index $\gets$ best\_index + 1
 			\If{nearest\_vertices.length = K}
 				\State \Return \Call{PATHS}{nearest\_vertices}
 			\EndIf
@@ -415,25 +414,7 @@ The algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vert
 		\EndIf
 		
 		\If{v is not visited}
-			\For{$u \gets G.Adj(v)$}
-				\If{\textbf{not} \Call{LIES\_IN}{R, GRP-SPATIAL(u)}}
-					\State \textbf{continue}
-				\EndIf
-				\If{u is not visited}
-					\If{u in Q}
-						\If{u.d < v.d + WEIGHT(u, v)}
-							\State \textbf{continue}
-						\Else
-							\State $u.key \gets v.d +$ WEIGHT(u, v)
-						\EndIf
-					\Else
-						\State $u.parent \gets v$
-						\State $u.d \gets v.d +$ WEIGHT(u, v)
-						\State $u.key \gets HEURISTIC(u, R, best\_index)$
-						\State Q.INSERT(u)
-					\EndIf
-				\EndIf
-			\EndFor
+			\State \Call{VSIT}{G, u, v, Q}
 		\EndIf
 	\EndWhile
 \EndFunction
@@ -443,15 +424,43 @@ The algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vert
 	\State \Return MAX( MIN$_i$(GRP-SOCIAL(l, u) $\forall u \in v) \forall l \in$ L)
 \EndFunction
 
-\Function{LIES\_IN}{x, y}
-	\If{x is a region \textbf{and} x overlaps or completely falls in y}
-		\State \Return true
-	\EndIf
-	\If{x is a point \textbf{and} x falls in y}
-		\State \Return true
-	\EndIf
-	\State \Return false
+% \Function{LIES\_IN}{x, y}
+% 	\If{x is a region \textbf{and} x overlaps or completely falls in y}
+% 		\State \Return true
+% 	\EndIf
+% 	\If{x is a point \textbf{and} x falls in y}
+% 		\State \Return true
+% 	\EndIf
+% 	\State \Return false
+% \EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[t]
+\caption{Vertex Visit}
+\label{alg4}
+\begin{algorithmic}[1]
+\Function{VISIT}{G, u, v, Q}
+	\For{u $\gets$ G.Adj(v)}
+		\If{R does \textbf{not} lie in GRP-SPATIAL(u)}
+			\State \textbf{continue}
+		\EndIf
+		\If{u is not visited}
+			\If{u in Q}
+				\If{u.d < v.d + WEIGHT(u, v)}
+					\State \textbf{continue}
+				\Else
+					\State u.key $\gets$ v.d + WEIGHT(u, v)
+				\EndIf
+			\Else
+				\State u.parent $\gets$ v
+				\State u.d $\gets$ v.d + WEIGHT(u, v)
+				\State u.key $\gets$ HEURISTIC(u, R, best\_index)
+				\State Q.INSERT(u)
+			\EndIf
+		\EndIf
+	\EndFor
 \EndFunction
 \end{algorithmic}
-\end{multicols}
-\end{algorithm*}
+\end{algorithm}
