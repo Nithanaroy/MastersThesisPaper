@@ -26,7 +26,7 @@ In all the algorithms, the DisjointSearch approach first filters nodes based on 
 	\end{center}
 \end{table}
 
-\begin{figure}
+\begin{figure}[t]
 	\begin{tikzpicture}[every plot/.append style={very thick}]
 	\begin{axis}[
 	    xlabel={K},
@@ -64,7 +64,7 @@ In all the algorithms, the DisjointSearch approach first filters nodes based on 
 
 Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch approach for the same source vertex and region. The DisjointSearch approach totally takes a disconnected approach between spatial and social constraints while RRP does a joint search in both the domains using a heuristic. As K increases, the time taken also increases linearly. Though it may be very unlikely that we query for K $>$ 20, RRP still outperforms DisjointSearch approach by at least 3 times even in the worst cases. To be specific, the region in the query has 2,804 spatial nodes and we set K as high as 1,280 nodes (viz. 50\%) in that region which is very unlikely and testing the limits. Now that we know the final outcome, lets split the RRP into components and analyze each. As RRP is made of Spatial Index and Social Index, we can run RRP multiple times with and without each index.
 
-\begin{figure*}[t!]
+\begin{figure*}[t]
 	\begin{subfigure}[t]{0.33\textwidth}
 		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.70]
 			\begin{axis}[
@@ -496,17 +496,13 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 	\caption{Runtime comparison between Resolution and K for different types of RRP algorithms}
 \end{figure*}
 
-From figure \ref{fig:plot-07} we can see that as resolution increases for a fixed K and Spatial Index variant of RRP, performance degrades for very high resolutions due to the overhead by LIES\_IN function. For very low resolutions, as each block is almost the size of Texas, even if a user checks-in at one restaurant there, he/she is considered reachable to that block. So it turns many vertices can reach majority of the blocks making it less useful to use a spatial index. The sweet spot so is in between the both extremes, which is 100 in this case. Similar conclusions can be made in next case \ref {fig:plot-08} where both indices are used. The humps are due to the inefficiency of the landmark and nothing to do with Spatial Index.
+From Figure \ref{fig:plot-07} we can see that as resolution increases for a fixed K and Spatial Index variant of RRP, performance degrades for very high resolutions due to the overhead by LIES\_IN function. For very low resolutions, as each block is almost the size of Texas, even if a user checks-in at one restaurant there, he/she is considered reachable to that block. So it turns many vertices can reach majority of the blocks making it less useful to use a spatial index. The sweet spot so is in between the both extremes, which is 100 in this case. Similar conclusions can be made in next case \ref {fig:plot-08} where both indices are used. The humps are due to the inefficiency of the landmark and nothing to do with Spatial Index.
 
 So after these experiments, we find that when the graph is really dense using the social index with a high quality landmark is sufficient. Now let us see how things change when the quality of landmark(s) is not as good. For the next query, the region is even more densely connected and the source vertex is the same, however we fed a moderate quality landmark. This region has 21,239 spatial nodes which is almost 10 times the count of the previous one.
 
-% \begin{figure}
-
-% \end{figure}
-
 Figure \ref{fig:plot-09} proves why just having a social index wont help like before. For this region, we purposefully chose a moderate landmark. In such cases spatial index prunes majority of the graph as we have a decent resolution of 100 by 100. Though social index outperformed social+spatial index, it lost soon as the landmark wasn't good enough. The correctness is never compromised, it is only that RRP tends to Dijkstra's search if landmark quality is not good. Now that we are convinced when to use each type of index, let us see how each of our algorithms perform with change in region size.
 
-\begin{figure*}[t!]
+\begin{figure*}[t]
 \begin{subfigure}[t]{0.5\textwidth}
 	\begin{tikzpicture}[every plot/.append style={very thick}][scale=0.85]
 		\begin{axis}[
@@ -607,4 +603,4 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 \caption{Runtime comparison between the types of RRP algorithms for changes in region size for different source verteices}
 \end{figure*}
 
-In figure \ref{fig:plot-10} we can see how every algorithm linearly increase the time taken w.r.t the size of the region. Here the source vertex has many check-ins in each region and so the spatial index performs worse initially due to its overhead but gradually performs better than social and social+spatial indices as the size of the region increases. This is even more evident when we choose a user who doesn't have many check-ins the query regions and has to traverse the social graph to find paths as shown in \ref{fig:plot-11}.
+In Figure \ref{fig:plot-10} we can see how every algorithm linearly increase the time taken w.r.t the size of the region. Here the source vertex has many check-ins in each region and so the spatial index performs worse initially due to its overhead but gradually performs better than social and social+spatial indices as the size of the region increases. This is even more evident when we choose a user who doesn't have many check-ins the query regions and has to traverse the social graph to find paths as shown in Figure \ref{fig:plot-11}.

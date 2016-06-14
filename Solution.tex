@@ -2,9 +2,9 @@
 
 {The solution is two fold, first we preprocess the data and create an index. Then we use a modified A* algorithm to traverse the graph using the index and answer any query.}
 
-{We will use a running example to explain the main idea and then formally present an algorithm. Consider figure \ref{fig:space-partitioned} which has a social graph of friends and their check ins at various restaurants.}
+{We will use a running example to explain the main idea and then formally present an algorithm. Consider Figure \ref{fig:space-partitioned} which has a social graph of friends and their check ins at various restaurants.}
 
-\begin{figure}[h]
+\begin{figure}[t]
 	\includegraphics[width=0.9\linewidth]{images/image05.eps}
     \caption{Space partitioned world}
     \label{fig:space-partitioned}
@@ -22,7 +22,7 @@ Using the spatial attributes of the vertices, we create the spatial meta informa
 Using the social distances (edge weights) we create social meta information/index. We pick a few vertices from our graph based on some criteria (detailed later) and store shortest distance from each to all vertices it can reach using well known single source shortest algorithms like Dijkstra's. Lets call these selected vertices as landmarks. So social meta information is a table which has shortest distances information from each landmark. Using these landmarks and traingle inequality we obtain an estimate of the shortest distance from any vertex to any other vertex in the graph. This valuable information is used during graph traversal to prune sub-graphs even better and will be details in section \ref{querying}.
 
 \subsubsection{Using the Spatial Component}
-In to our running example, we divide the entire region into equal sized blocks from 1 to 16 as show in figure \ref{fig:space-partitioned}. Then for vertex D, meta information would be {[}8{]} as the user checked-in at a restaurant which falls in block number 8. Similarly for vertex G, the meta information would be {[}5, 6, 7{]}. Continuing like this, we populate a meta information table \ref{tab:multi-hop-meta} (ignore the bolded letters and the last column for now) for each vertex which are directly connected to a spatial node.
+In to our running example, we divide the entire region into equal sized blocks from 1 to 16 as show in Figure \ref{fig:space-partitioned}. Then for vertex D, meta information would be {[}8{]} as the user checked-in at a restaurant which falls in block number 8. Similarly for vertex G, the meta information would be {[}5, 6, 7{]}. Continuing like this, we populate a meta information table \ref{tab:multi-hop-meta} (ignore the bolded letters and the last column for now) for each vertex which are directly connected to a spatial node.
 
 % \begin{table}[h]
 % 	\caption{1-hop reachability meta table}
@@ -82,7 +82,7 @@ If we extend the idea of 1-hop reachability to any number of hops, it is multi-h
 %     \label{fig:multi-grid}
 % \end{figure}
 
-{As shown in figure \ref{fig:multi-grid2} (assume the 3rd layer does not exist for now), blocks 17 to 20 are added on top of blocks 1 to 16. Imagine this like a stack where the old layer sits exactly on top of the new layer. That is block 17 covers exactly the same area as area covered by blocks 1, 2, 8 and 9. Similarly block 18 in layer 1 represents blocks 3, 4, 10 and 11 of layer 0. Due to this change, our meta table becomes like the shown in the 3rd column of the table \ref{tab:multi-hop-meta}
+{As shown in Figure \ref{fig:multi-grid2} (assume the 3rd layer does not exist for now), blocks 17 to 20 are added on top of blocks 1 to 16. Imagine this like a stack where the old layer sits exactly on top of the new layer. That is block 17 covers exactly the same area as area covered by blocks 1, 2, 8 and 9. Similarly block 18 in layer 1 represents blocks 3, 4, 10 and 11 of layer 0. Due to this change, our meta table becomes like the shown in the 3rd column of the table \ref{tab:multi-hop-meta}
 
 % \begin{table}[h]
 % 	\caption{Compressed Meta table for multi-hop reachability}
@@ -106,16 +106,16 @@ If we extend the idea of 1-hop reachability to any number of hops, it is multi-h
 % 	\end{center}
 % \end{table}
 
-{To compress further we can add one more layer below layer 1 as show in figure \ref{fig:multi-grid2}.}
+To compress further we can add one more layer below layer 1 as show in Figure \ref{fig:multi-grid2}.
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centering
     \includegraphics[width=0.8\linewidth]{images/image06.eps}
     \caption{Multi layer grid index}
     \label{fig:multi-grid2}
 \end{figure}
 
-{Here block 21 represents blocks 17 and 18 in the layer above it. As you can see the reduction factor for every layer is set to half which is a tunable parameter }{RF}{. The number of layers in the multi layer grid index is guided by another tunable parameter }{M}{. }{M}{~is the maximum size of meta information for a vertex. For example, if }{M = 2,}{~then each vertex can only have two entries in its meta information and until we satisfy this limit, we create new layers.}
+Here block 21 represents blocks 17 and 18 in the layer above it. As you can see the reduction factor for every layer is set to half which is a tunable parameter }{RF}{. The number of layers in the multi layer grid index is guided by another tunable parameter }{M}{. }{M}{~is the maximum size of meta information for a vertex. For example, if }{M = 2,}{~then each vertex can only have two entries in its meta information and until we satisfy this limit, we create new layers.
 
 \begin{center}
 $Index Size \propto M \div RF$
@@ -282,11 +282,11 @@ We use a modified A* greedy algorithm for answering RRP queries using the GeoRea
 
 The crux of A* algorithm is the heuristic function. Our heuristic function takes a vertex and a region and returns the heuristic distance which will be used by A* to decide which path to traverse. In order to design such heuristic function we will use the social part of GeoReachPaths index as explained in algorithm \ref{alg3}. For this we use the triangle inequality property to get a lower bound on the distance between two vertices.
 
-As shown in the figure \ref{fig:tri-ine} $u$ and $v$ are vertices for which we need a lower bound of the distance between them. For this we use the distances saved w.r.t each landmark, $G$ as part of social GeoReachPaths index. So in the figure using the index we can get the distances \textbf{u} and \textbf{v}. In order to find \textbf{x} which is the distance between $u$ and $v$ we subtract \textbf{u} from \textbf{v}. Therefor the value of \textbf{x} shown in the figure would be $\textbf{v} - \textbf{u}$ which directly follows from vectors addition. Keep in mind that this is only a lower bound on the distance from $u$ to $v$.
+As shown in the Figure \ref{fig:tri-ine} $u$ and $v$ are vertices for which we need a lower bound of the distance between them. For this we use the distances saved w.r.t each landmark, $G$ as part of social GeoReachPaths index. So in the figure using the index we can get the distances \textbf{u} and \textbf{v}. In order to find \textbf{x} which is the distance between $u$ and $v$ we subtract \textbf{u} from \textbf{v}. Therefor the value of \textbf{x} shown in the figure would be $\textbf{v} - \textbf{u}$ which directly follows from vectors addition. Keep in mind that this is only a lower bound on the distance from $u$ to $v$.
 
-In our case we need a lower bound from a vertex to a region. In order to understand how this is done, let us revise the problem definition - we need K shortest paths from a vertex to a region in a graph. To understand better, let us set K = 1, i.e. say we want the nearest vertex in the R from a source vertex. Now, for A* to work efficiently we need the lower bound as tight as possible, else the traversal would touch as many vertices as Dijkstra's. A* pops a vertex from its minimum priority queue and explores its unvisited neighbours in the adjacency list. Let us denote the vertex popped as $u$ depicted in figure\ref{fig:tri-ine}. Now we want the nearest vertex to $u$ in the region so that get the shortest path to $u$ which can be computed using the triangle inequality formula we devised above, $\textbf{v} - \textbf{u}$. In order to keep this value minimum, we should keep \textbf{v} as small as possible. Therefore we pick the closest vertex in R to the landmark. Similarly for the second closest vertex we choose the second nearest vertex to L in R. We proceed this way till we get the nearest K vertices in R. If we have multiple landmarks, we will have a value of \textbf{x} for each landmark. We pick the maximum value of \textbf{x} to get the tightest bound possible and this follows from efficiency of A* algorithm.
+In our case we need a lower bound from a vertex to a region. In order to understand how this is done, let us revise the problem definition - we need K shortest paths from a vertex to a region in a graph. To understand better, let us set K = 1, i.e. say we want the nearest vertex in the R from a source vertex. Now, for A* to work efficiently we need the lower bound as tight as possible, else the traversal would touch as many vertices as Dijkstra's. A* pops a vertex from its minimum priority queue and explores its unvisited neighbours in the adjacency list. Let us denote the vertex popped as $u$ depicted in Figure\ref{fig:tri-ine}. Now we want the nearest vertex to $u$ in the region so that get the shortest path to $u$ which can be computed using the triangle inequality formula we devised above, $\textbf{v} - \textbf{u}$. In order to keep this value minimum, we should keep \textbf{v} as small as possible. Therefore we pick the closest vertex in R to the landmark. Similarly for the second closest vertex we choose the second nearest vertex to L in R. We proceed this way till we get the nearest K vertices in R. If we have multiple landmarks, we will have a value of \textbf{x} for each landmark. We pick the maximum value of \textbf{x} to get the tightest bound possible and this follows from efficiency of A* algorithm.
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centering
     \includegraphics[width=0.75\linewidth]{images/traingle-inequality2.eps}
     \caption{Triangle Inequality}
