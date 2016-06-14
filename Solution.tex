@@ -215,7 +215,7 @@ Then we will also construct a R-Tree using the spatial nodes in the graph. This 
 % \end{multicols}
 % \end{algorithm*}
 
-\begin{algorithm}[h]
+\begin{algorithm}[t]
 \caption{GeoReachPaths - spatial}
 \label{alg1}
 \begin{algorithmic}[1]
@@ -259,9 +259,9 @@ The quality of the landmarks determine the pruning power of the index. Choosing 
 
 Algorithm \ref{alg3}, GeoReachPaths-Social, describes how to create an index using landmarks. Landmark selection function on line 2 can be any of the functions described in [11]. Then for each landmark we compute the shortest distances using any well known single source shortest path algorithms like Dijkstra's or Bellman Ford to every vertex reachable from that landmark. Please note that we are saving the distances from the landmark to every vertex and not the other way around. The direction is important as we are dealing with directed graphs.\\
 
-\begin{algorithm}[h]
+\begin{algorithm}[t]
 \caption{GeoReachPaths - social}
-\label{alg3}
+\label{alg2}
 \begin{algorithmic}[1]
 
 \Function{GeoReachPaths-Social}{$G$}
@@ -391,9 +391,9 @@ The algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vert
 % \end{multicols}
 % \end{algorithm*}
 
-\begin{algorithm*}[h]
+\begin{algorithm*}[t]
 \caption{RangeReachPaths}
-\label{alg2}
+\label{alg3}
 \begin{multicols}{2}
 \begin{algorithmic}[1]
 \Function{RRP}{G, s, R, K}
