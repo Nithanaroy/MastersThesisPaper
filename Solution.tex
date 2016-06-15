@@ -217,6 +217,7 @@ Then we will also construct a R-Tree using the spatial nodes in the graph. This 
 
 \begin{algorithm}[t]
 \caption{GeoReachPaths - spatial}
+\begin{scriptsize}
 \label{alg1}
 \begin{algorithmic}[1]
 \Function{GeoReachPaths-Spatial}{$G, RF, M$}
@@ -248,6 +249,7 @@ Then we will also construct a R-Tree using the spatial nodes in the graph. This 
 	\State \Return v.meta
 \EndFunction
 \end{algorithmic}
+\end{scriptsize}
 \end{algorithm}
 
 \subsubsection{Using the social component}
@@ -261,6 +263,7 @@ Algorithm \ref{alg2}, GeoReachPaths-Social, describes how to create an index usi
 
 \begin{algorithm}[t]
 \caption{GeoReachPaths - social}
+\begin{scriptsize}
 \label{alg2}
 \begin{algorithmic}[1]
 
@@ -274,6 +277,8 @@ Algorithm \ref{alg2}, GeoReachPaths-Social, describes how to create an index usi
   \EndFor
 \EndFunction
 \end{algorithmic}
+
+\end{scriptsize}
 \end{algorithm}
 
 \subsection{Answering RangeReachPaths(G, s, R) queries} \label{querying}
@@ -282,7 +287,7 @@ We use a modified A* greedy algorithm for answering RRP queries using the GeoRea
 
 The crux of A* algorithm is the heuristic function. Our heuristic function takes a vertex and a region and returns the heuristic distance which will be used by A* to decide which path to traverse. In order to design such heuristic function we will use the social part of GeoReachPaths index as explained in algorithm \ref{alg3}. For this we use the triangle inequality property to get a lower bound on the distance between two vertices.
 
-As shown in the Figure \ref{fig:tri-ine} $u$ and $v$ are vertices for which we need a lower bound of the distance between them. For this we use the distances saved w.r.t. each landmark, $G$ as part of social GeoReachPaths index. So in the figure using the index we can get the distances \textbf{u} and \textbf{v}. In order to find \textbf{x} which is the distance between $u$ and $v$ we subtract \textbf{u} from \textbf{v}. Therefor the value of \textbf{x} shown in the figure would be $\textbf{v} - \textbf{u}$ which directly follows from vectors addition. Keep in mind that this is only a lower bound on the distance from $u$ to $v$.
+As shown in the Figure \ref{fig:tri-ine}, $u$ and $v$ are vertices for which we need a lower bound of the distance between them. For this we use the distances saved w.r.t. each landmark, $G$ as part of social GeoReachPaths index. So in the figure using the index we can get the distances \textbf{u} and \textbf{v}. In order to find \textbf{x} which is the distance between $u$ and $v$ we subtract \textbf{u} from \textbf{v}. Therefor the value of \textbf{x} shown in the figure would be $\textbf{v} - \textbf{u}$ which directly follows from vectors addition. Keep in mind that this is only a lower bound on the distance from $u$ to $v$.
 
 In our case we need a lower bound from a vertex to a region. In order to understand how this is done, let us revise the problem definition - we need K shortest paths from a vertex to a region in a graph. To understand better, let us set K = 1, i.e. say we want the nearest vertex in the R from a source vertex. Now, for A* to work efficiently we need the lower bound as tight as possible, else the traversal would touch as many vertices as Dijkstra's. A* pops a vertex from its minimum priority queue and explores its unvisited neighbours in the adjacency list. Let us denote the vertex popped as $u$ depicted in Figure \ref{fig:tri-ine}. Now we want the nearest vertex to $u$ in the region so that get the shortest path to $u$ which can be computed using the triangle inequality formula we devised above, $\textbf{v} - \textbf{u}$. In order to keep this value minimum, we should keep \textbf{v} as small as possible. Therefore we pick the closest vertex in R to the landmark. Similarly for the second closest vertex we choose the second nearest vertex to L in R. We proceed this way till we get the nearest K vertices in R. If we have multiple landmarks, we will have a value of \textbf{x} for each landmark. We pick the maximum value of \textbf{x} to get the tightest bound possible and this follows from efficiency of A* algorithm.
 
@@ -393,6 +398,7 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices
 
 \begin{algorithm}[t]
 \caption{RangeReachPaths}
+\begin{scriptsize}
 \label{alg3}
 \begin{algorithmic}[1]
 \Function{RRP}{G, s, R, K}
@@ -434,11 +440,14 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices
 % 	\State \Return false
 % \EndFunction
 \end{algorithmic}
+
+\end{scriptsize}
 \end{algorithm}
 
 
 \begin{algorithm}[t]
 \caption{Vertex Visit}
+\begin{scriptsize}
 \label{alg4}
 \begin{algorithmic}[1]
 \Function{VISIT}{G, u, v, Q}
@@ -463,4 +472,6 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices
 	\EndFor
 \EndFunction
 \end{algorithmic}
+
+\end{scriptsize}
 \end{algorithm}

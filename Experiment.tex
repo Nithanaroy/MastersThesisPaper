@@ -230,7 +230,7 @@ However, we can see that as the value of K increases, using both the indices cer
 
 % \end{figure}
 
-Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and RRP-OnlySocial indices further increases when resolution (RZ) is set to 1000. The function LIES\_IN which checks whether a vertex can reach a region using spatial index takes longer when size of the index entry increases for a given vertex. To totally confirm that this is the case, we implemented LIES\_IN in two more ways which are equivalent w.r.t runtime but cash on \textit{tiny} advantages based on the size of R and size of spatial index. This is exactly the same parameter VertexReachesAlgo in table \ref{tab:default-param}. Let us see briefly how each is implemented.
+Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and RRP-OnlySocial indices further increases when resolution (RZ) is set to 1000. The function LIES\_IN which checks whether a vertex can reach a region using spatial index takes longer when size of the index entry increases for a given vertex. To totally confirm that this is the case, we implemented LIES\_IN in two more ways which are equivalent w.r.t. runtime but cash on \textit{tiny} advantages based on the size of R and size of spatial index. This is exactly the same parameter VertexReachesAlgo in table \ref{tab:default-param}. Let us see briefly how each is implemented.
 \begin{itemize}
   \item \textbf{Type 1}: In this we use axes transformation technique to check if a vertex reaches a region. We transform the axes such that the southwest corner of the region in the query, is set as origin (0,0). Then for checking a vertex falls in this region, we query the spatial index for the vertex and for each block number that it can reach, we transform that block into the new co-ordinate system. Then using this transformed 2D block number, we use simple comparison of the block with all four corners of the region.
   \item \textbf{Type 2}: In this we enumerate the region (R) in the query to block numbers for as many levels as there in the spatial index. Then to check if a vertex reaches this region, foreach block in R, we probe for it in the blocks reachable by the vertex. This probing can be done in constant time if blocks reachable by a vertex are stored in a HashSet. This approach performs better than Type 1 if region is really small as we do not have the overhead of transforming into a new co-ordinate system.
@@ -241,7 +241,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 
 % \end{figure}
 
-\begin{figure*}[t!]
+\begin{figure*}[t]
 	\begin{subfigure}[t]{0.33\textwidth}
 		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.70]
 			\begin{axis}[
@@ -394,7 +394,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 
 Now that we know how each algorithm for LIES\_IN is implemented, we can clearly see that from figures \ref{fig:plot-04}, \ref{fig:plot-05}, \ref{fig:plot-06} that all perform the same way. However, if we mash them together keeping the K constant, we see that Algorithm of Type 3 outperforms in most cases. This confirms the previous doubt that if the resolution is too high like 1,000 by 1,000 the overhead in LIES\_IN function overcomes the advantage gained by graph pruning in a dense graph. Now to figure out the sweet spot for right value of RZ, we perform experiments comparing K VS Resolution VS Time for each variant of RRP. 
 
-\begin{figure*}[t!]
+\begin{figure*}[t]
 	\begin{subfigure}[t]{0.5\textwidth}
 		\begin{tikzpicture}[every plot/.append style={very thick}][scale=0.85]
 			\begin{axis}[
@@ -616,4 +616,4 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 \caption{Runtime comparison between the types of RRP algorithms for changes in region size for different source verteices}
 \end{figure*}
 
-In Figure \ref{fig:plot-10} we can see how every algorithm linearly increase the time taken w.r.t the size of the region. Here the source vertex has many check-ins in each region and so the spatial index performs worse initially due to its overhead but gradually performs better than social and social+spatial indices as the size of the region increases. This is even more evident when we choose a user who doesn't have many check-ins the query regions and has to traverse the social graph to find paths as shown in Figure \ref{fig:plot-11}.
+In Figure \ref{fig:plot-10} we can see how every algorithm linearly increase the time taken w.r.t. the size of the region. Here the source vertex has many check-ins in each region and so the spatial index performs worse initially due to its overhead but gradually performs better than social and social+spatial indices as the size of the region increases. This is even more evident when we choose a user who doesn't have many check-ins the query regions and has to traverse the social graph to find paths as shown in Figure \ref{fig:plot-11}.
