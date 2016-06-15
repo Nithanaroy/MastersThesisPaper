@@ -210,5 +210,5 @@ $RECYCLE.BIN/
 *.lnk
 
 *.pdf
-*.svg
+#*.svg
 *.ps
