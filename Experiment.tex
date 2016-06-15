@@ -37,12 +37,13 @@ In all the algorithms, the DisjointSearch approach first filters nodes based on 
 	    % xtick={0, 10, 20, 40, 80, 160, 320, 640, 1280},
 	    % xticklabel style={rotate=90},
 	    grid style=dashed,
-	    axis line style = ultra thin,
+	    % axis line style = ultra thin
 	]
 	 
 	\addplot[
 	    color=blue,
 	    mark=x,
+	    mark size=4pt
 	    ]
 	    coordinates {
 	    (10,8.91)(20,10.72)(40,16.41)(80,12.82)(160,14.14)(320,15.69)(640,17.76)(1280,21.03)
@@ -50,6 +51,7 @@ In all the algorithms, the DisjointSearch approach first filters nodes based on 
 	\addplot[
 	    color=orange,
 	    mark=o,
+	    mark size=3pt
 	    ]
 	    coordinates {
 	    (10,67.72)(20,67.66)(40,65.46)(80,68.9)(160,69.44)(320,70.13)(640,70.78)(1280,71.75)
@@ -74,6 +76,7 @@ Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch appro
 			    xmajorgrids=true,
 			    ymajorgrids=true,
 			    grid style=dashed,
+			   	mark size=4pt
 			]
 			 
 			%\addplot[
@@ -122,6 +125,7 @@ Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch appro
 			    xmajorgrids=true,
 			    ymajorgrids=true,
 			    grid style=dashed,
+			    mark size=4pt
 			]
 			 
 			% \addplot[
@@ -170,6 +174,7 @@ Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch appro
 			    xmajorgrids=true,
 			    ymajorgrids=true,
 			    grid style=dashed,
+			    mark size=4pt
 			]
 			 
 			% \addplot[
@@ -246,6 +251,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 			    xmajorgrids=true,
 			    ymajorgrids=true,
 			    grid style=dashed,
+			    mark size=4pt
 			]
 			 
 			% \addplot[
@@ -294,6 +300,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 			    xmajorgrids=true,
 			    ymajorgrids=true,
 			    grid style=dashed,
+			    mark size=4pt
 			]
 			 
 			% \addplot[
@@ -342,6 +349,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 			    xmajorgrids=true,
 			    ymajorgrids=true,
 			    grid style=dashed,
+			    mark size=4pt
 			]
 			 
 			% \addplot[
@@ -396,6 +404,7 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			    xmajorgrids=true,
 			    ymajorgrids=true,
 			    grid style=dashed,
+			    mark size=3pt
 			]
 			 
 			\addplot[
@@ -449,6 +458,7 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			    xmajorgrids=true,
 			    ymajorgrids=true,
 			    grid style=dashed,
+			    mark size=3pt
 			]
 			 
 			\addplot[
@@ -508,11 +518,13 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 		\begin{axis}[
 		    xlabel={Region Size},
 		    ylabel={Time (s)},
-		    legend pos=south west,
+		    % legend pos=south west,
+		    legend style={at={(0.03,0.5)},anchor=west},
 		    % legend style={at={(0,-0.1)},anchor=north},
 		    xmajorgrids=true,
 		    ymajorgrids=true,
 		    grid style=dashed,
+		    mark size=4pt
 		]
 		 
 		% \addplot[
@@ -561,6 +573,7 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 		    xmajorgrids=true,
 		    ymajorgrids=true,
 		    grid style=dashed,
+		    mark size=4pt
 		]
 		 
 		% \addplot[
