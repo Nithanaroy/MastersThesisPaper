@@ -1,0 +1,3 @@
+Problem statement section should give a brief and precise definition of problem.
+
+For solution section the index structure should be demonstrated in a different way. Construction and structure should be totally separate. 
