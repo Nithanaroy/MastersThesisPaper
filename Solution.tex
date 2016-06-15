@@ -5,7 +5,7 @@
 {We will use a running example to explain the main idea and then formally present an algorithm. Consider Figure \ref{fig:space-partitioned} which has a social graph of friends and their check ins at various restaurants.}
 
 \begin{figure}[t]
-	\includegraphics[width=0.9\linewidth]{images/image05.eps}
+	\includegraphics[width=0.88\linewidth]{images/image05.eps}
     \caption{Space partitioned world}
     \label{fig:space-partitioned}
 \end{figure}
@@ -22,7 +22,7 @@ Using the spatial attributes of the vertices, we create the spatial meta informa
 Using the social distances (edge weights) we create social meta information/index. We pick a few vertices from our graph based on some criteria (detailed later) and store shortest distance from each to all vertices it can reach using well known single source shortest algorithms like Dijkstra's. Lets call these selected vertices as landmarks. So social meta information is a table which has shortest distances information from each landmark. Using these landmarks and traingle inequality we obtain an estimate of the shortest distance from any vertex to any other vertex in the graph. This valuable information is used during graph traversal to prune sub-graphs even better and will be details in section \ref{querying}.
 
 \subsubsection{Using the Spatial Component}
-In to our running example, we divide the entire region into equal sized blocks from 1 to 16 as show in Figure \ref{fig:space-partitioned}. Then for vertex D, meta information would be {[}8{]} as the user checked-in at a restaurant which falls in block number 8. Similarly for vertex G, the meta information would be {[}5, 6, 7{]}. Continuing like this, we populate a meta information table \ref{tab:multi-hop-meta} (ignore the bolded letters and the last column for now) for each vertex which are directly connected to a spatial node.
+In to our running example, we divide the entire region into equal sized blocks from 1 to 16 as show in Figure \ref{fig:space-partitioned}. Then for vertex D, meta information would be {[}8{]} as the user checked-in at a restaurant which falls in block number 8. Similarly for vertex G, the meta information would be {[}5, 6, 7{]}. Continuing like this, we populate a meta information Table \ref{tab:multi-hop-meta} (ignore the bolded letters and the last column for now) for each vertex which are directly connected to a spatial node.
 
 % \begin{table}[h]
 % 	\caption{1-hop reachability meta table}
@@ -47,7 +47,7 @@ In to our running example, we divide the entire region into equal sized blocks f
 
 If we extend the idea of 1-hop reachability to any number of hops, it is multi-hop reachability or simply reachability. These values denote all blocks that are reachable from a vertex in any number of hops/steps. For building multi-hop reachability information, we reverse the direction of all the edges. Now, for every vertex, we append it reachability information to all the vertices it is directly connected to bottom up.
 
-{Assume we inverse the graph by reversing direction of all edges in it. Now to compute multi-hop meta information for H, we append G's meta information. Similarly for B, we append meta information from H and F. As this is a DAG, we have complete reachability information of every node after completing the exercise for entire graph. The final meta table for every node looks like the one shown in the column 1 of table \ref{tab:multi-hop-meta}. }
+{Assume we inverse the graph by reversing direction of all edges in it. Now to compute multi-hop meta information for H, we append G's meta information. Similarly for B, we append meta information from H and F. As this is a DAG, we have complete reachability information of every node after completing the exercise for entire graph. The final meta table for every node looks like the one shown in the column 1 of Table \ref{tab:multi-hop-meta}. }
 
 \begin{table}[h]
 	\caption{Meta table for multi-hop reachability}
@@ -82,7 +82,7 @@ If we extend the idea of 1-hop reachability to any number of hops, it is multi-h
 %     \label{fig:multi-grid}
 % \end{figure}
 
-{As shown in Figure \ref{fig:multi-grid2} (assume the 3rd layer does not exist for now), blocks 17 to 20 are added on top of blocks 1 to 16. Imagine this like a stack where the old layer sits exactly on top of the new layer. That is block 17 covers exactly the same area as area covered by blocks 1, 2, 8 and 9. Similarly block 18 in layer 1 represents blocks 3, 4, 10 and 11 of layer 0. Due to this change, our meta table becomes like the shown in the 3rd column of the table \ref{tab:multi-hop-meta}
+{As shown in Figure \ref{fig:multi-grid2} (assume the 3rd layer does not exist for now), blocks 17 to 20 are added on top of blocks 1 to 16. Imagine this like a stack where the old layer sits exactly on top of the new layer. That is block 17 covers exactly the same area as area covered by blocks 1, 2, 8 and 9. Similarly block 18 in layer 1 represents blocks 3, 4, 10 and 11 of layer 0. Due to this change, our meta table becomes like the shown in the 3rd column of the Table \ref{tab:multi-hop-meta}
 
 % \begin{table}[h]
 % 	\caption{Compressed Meta table for multi-hop reachability}
@@ -110,7 +110,7 @@ To compress further we can add one more layer below layer 1 as show in Figure \r
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.8\linewidth]{images/image06.eps}
+    \includegraphics[width=0.88\linewidth]{images/image06.eps}
     \caption{Multi layer grid index}
     \label{fig:multi-grid2}
 \end{figure}
@@ -255,11 +255,11 @@ Then we will also construct a R-Tree using the spatial nodes in the graph. This 
 \subsubsection{Using the social component}
 Now we will use the social distances between nodes and create an index to prune the graph even better. This will take care of the cases when graph is very dense and the spatial index created before may not be of much use for pruning at query time. We will see more details in the next section on querying the graph.
 
-The main idea is to select a few nodes in the graph and call them landmarks. Then for each vertex we compute shortest distances to each landmark and save them. Then at query time we will use these precomputed distances and triangle inequality to guide as a heuristic in the A* search algorithm. The inspiration is from [11] which introduces a class of algorithms called ALT. The main challenge here however is to find topK paths to a region unlike finding the shortest path from a given source to a given destination which is the main intent of the paper.
+The main idea is to select a few nodes in the graph and call them landmarks. Then for each vertex we compute shortest distances to each landmark and save them. Then at query time we will use these precomputed distances and triangle inequality to guide as a heuristic in the A* search algorithm. The inspiration is from \cite{AC2005} which introduces a class of algorithms called ALT. The main challenge here however is to find topK paths to a region unlike finding the shortest path from a given source to a given destination which is the main intent of the paper.
 
-The quality of the landmarks determine the pruning power of the index. Choosing the right landmarks requires some domain knowledge of the graph. Once that is picked the process remains the same no matter what the graph represents. [11] talks about multiple ideas on how to find high quality landmarks quickly. The ideal case would be to find as minimum number of landmarks as possible such that every vertex in the graph is connected to at least one of the landmarks.  However leaving out a few vertices that do not reach any landmark will not hamper the correctness of the algorithm. Therefore finding the sweet spot of number of landmarks which gives the best query performance is crucial and is the main goal of [11]. The main contribution from our side is to use this social index and propose a new heuristic for A* algorithm.
+The quality of the landmarks determine the pruning power of the index. Choosing the right landmarks requires some domain knowledge of the graph. Once that is picked the process remains the same no matter what the graph represents. \cite{AC2005} talks about multiple ideas on how to find high quality landmarks quickly. The ideal case would be to find as minimum number of landmarks as possible such that every vertex in the graph is connected to at least one of the landmarks.  However leaving out a few vertices that do not reach any landmark will not hamper the correctness of the algorithm. Therefore finding the sweet spot of number of landmarks which gives the best query performance is crucial and is the main goal of \cite{AC2005}. The main contribution from our side is to use this social index and propose a new heuristic for A* algorithm.
 
-Algorithm \ref{alg2}, GeoReachPaths-Social, describes how to create an index using landmarks. Landmark selection function on line 2 can be any of the functions described in [11]. Then for each landmark we compute the shortest distances using any well known single source shortest path algorithms like Dijkstra's or Bellman Ford to every vertex reachable from that landmark. Please note that we are saving the distances from the landmark to every vertex and not the other way around. The direction is important as we are dealing with directed graphs.\\
+Algorithm \ref{alg2}, GeoReachPaths-Social, describes how to create an index using landmarks. Landmark selection function on line 2 can be any of the functions described in \cite{AC2005}. Then for each landmark we compute the shortest distances using any well known single source shortest path algorithms like Dijkstra's or Bellman Ford to every vertex reachable from that landmark. Please note that we are saving the distances from the landmark to every vertex and not the other way around. The direction is important as we are dealing with directed graphs.\\
 
 \begin{algorithm}[t]
 \caption{GeoReachPaths - social}
@@ -293,7 +293,7 @@ In our case we need a lower bound from a vertex to a region. In order to underst
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.75\linewidth]{images/traingle-inequality2.eps}
+    \includegraphics[width=0.88\linewidth]{images/traingle-inequality2.eps}
     \caption{Triangle Inequality}
     \label{fig:tri-ine}
 \end{figure}
