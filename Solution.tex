@@ -22,7 +22,7 @@ Using the spatial attributes of the vertices, we create the spatial meta informa
 Using the social distances (edge weights) we create social meta information/index. We pick a few vertices from our graph based on some criteria (detailed later) and store shortest distance from each to all vertices it can reach using well known single source shortest algorithms like Dijkstra's. Lets call these selected vertices as landmarks. So social meta information is a table which has shortest distances information from each landmark. Using these landmarks and traingle inequality we obtain an estimate of the shortest distance from any vertex to any other vertex in the graph. This valuable information is used during graph traversal to prune sub-graphs even better and will be details in section \ref{querying}.
 
 \subsubsection{Using the Spatial Component}
-In to our running example, we divide the entire region into equal sized blocks from 1 to 16 as show in Figure \ref{fig:space-partitioned}. Then for vertex D, meta information would be {[}8{]} as the user checked-in at a restaurant which falls in block number 8. Similarly for vertex G, the meta information would be {[}5, 6, 7{]}. Continuing like this, we populate a meta information Table \ref{tab:multi-hop-meta} (ignore the bolded letters and the last column for now) for each vertex which are directly connected to a spatial node.
+In to our running example, we divide the entire region into equal sized blocks from 1 to 16 as show in Figure \ref{fig:space-partitioned}. Then for vertex D, meta information would be {[}8{]} as the user checked-in at a restaurant which falls in block number 8. Similarly for vertex G, the meta information would be {[}5, 6, 7{]}. Continuing like this, we populate a meta information table for each vertex which are directly connected to a spatial node.
 
 % \begin{table}[h]
 % 	\caption{1-hop reachability meta table}
@@ -43,11 +43,11 @@ In to our running example, we divide the entire region into equal sized blocks f
 % 	\end{center}
 % \end{table}
 
-{This is the reachability to restaurants by 1-hop which can answer 1-hop queries. For example, did vertex G check-in at restaurant L1 or did vertex E visit any restaurant in a region L2. The first can be answered by using location of L1, we can find the block number and cross-reference if that block number is listed under G in the meta table. We will see more details in the next section where we talk about answering queries. }
+This is the reachability to restaurants by 1-hop which can answer 1-hop queries. For example, did vertex G check-in at restaurant L1 or did vertex E visit any restaurant in a region L2. The first can be answered by using location of L1, we can find the block number and cross-reference if that block number is listed under G in the meta table. We will see more details in the next section where we talk about answering queries.
 
 If we extend the idea of 1-hop reachability to any number of hops, it is multi-hop reachability or simply reachability. These values denote all blocks that are reachable from a vertex in any number of hops/steps. For building multi-hop reachability information, we reverse the direction of all the edges. Now, for every vertex, we append it reachability information to all the vertices it is directly connected to bottom up.
 
-{Assume we inverse the graph by reversing direction of all edges in it. Now to compute multi-hop meta information for H, we append G's meta information. Similarly for B, we append meta information from H and F. As this is a DAG, we have complete reachability information of every node after completing the exercise for entire graph. The final meta table for every node looks like the one shown in the column 1 of Table \ref{tab:multi-hop-meta}. }
+Assume we inverse the graph by reversing direction of all edges in it. Now to compute multi-hop meta information for H, we append G's meta information. Similarly for B, we append meta information from H and F. As this is a DAG, we have complete reachability information of every node after completing the exercise for entire graph. The final meta table for every node looks like the one shown in the column 1 of Table \ref{tab:multi-hop-meta}.
 
 \begin{table}[h]
 	\caption{Meta table for multi-hop reachability}
@@ -58,22 +58,22 @@ If we extend the idea of 1-hop reachability to any number of hops, it is multi-h
 			\hline
 			Vertex & Reachable Block Numbers & Compressed\\ \hline
 			\hline
-			D & [8\textbf{, 2, 10}] & [17, 18] \\
-			E & [2, 10] & [2, 10] \\
+			D & [9, 2, 11] & [17, 18] \\
+			E & [2, 11] & [2, 11] \\
 			F & [3, 4] & [3, 4] \\
-			H & [5, \textbf{6, 7}] & [\textbf{19, 20}] \\
-			G & [5, 6, 7] & [\textbf{19, 20}] \\
-			\textbf{C} & \textbf{[5, 6, 7]} & [\textbf{19, 20}] \\
-			\textbf{B} & \textbf{[3, 4, 5, 6, 7]} & [\textbf{18, 19, 20}] \\
-			\textbf{A} & \textbf{[3, 4, 5, 6, 7]} & [\textbf{18, 19, 20}] \\
+			H & [5, 6, 7] & [19, 20] \\
+			G & [5, 6, 7] & [19, 20] \\
+			C & [5, 6, 7] & [19, 20] \\
+			B & [3, 4, 5, 6, 7] & [18, 19, 20] \\
+			A & [3, 4, 5, 6, 7] & [18, 19, 20] \\
 			\hline
 		\end{tabular}
 	\end{center}
 \end{table}
 
-{The cells updated are marked in bold and using the entire table we can answer any region reachability query which will be described in the next section. Now we can see that vertex A can reach whatever B, C and D can reach. Similarly B can reach whatever H and F can reach and so on. However, as you can see the size of the meta table (a.k.a index table) can grow really large as vertices like B and A which are highly connected can reach many blocks. }
+Using this table we can answer any region reachability query which will be described in the next section. Now we can see that vertex A can reach whatever B, C and D can reach. Similarly B can reach whatever H and F can reach and so on. However, as you can see the size of the meta table (a.k.a index table) can grow really large as vertices like B and A which are highly connected can reach many blocks.
 
-{In order to compress the entries in our meta table for highly reachable nodes, we add a new layer of blocks with higher resolution.}
+In order to compress the entries in our meta table for highly reachable nodes, we add a new layer of blocks with higher resolution.
 
 % \begin{figure}[h]
 %     \centering
@@ -115,12 +115,12 @@ To compress further we can add one more layer below layer 1 as show in Figure \r
     \label{fig:multi-grid2}
 \end{figure}
 
-Here block 21 represents blocks 17 and 18 in the layer above it. As you can see the reduction factor for every layer is set to half which is a tunable parameter }{RF}{. The number of layers in the multi layer grid index is guided by another tunable parameter }{M}{. }{M}{~is the maximum size of meta information for a vertex. For example, if }{M = 2,}{~then each vertex can only have two entries in its meta information and until we satisfy this limit, we create new layers.
+Here block 21 represents blocks 17 and 18 in the layer above it. As you can see the reduction factor for every layer is set to half which is a tunable parameter RF. The number of layers in the multi layer grid index is guided by another tunable parameter M. M is the maximum size, in terms of number of block ids, of meta information for a vertex. For example, if M = 2, then each vertex can only have two entries in its meta information and until we satisfy this limit, we create new layers.
 
-\begin{center}
-$Index Size \propto M \div RF$
-\end{center}
-\vspace{2mm}
+% \begin{center}
+% $Index Size \propto M \div RF$
+% \end{center}
+% \vspace{2mm}
 
 \begin{lemma}
 \label{vertex-component-meta}
@@ -289,9 +289,9 @@ We use a modified A* greedy algorithm for answering RRP queries using the GeoRea
 
 The crux of A* algorithm is the heuristic function. Our heuristic function takes a vertex and a region and returns the heuristic distance which will be used by A* to decide which path to traverse. In order to design such heuristic function we will use the social part of GeoReachPaths index as explained in algorithm \ref{alg3}. For this we use the triangle inequality property to get a lower bound on the distance between two vertices.
 
-As shown in the Figure \ref{fig:tri-ine}, $u$ and $v$ are vertices for which we need a lower bound of the distance between them. For this we use the distances saved w.r.t. each landmark, $G$ as part of social GeoReachPaths index. So in the figure using the index we can get the distances \textbf{u} and \textbf{v}. In order to find \textbf{x} which is the distance between $u$ and $v$ we subtract \textbf{u} from \textbf{v}. Therefor the value of \textbf{x} shown in the figure would be $\textbf{v} - \textbf{u}$ which directly follows from vectors addition. Keep in mind that this is only a lower bound on the distance from $u$ to $v$.
+As shown in the Figure \ref{fig:tri-ine}, $H$ and $R$ are vertices for which we need a lower bound of the distance between them. For this we use the distances saved w.r.t. each landmark, $G$ as part of social GeoReachPaths index. So in the figure using the index we can get the distances \textbf{u} and \textbf{v}. In order to find \textbf{x} which is the distance between $H$ and $X$ we subtract \textbf{u} from \textbf{v}. Therefor the value of \textbf{x} shown in the figure would be $\textbf{v} - \textbf{u}$ which directly follows from vectors addition. Keep in mind that this is only a lower bound on the distance from $H$ to $X$.
 
-In our case we need a lower bound from a vertex to a region. In order to understand how this is done, let us revise the problem definition - we need K shortest paths from a vertex to a region in a graph. To understand better, let us set K = 1, i.e. say we want the nearest vertex in the R from a source vertex. Now, for A* to work efficiently we need the lower bound as tight as possible, else the traversal would touch as many vertices as Dijkstra's. A* pops a vertex from its minimum priority queue and explores its unvisited neighbours in the adjacency list. Let us denote the vertex popped as $u$ depicted in Figure \ref{fig:tri-ine}. Now we want the nearest vertex to $u$ in the region so that get the shortest path to $u$ which can be computed using the triangle inequality formula we devised above, $\textbf{v} - \textbf{u}$. In order to keep this value minimum, we should keep \textbf{v} as small as possible. Therefore we pick the closest vertex in R to the landmark. Similarly for the second closest vertex we choose the second nearest vertex to L in R. We proceed this way till we get the nearest K vertices in R. If we have multiple landmarks, we will have a value of \textbf{x} for each landmark. We pick the maximum value of \textbf{x} to get the tightest bound possible and this follows from efficiency of A* algorithm.
+In our case we need a lower bound from a vertex to a region. In order to understand how this is done, let us revise the problem definition - we need K shortest paths from a vertex to a region in a graph. To understand better, let us set K = 1, i.e. say we want the nearest vertex in the R from a source vertex and that we have only one landmark. Now, for A* to work efficiently we need the lower bound as tight as possible, else the traversal would touch as many vertices as Dijkstra's. Let us denote the source vertex as $H$, landmark as $G$ and region exactly enclosing blocks 5 and 6 in the Figure \ref{fig:tri-ine}. Now we want the nearest vertex to $H$ in the region as K = 1. To get a lower bound for $\textbf{x}$, the triangle inequality formula we devised above, $\textbf{v} - \textbf{u}$ can be used. In order to keep $\textbf{x}$ minimum, we should keep $\textbf{v}$ as small as possible. Therefore we pick the closest vertex in R to $G$. Similarly for the second closest vertex we choose the second nearest vertex to $G$ in R. We proceed this way till we get the nearest K vertices in R. If we have multiple landmarks, we will have a value of \textbf{x} for each landmark. We pick the maximum value of \textbf{x} to get the tightest bound possible and this follows from efficiency of A* algorithm.
 
 \begin{figure}[t]
     \centering
@@ -300,7 +300,7 @@ In our case we need a lower bound from a vertex to a region. In order to underst
     \label{fig:tri-ine}
 \end{figure}
 
-Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices' color and parent reference. The parent reference is used to construct the path before returning the top-k results and color is used to prevent traversing the same node multiple times. The priority queue $Q$ in keyed by sum of actual distance from source and heuristic distance to current closest vertex to a landmark. For each vertex popped from the queue, we check if it lies in R and return the result if K shortest paths are found. If not, we update keys for all existing vertices in Q with the new heuristic and we visit all unvisited neighbors of the popped vertex and see if each can reach the region R using GeoReachPaths-Spatial index. If a neighbor can reach R, and if it not already in $Q$, we compute its heuristic distance, add it to its distance from the source and insert into the $Q$. If the vertex is already in the $Q$, we simply update its key. We proceed this way till we exhaust all vertices in the Q or find K shortest paths to R whichever is earlier. This way, we provide an iterative algorithm which doesn't traverse the entire graph to return the top-K results.
+Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices as unvisited and parent references to empty. The parent reference is used to construct the path before returning the top-k results and visited flag is used to prevent traversing the same node multiple times. The priority queue $Q$ in keyed by sum of actual distance from source and a heuristic distance to current closest vertex to a landmark. For each vertex popped from the queue, we check if it lies in R and return the result if K shortest paths are found. If not, we update keys for all existing vertices in Q with the new heuristic and we visit all unvisited neighbors of the popped vertex and see if each can reach the region R using GeoReachPaths-Spatial index. If a neighbor can reach R, and if it not already in $Q$, we compute its heuristic distance, add it to its distance from the source and insert into the $Q$. If the vertex is already in the $Q$, we simply update its key if the new distance is smaller. We proceed this way till we exhaust all vertices in the Q or find K shortest paths to R whichever is earlier. This way, we provide an iterative algorithm which doesn't traverse the entire graph to return the top-K results.
 
 % \begin{algorithm*}[h]
 % \caption{RangeReachPaths}

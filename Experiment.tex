@@ -5,7 +5,7 @@ We use real Yelp Dataset\footnote{https://www.yelp.com/dataset\_challenge} which
 
 Unless specified each run uses the default parameter values shown in Table \ref{tab:default-param}. Parameter K is the shorthand for top-k, i.e. any query requests 160 shortest paths by default. RZ is the shorthand for resolution which determines the number of blocks the world is divided into. RZ $\gets$ 100 implies that the world is equally into 100 by 100 blocks along latitudes and longitudes. \textit{VertexReachesAlgo} parameter defines how the function LIES\_IN is implemented. We had three implementations which check whether the query region R overlaps with regions reachable from a vertex. We will describe each type near those experiments. M and RF are the same parameters described before as the size of the index and reduction factor between each level of the index.
 
-In all the algorithms, the DisjointSearch approach first filters nodes based on spatial constraint and finds the shortest path to each using a well known shortest path algorithm called Dijkstra's until K paths are found.
+The DisjointSearch approach runs a Dijkstra's algorithm until K shortest paths in the region are found.
 
 \begin{table}[h]
 	\caption{Default parameter values}
@@ -19,8 +19,8 @@ In all the algorithms, the DisjointSearch approach first filters nodes based on 
 			K & 160 & 10, 20, 40, 80, 160, 320, 640, 1280 \\
 			RZ & 100 & 10, 100, 500, 1000, 5000 \\
 			VertexReachesAlgo & Type 3 & Type 1, Type 2, Type 3 \\
-			M & 10K & Any positive integer \\
-			RF & 4 & Any positive integer \\
+			M & 10K & - \\
+			RF & 4 & - \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -64,7 +64,7 @@ In all the algorithms, the DisjointSearch approach first filters nodes based on 
 	\label{fig:plot-01}
 \end{figure}
 
-Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch approach for the same source vertex and region. The DisjointSearch approach totally takes a disconnected approach between spatial and social constraints while RRP does a joint search in both the domains using a heuristic. As K increases, the time taken also increases linearly. Though it may be very unlikely that we query for K $>$ 20, RRP still outperforms DisjointSearch approach by at least 3 times even in the worst cases. To be specific, the region in the query has 2,804 spatial nodes and we set K as high as 1,280 nodes (viz. 50\%) in that region which is very unlikely and testing the limits. Now that we know the final outcome, lets split the RRP into components and analyze each. As RRP is made of Spatial Index and Social Index, we can run RRP multiple times with and without each index.
+Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch approach for the same source vertex and region. The DisjointSearch approach totally takes a disconnected approach between spatial and social constraints while RRP does a joint search in both the domains using a heuristic. As K increases, the time taken also increases. Though it may be very unlikely that we query for K $>$ 20, RRP still outperforms DisjointSearch approach by at least 3 times even in the worst cases. To be specific, the region in the query has 2,804 spatial nodes and we set K as high as 1,280 nodes (viz. 50\%) in that region which is very unlikely and testing the limits. Now that we know the final outcome, lets split the RRP into components and analyze each. As RRP is made of Spatial Index and Social Index, we can run RRP multiple times with and without each index.
 
 \begin{figure*}[t]
 	\begin{subfigure}[t]{0.33\textwidth}
