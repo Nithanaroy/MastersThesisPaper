@@ -221,19 +221,21 @@ Then we will also construct a R-Tree using the spatial nodes in the graph. This 
 \label{alg1}
 \begin{algorithmic}[1]
 \Function{GeoReachPaths-Spatial}{$G, RF, M$}
-  \State $G' \gets DAG(G)$
-  \For{$u \gets spatial(G'.Adj(v))$}	 \Comment{1\-hop spatial reachability}
-  	\State v.meta.add(\Call{REGION}{u})
-	\State \Call{REPARTITION}{v, RF, M}
-  \EndFor
-  \State DO\_DFS(G', RF, M)  \Comment{multi\-hop region reachability}
+  \State G' $\gets$ G.condense() \label{alg:condense}
+  \For{v $\gets$ G.V} \Comment{1\-hop spatial reachability} \label{alg:onehopstart}
+	  \For{u $\gets$ spatial(G'.Adj(v))}	 
+	  	\State v.meta.add(\Call{REGION}{u})
+	  \EndFor
+	  \State \Call{REPARTITION}{v, RF, M}
+  \EndFor \label{alg:onehopend}
+  \State DO\_DFS(G', RF, M)  \Comment{multi\-hop region reachability} \label{alg:dfs}
 \EndFunction
 \Function{REGION}{$u$}
 	\State \Return block \# for CURRENT\_RES(u)
 \EndFunction
 \Function{REPARTITION}{$v, RF, M$}
 	\While{$v.meta.size() \leq M$}
-		\State \Call{TRANSLATE\_TO\_RES}{v.meta, $res \div MF$}
+		\State \Call{TRANSLATE\_TO\_RES}{v.meta, CURRENT\_RES(v) $\div$ RF}
 	\EndWhile
 \EndFunction
 \Function{DO\_DFS}{G, RF, M}
@@ -268,11 +270,11 @@ Algorithm \ref{alg2}, GeoReachPaths-Social, describes how to create an index usi
 \begin{algorithmic}[1]
 
 \Function{GeoReachPaths-Social}{$G$}
-  \State $L \gets FIND\_LANDMARKS(G)$ \Comment{Domain based landmark selection}
-  \State $social\_index \gets []$
-  \For{$l \gets L:$}
-    \For{$v \gets G'.v:$}
-	  	\State $social\_index[l][v] \gets $ shortest distance from $l$ to $v$
+  \State L $\gets$ FIND\_LANDMARKS(G) \Comment{Domain based}
+  \State social\_index $\gets$ []
+  \For{l $\gets$ L}
+    \For{v $\gets$ G.v}
+	  	\State social\_index[l][v] $\gets $ shortest distance from l to v
 	\EndFor
   \EndFor
 \EndFunction
@@ -405,7 +407,7 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices
 	\State $nearest\_vertices \gets []$
 	\State $Q \gets [s]$
 	\State $best\_index \gets 0$
-	\While{Q is not empty}
+	\While{Q is not empty}  \label{alg:theqstart}
 		\State $v \gets \Call{EXTRACT\_MIN}{Q}$
 		
 		\If{v lies in R}
@@ -422,7 +424,7 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices
 		\If{v is not visited}
 			\State \Call{VSIT}{G, u, v, Q}
 		\EndIf
-	\EndWhile
+	\EndWhile	\label{alg:theqend}
 \EndFunction
 
 \Function{HEURISTIC}{u, R, i}
