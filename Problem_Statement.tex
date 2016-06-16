@@ -40,15 +40,3 @@ $Vs \subset V$ have spatial attributes; i.e. $\forall v \in Vs \Leftrightarrow v
 \fi
 
 Figure \ref{fig:socio-spatial-graph} pictorially represents the entire problem. v is the source vertex and R is the region of interest. Red, green and yellow vertices have spatial attributes like latitude and longitude information. Red vertices fall outside the region and so are not returned by RRP. Yellow vertices fall inside R but cannot be reached from v, so are not returned by RRP. Green vertices satisfy both these conditions as they fall inside the region and are also reachable from v. ~Therefore, RRP returns the paths to all green vertices. These paths with rich social information about the relationship with v, can be fed into a recommendation system which can rank them.
-
-\iffalse
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\linewidth]{images/image10.eps}
-    \caption{A social graph showing friend-friend connections and also
-the region of interest}
-    \label{fig:socio-spatial-graph}
-\end{figure}
-
-Figure \ref{fig:socio-spatial-graph} pictorially represents the entire problem. v is the source vertex and R is the region of interest. Red, green and yellow vertices have spatial attributes like latitude and longitude information. Red vertices fall outside the region and so are not returned by RRP. Yellow vertices fall inside R but cannot be reached from v, so are not returned by RRP. Green vertices satisfy both these conditions as they fall inside the region and are also reachable from v. ~Therefore, RRP returns the paths to all green vertices. These paths with rich social information about the relationship with v, can be fed into a recommendation system which can rank them.
-\fi
