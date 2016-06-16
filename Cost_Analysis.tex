@@ -1,46 +1,46 @@
 \section{Cost Analysis}
 
-In this section we will see run time and space complexities for GeoReachPaths and RangeReachPaths algorithms.
+In this section we will see asymptotic run time and space complexities for GeoReachPaths and RangeReachPaths algorithms.
 
 \subsection{For GeoReachPaths - spatial}
-Algorithm \ref{alg1}, can be divided into four pieces - graph condensation, 1-hop reachability calculation, DFS and repartition for multi-hop reachability. The runtime for each would be as follows,
+Algorithm \ref{alg1}, can be divided into four pieces - graph condensation, 1-hop reachability calculation, DFS for multi-hop reachability and repartition function. The runtime for each would be as follows,
 \begin{itemize}
-  \item \textbf{Graph Condensation}: On line~\ref{alg:condense}, we condense the input graph into its strongly connected components. If we use a popular algorithm like Kosaraju\footnote{https://en.wikipedia.org/wiki/Kosaraju\%27s\_algorithm\#Complexity} and an adjencacy list for storing the edges, the runtime would be $\theta(V + E)$.
+  \item \textbf{Graph Condensation}: On line~\ref{alg:condense}, we condense the input graph into its strongly connected components. If we use a popular algorithm like Kosaraju\footnote{\url{https://en.wikipedia.org/wiki/Kosaraju\%27s\_algorithm\#Complexity}} and an adjacency list for storing the edges, the runtime would be $O(V + E)$.
 
-  \item \textbf{1-hop rechability calculation}: From lines~\ref{alg:onehopstart} to~\ref{alg:onehopend}, we compute the 1-hop reachability on the condensed graph. In the worst case, every vertex will be a strongly connected component and so the size of the graph remains the same after graph condensation. As we traverse the entire graph once and populate 1-hop meta data for each vertex, the complexity for this piece also would be $\theta(V + E)$. Calls to repartition() function are handled separately.
+  \item \textbf{1-hop reachability calculation}: From lines~\ref{alg:onehopstart} to~\ref{alg:onehopend}, we compute the 1-hop reachability on the condensed graph. In the worst case, every vertex will be a strongly connected component and so the size of the graph remains the same after graph condensation. As we traverse the entire graph once and populate 1-hop meta data for each vertex, the complexity for this piece also would be $O(V + E)$. Calls to repartition() function are handled separately.
 
-  \item \textbf{DFS}: For multi-hop reachability, we perform DFS on the graph once on line~\ref{alg:dfs}. As we are using adjacency list for managing our edges, the complexity for DFS would be $\theta(V + E)$ again. Calls to repartition() function are handled separately.
+  \item \textbf{DFS}: For multi-hop reachability, we perform DFS on the graph once on line~\ref{alg:dfs}. As we are using adjacency list for managing our edges, the complexity for DFS would be $O(V + E)$ again. Calls to repartition() function are handled separately.
 
-  \item \textbf{Repartition}: This function is called multiple times to make sure we satisfy the M constraint. The runtime of the function depends on the size of the meta entry for the vertex. For every vertex we start with a default constant resolution, and the total number of blocks would be a constant multiple of it. So, let the total number of blocks in the default resolution be $c$, which would be the worst case size of a vertex's meta information. And until the size of meta information for the vertex falls below M, we keep reducing the resolution by $RF$. Therefore number of times we would run the loop, say $n$ would be,
+  \item \textbf{Repartition}: This function is called multiple times to make sure we satisfy the M constraint. The runtime of the function depends on the size of the meta entry for the vertex. For every vertex we start with a default constant resolution, and the total number of blocks the entire world is divided at that resolution would be a constant multiple of it. So, let the total number of blocks in the default resolution be $c$, which would be the worst case size of a vertex's meta information. And until the size of meta information for the vertex falls below M, we keep reducing the resolution by $RF$. Therefore number of times we would run the loop, say $n$ would be,
   \begin{eqnarray*}
   	\dfrac{c}{RF^n} \leq M\\
   	n \leq {\log_{\dfrac{1}{RF}} (\dfrac{M}{c})}
   \end{eqnarray*}
-  And repartition function is called exactly twice for each vertex, once during 1-hop rechability and once during DFS. Therefore, the time complexity due to this function would be $\theta(V \times {\log_{\dfrac{1}{RF}} (\dfrac{M}{c})})$. This fraction is very small compared to sum of vertices and edges in the graph.
+  And repartition function is called exactly twice for each vertex, once during 1-hop rechability and once during DFS. Therefore, the time complexity due to this function would be $O(V \times {\log_{\dfrac{1}{RF}} (\dfrac{M}{c})})$. This fraction is very small compared to sum of vertices and edges in the graph.
 \end{itemize}
 
-All the other lines in the algorithm can be computed in constant time. The runtime of GeoReachPaths - spatial would hence be $\theta(V + E)$.
+All the other lines in the algorithm can be computed in constant time. The runtime of GeoReachPaths - spatial would hence be $O(V + E)$.
 
-Space complexity would be amount of memory required to store the multi-hop reachability table. Each index entry has an upper bound of $M$. Hence memory consumption in the worst case would be, $\theta(V \times M)$.
+Space complexity would be amount of memory required to store the multi-hop reachability table. Each index entry has an upper bound of $M$. Hence memory consumption in the worst case would be, $O(V \times M)$.
 
 \subsection{For GeoReachPaths - social}
 Algorithm \ref{alg2} can be divided into two pieces - finding the landmarks, finding shortest distances to each reachable vertex from each landmark. The runtime for each is as follows,
 \begin{itemize}
-	\item \textbf{Finding Landmarks}: There are various ways of picking the landmarks and is totally left to user. In our case we used an approach which finds landmarks in constant number of scans of the entire graph. Therefore, the complexity of this piece is $\theta(V + E)$.
-	\item \textbf{Shortest distance to each landmark}: Here, we would like to find the shortest distances from each landmark to all vertices it can reach. Using adjencancy list for storing the edges, we use Dijsktra's algorithm as edges have positive weights. With this setting, the complexity would be $\theta(landmarks \times E\log V)$. As the number of landmarks is usually very small compared to number of edges in the graph, it can be approximated to $\theta(E\log V)$.
+	\item \textbf{Finding Landmarks}: There are various ways of picking the landmarks and is totally left to user. In our case we used an approach which finds landmarks in constant number of scans of the entire graph. Therefore, the complexity of this piece is $O(V + E)$.
+	\item \textbf{Shortest distance to each landmark}: Here, we find the shortest distances from each landmark to all vertices it can reach. Using adjacency list for storing the edges, we use Dijsktra's algorithm as edges have positive weights. With this setting, the complexity would be $O(landmarks \times E\log V)$. As the number of landmarks is usually very small compared to number of edges in the graph, it would be $O(E\log V)$ in asymptotic notation.
 \end{itemize}
 
-Therefore the runtime for this algorithm using a sensible lanmark selection algorithm would be, $\theta(V + E) + \theta(E\log V)$.
+Therefore the runtime for this algorithm using a sensible landmark selection algorithm would be, $O(V + E) + O(E\log V)$.
 
-Space complexity would be memory taken to store the shortest distances to each reachable vertex for all landmarks. As the number of landmarks is very small compared to the number of vertices in the graph, this would be $\theta(V)$.
+Space complexity would be memory taken to store the shortest distances to each reachable vertex for all landmarks. As the number of landmarks is very small compared to the number of vertices in the graph, this would be $O(V)$.
 
 \subsection{For RangeReachPaths}
-Algorithm \ref{alg3} which answers socio-spatial queries using modified A* algorithm, has a complexity that depends on the quality of the heuristic function. So rather than one value for asynmptotic runtime we will see two extremes here. The algorithm can be divided into three pieces - the Q, heuristic and vertex visit which is written as a subroutine under algorithm \ref{alg4}. The runtime for each is as follows,
+Algorithm \ref{alg3} which answers socio-spatial queries using modified A* algorithm, has a complexity that depends on the quality of the heuristic function. So rather than one value for asymptotic runtime we will see two extremes here. The algorithm can be divided into three pieces - the Q, heuristic function and vertex visit (which is written as a subroutine as algorithm \ref{alg4}). The runtime for each is as follows,
 
 \begin{itemize}
-	\item \textbf{the Q and Vertex visit}: Lines~\ref{alg:theqstart} to~\ref{alg:theqend} of algorithm \ref{alg3} detail the priority queue's role (viz. keyed by actual distance + heuristic distance). Algorithm \ref{alg4} details what happens at every vertex that is not yet visited. The number of times the Q loop excutes depends on the way heuristic guides the algorithm. In the best case, we are always on the right path to the shortest distance and so the run time would $\theta(n)$, where $n$ is the length of the path. As we have to find K such paths, the complexity would become, $\theta(K \times n)$. In the worst case, the heuristic always picks the wrong path and the algorithm becomes a Dijkstra's or BFS. In such a case, the complexity would be $\theta(V + E)$ for finding any number of shortest paths as we traversed the entire graph once. 
+	\item \textbf{the Q and Vertex visit}: Lines~\ref{alg:theqstart} to~\ref{alg:theqend} of algorithm \ref{alg3} detail the priority queue's role (viz. keyed by actual distance + heuristic distance). Algorithm \ref{alg4} details what happens at every vertex that is not yet visited. The number of times the Q loop executes depends on the way heuristic guides the algorithm. In the best case, we are always on the right path to the shortest distance and so the run time would $O(n)$, where $n$ is the length of the path. As we have to find K such paths, the complexity would become, $O(K \times n)$. In the worst case, the heuristic always picks the wrong path and the algorithm works like a Dijkstra's or a BFS. In such a case, the complexity would be $O(V + E)$ for finding any number of shortest paths as we traversed the entire graph once. 
 
-	\item \textbf{the Heuristic}: Here we first filter all vertices that fall in the region of interest, R. If properly implemented this can be done only once per query. Its complexity would be $\theta(\log_m (V))$ where $m$ is the number of nodes/vertices per memory page (fan out of a tree). Then we find the maximum of all closest distances to all landmarks. This is nothing but finding the K smallest elements in an array, as the number of landmarks are constant. Its complexity would be $\theta(K + (V-K)\log K)$. So the total complexity would be $\theta(\log_m (V)) + \theta(K + (V-K)\log K)$ where $m$ is the number of nodes/vertices per memory page (fan out of a tree).
+	\item \textbf{the Heuristic}: Here we first filter all vertices that fall in the region of interest, R. If properly implemented this can be done only once per query. Its complexity would be $O(\log_m (V))$ where $m$ is the number of nodes/vertices per memory page (fan out of a tree). Then we find the maximum of all closest distances to all landmarks. This is nothing but finding the K smallest elements in an array, as the number of landmarks are constant. Its complexity would be $O(K + (V-K)\log K)$. So the total complexity would be $O(\log_m (V)) + O(K + (V-K)\log K)$ where $m$ is the number of nodes/vertices per memory page (fan out of a tree).
 \end{itemize}
 
-Therefore the runtime of RangeReachPaths would like in between $\theta(K \times n) + \theta(\log_m (V)) + \theta(K + (V-K)\log K)$ and $\theta(V + E) + \theta(\log_m (V)) + \theta(K + (V-K)\log K)$, where $m$ is the number of nodes/vertices per memory page.
+Therefore the runtime of RangeReachPaths would be in between $O(K \times n) + O(\log_m (V)) + O(K + (V-K)\log K)$ and $O(V + E) + O(\log_m (V)) + O(K + (V-K)\log K)$, where $m$ is the number of nodes/vertices per memory page.
