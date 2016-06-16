@@ -211,14 +211,7 @@
      id="g4144"
      inkscape:groupmode="layer"
      inkscape:label="figure_source"
-     transform="matrix(1.25,0,0,-1.25,0,675)"><g
-       id="g4146"><g
-         id="g4148"
-         clip-path="url(#clipPath4150)"><path
-           d="m 0,6.1035e-5 720,0 0,539.999998965 -720,0 L 0,6.1035e-5 Z"
-           style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           id="path4154"
-           inkscape:connector-curvature="0" /></g></g><path
+     transform="matrix(1.25,0,0,-1.25,0,675)"><path
        d="m 128,366.06 60,0 0,29.2 -60,0 0,-29.2 z"
        style="fill:#606372;fill-opacity:1;fill-rule:evenodd;stroke:none"
        id="path4156"
