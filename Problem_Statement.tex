@@ -1,12 +1,12 @@
 \section{Preliminary}
 \label{sec:preliminary}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.44\textwidth]{images/a_social_graph.eps}
-	\caption{A social graph showing friend-friend connections and also the region of interest}
-	\label{fig:socio-spatial-graph}
-\end{figure}
+% \begin{figure}[h]
+% 	\centering
+% 	\includegraphics[width=0.44\textwidth]{images/a_social_graph.eps}
+% 	\caption{A social graph showing friend-friend connections and also the region of interest}
+% 	\label{fig:socio-spatial-graph}
+% \end{figure}
 
 {\bf Graph Data.} A weighted directed graph $G=(V,E,S)$ consists of (1) a set of vertices $V$; (2) a set of directed edges $E\subset V\times V$ with weights. If $(u,v)\in E$, there exists one edge from vertex $u$ to $v$; (3) a function $S$ defined on $V$ that decides spatial attribute of a given vertex. $S(v)$ returns spatial property of $v$ (denoted as $v.spatial$) and the value will be null when $v$ brings no spatial attribute. $S(v)$ can be a geometrical a point, line, or polygon. For ease of presentation, we assume that a spatial attribute of spatial vertex is represented by a point.
 %${\GeoReach} deals with a directed property graph $G=(V,E)$ where (1)~$V$ is a set of vertices such that each vertex has a set of properties (attributes) and (2)~$E$ is a set of edges in which every edge can be represented as a tuple of two vertices $v_1$ and $v_2$ ($v_1,v_2\in V$). The set of spatial vertices $V_S \subseteq V$ such that each $v \in V_{S}$ has a spatial attribute (property) $v.spatial$. The spatial attribute $v.spatial$ may be a geometrical point, rectangle, or a polygon. For ease of presentation, we assume that a spatial attribute of spatial vertex is represented by a point. Figure~\ref{fig:graph_example} depicts an example of a directed property graph. Spatial Vertices $V_S$ are represented by black colored circles and are located in a two-dimensional planer space while white colored circles represent regular vertices that do not possess a spatial attribute. Arrows indicate directions of edges in the graph.
@@ -39,4 +39,4 @@ $Vs \subset V$ have spatial attributes; i.e. $\forall v \in Vs \Leftrightarrow v
 
 \fi
 
-Figure \ref{fig:socio-spatial-graph} pictorially represents the entire problem. v is the source vertex and R is the region of interest. Red, green and yellow vertices have spatial attributes like latitude and longitude information. Red vertices fall outside the region and so are not returned by RRP. Yellow vertices fall inside R but cannot be reached from v, so are not returned by RRP. Green vertices satisfy both these conditions as they fall inside the region and are also reachable from v. ~Therefore, RRP returns the paths to all green vertices. These paths with rich social information about the relationship with v, can be fed into a recommendation system which can rank them.
+See Figure \ref{fig:begin-example} to understand the problem better. Let `Jia' be the source vertex, v and R be the region of interest. A, B, ... K vertices have spatial attributes like latitude and longitude information. \{A, B, C, D, E, J\} vertices fall outside the region and so are not returned by RRP. Vertex K falls inside R but cannot be reached from v, so are not returned by RRP. \{F, H, G, I\} vertices satisfy both these conditions as they fall inside the region and are also reachable from v. Therefore, RRP may return shortest paths to them. These paths with rich social information about the relationship with v, can be fed into a recommendation system which can rank them.

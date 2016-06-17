@@ -64,8 +64,8 @@ Assume we inverse the graph by reversing direction of all edges in it. Now to co
 			H & [5, 6, 7] & [19, 20] \\
 			G & [5, 6, 7] & [19, 20] \\
 			C & [5, 6, 7] & [19, 20] \\
-			B & [3, 4, 5, 6, 7] & [18, 19, 20] \\
-			A & [3, 4, 5, 6, 7] & [18, 19, 20] \\
+			B & [3, 4, 5, 6, 7] & [21] \\
+			A & [3, 4, 5, 6, 7] & [21] \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -106,7 +106,7 @@ In order to compress the entries in our meta table for highly reachable nodes, w
 % 	\end{center}
 % \end{table}
 
-To compress further we can add one more layer below layer 1 as show in Figure \ref{fig:multi-grid2}.
+To compress further we can add one more layer below layer 1 as show in Figure \ref{fig:multi-grid2}. Here block 21 represents blocks 17, 18, 19 and 20 in the layer above it. As you can see the reduction factor for every layer is set to one fourth which is a tunable parameter RF. The number of layers in the multi layer grid index is guided by another tunable parameter M. M is the maximum size, in terms of number of block ids, of meta information for a vertex. For example, if M = 2, then each vertex can only have two entries in its meta information and until we satisfy this limit, we create new layers.
 
 \begin{figure}[t]
     \centering
@@ -114,8 +114,6 @@ To compress further we can add one more layer below layer 1 as show in Figure \r
     \caption{Multi layer grid index}
     \label{fig:multi-grid2}
 \end{figure}
-
-Here block 21 represents blocks 17, 18, 19 and 20 in the layer above it. As you can see the reduction factor for every layer is set to one fourth which is a tunable parameter RF. The number of layers in the multi layer grid index is guided by another tunable parameter M. M is the maximum size, in terms of number of block ids, of meta information for a vertex. For example, if M = 2, then each vertex can only have two entries in its meta information and until we satisfy this limit, we create new layers.
 
 % \begin{center}
 % $Index Size \propto M \div RF$
@@ -137,13 +135,11 @@ If $C$ in condensed graph $G'$ can reach a set of regions $R$, then any vertex o
 Therefore, meta information of $C =$ meta information of $\forall v \in C$
 \end{proof}
 
-{We started the discussion by condensing G to a DAG (G'). Now we for
-each node in a connected component we use the meta information of the
-component from Lemma \ref{vertex-component-meta}.}
+We started the discussion by condensing G to a DAG (G'). Now for each node in a connected component we use the meta information of the component from Lemma \ref{vertex-component-meta}.
 
 Then we will also construct a R-Tree using the spatial nodes in the graph. This will later be used at query time to filter the exact nodes in a region which will be discussed in the next section. These are the two indices created on the spatial component of the graph.
 
-{Algorithm \ref{alg1} shows how the index, GeoReachPaths-spatial is created. In the first phase we add all spatial vertices as the meta information of the vertices they are connected from. Then we start a modified DFS to construct multi hop reachability. The REGION() method returns the block number for any spatial vertex. The REPARTITION() method ensures the }{M}{~constraint by recursively increasing the resolution by a factor of }{RF}{. In the DFS() method we recursively append meta information to the head vertex from the tail vertex.}
+Algorithm \ref{alg1} shows how the index, GeoReachPaths-spatial is created. In the first phase we add all spatial vertices as the meta information of the vertices they are connected from. Then we start a modified DFS to construct multi hop reachability. The REGION() method returns the block number for any spatial vertex. The REPARTITION() method ensures the M constraint by recursively increasing the resolution by a factor of RF. In the DFS() method we recursively append meta information to the head vertex from the tail vertex.
 
 % \begin{algorithm*}[h]
 % \caption{GeoReachPaths - spatial}
