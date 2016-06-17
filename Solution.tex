@@ -115,7 +115,7 @@ To compress further we can add one more layer below layer 1 as show in Figure \r
     \label{fig:multi-grid2}
 \end{figure}
 
-Here block 21 represents blocks 17 and 18 in the layer above it. As you can see the reduction factor for every layer is set to half which is a tunable parameter RF. The number of layers in the multi layer grid index is guided by another tunable parameter M. M is the maximum size, in terms of number of block ids, of meta information for a vertex. For example, if M = 2, then each vertex can only have two entries in its meta information and until we satisfy this limit, we create new layers.
+Here block 21 represents blocks 17, 18, 19 and 20 in the layer above it. As you can see the reduction factor for every layer is set to one fourth which is a tunable parameter RF. The number of layers in the multi layer grid index is guided by another tunable parameter M. M is the maximum size, in terms of number of block ids, of meta information for a vertex. For example, if M = 2, then each vertex can only have two entries in its meta information and until we satisfy this limit, we create new layers.
 
 % \begin{center}
 % $Index Size \propto M \div RF$
