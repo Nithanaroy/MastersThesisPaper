@@ -31,13 +31,14 @@ Unless specified each run uses the default parameter values shown in Table \ref{
 	\begin{axis}[
 	    xlabel={K},
 	    ylabel={Time (s)},
+	    xmode = log,
 	    % legend style={at={(0.03,0.5)},anchor=west},
 	    legend pos=south east,
-	    xmajorgrids=true,
-	    ymajorgrids=true,
+	    %xmajorgrids=true,
+	    %ymajorgrids=true,
 	    % xtick={0, 10, 20, 40, 80, 160, 320, 640, 1280},
 	    % xticklabel style={rotate=90},
-	    grid style=dashed,
+	    %grid style=dashed,
 	    % axis line style = ultra thin
 	]
 	 
@@ -47,7 +48,8 @@ Unless specified each run uses the default parameter values shown in Table \ref{
 	    mark size=4pt
 	    ]
 	    coordinates {
-	    (10, 4.23)(100, 6.52)(500, 9.33)(1000, 9.81)(5000, 13.88)(10000, 13.88)
+	    (10, 4.23)(100, 6.52)(1000, 9.81)(10000, 13.88)
+	    %(10, 4.23)(100, 6.52)(500, 9.33)(1000, 9.81)(5000, 13.88)(10000, 13.88)
 	    };
 	\addplot[
 	    color=blue,
@@ -55,7 +57,8 @@ Unless specified each run uses the default parameter values shown in Table \ref{
 	    mark size=3pt
 	    ]
 	    coordinates {
-	    (10, 20.5)(100, 22.81)(500, 23.04)(1000, 25.75)(5000, 26.61)(10000, 29.71)
+	    (10, 20.5)(100, 22.81)(1000, 25.75)(10000, 29.71)
+	    %(10, 20.5)(100, 22.81)(500, 23.04)(1000, 25.75)(5000, 26.61)(10000, 29.71)
 	    };
 	    \legend{RRP, DisjointSearch}
 	 
@@ -74,9 +77,10 @@ The DisjointSearch (or the naive approach) approach runs a Dijkstra's algorithm 
 			    xlabel={K},
 			    ylabel={Time (s)},
 			    legend pos=south east,
-			    xmajorgrids=true,
-			    ymajorgrids=true,
-			    grid style=dashed,
+			    xmode = log,
+			    %xmajorgrids=true,
+			    %ymajorgrids=true,
+			    %grid style=dashed,
 			   	mark size=4pt
 			]
 			 
@@ -92,21 +96,24 @@ The DisjointSearch (or the naive approach) approach runs a Dijkstra's algorithm 
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10, 9.07)(100, 11.36)(500, 13.59)(1000, 15.36)(5000, 19.45)(10000, 19.55)
+			    (10, 9.07)(100, 11.36)(1000, 15.36)(10000, 19.55)
+			    %(10, 9.07)(100, 11.36)(500, 13.59)(1000, 15.36)(5000, 19.45)(10000, 19.55)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-			    (10, 3.75)(100, 6.04)(500, 8.12)(1000, 9.81)(5000, 14.58)(10000, 17.65)
+			    (10, 3.75)(100, 6.04)(1000, 9.81)(10000, 17.65)
+			    %(10, 3.75)(100, 6.04)(500, 8.12)(1000, 9.81)(5000, 14.58)(10000, 17.65)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10, 4.21)(100, 6.57)(500, 8.81)(1000, 10.28)(5000, 13.4)(10000, 14.71)
+			    (10, 4.21)(100, 6.57)(1000, 10.28)(10000, 14.71)
+			    %(10, 4.21)(100, 6.57)(500, 8.81)(1000, 10.28)(5000, 13.4)(10000, 14.71)
 			    };
 			%    \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -123,9 +130,10 @@ The DisjointSearch (or the naive approach) approach runs a Dijkstra's algorithm 
 			    xlabel={K},
 			    ylabel={Time (s)},
 			    legend pos=south east,
-			    xmajorgrids=true,
-			    ymajorgrids=true,
-			    grid style=dashed,
+			    xmode = log,
+			    %xmajorgrids=true,
+			    %ymajorgrids=true,
+			    %grid style=dashed,
 			    mark size=4pt
 			]
 			 
@@ -141,21 +149,24 @@ The DisjointSearch (or the naive approach) approach runs a Dijkstra's algorithm 
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10, 12.61)(100, 16.01)(500, 19.3)(1000, 21.12)(5000, 26.01)(10000, 26.04)
+			    (10, 12.61)(100, 16.01)(1000, 21.12)(10000, 26.04)
+			    %(10, 12.61)(100, 16.01)(500, 19.3)(1000, 21.12)(5000, 26.01)(10000, 26.04)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-				(10, 3.79)(100, 6.12)(500, 8.13)(1000, 9.68)(5000, 19.23)(10000, 21.5)
+			    (10, 3.79)(100, 6.12)(1000, 9.68)(10000, 21.5)
+				%(10, 3.79)(100, 6.12)(500, 8.13)(1000, 9.68)(5000, 19.23)(10000, 21.5)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10, 4.97)(100, 7.57)(500, 9.86)(1000, 11.44)(5000, 15.81)(10000, 18.41)
+			    (10, 4.97)(100, 7.57)(1000, 11.44)(10000, 18.41)
+			    %(10, 4.97)(100, 7.57)(500, 9.86)(1000, 11.44)(5000, 15.81)(10000, 18.41)
 			    };
 			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -172,9 +183,10 @@ The DisjointSearch (or the naive approach) approach runs a Dijkstra's algorithm 
 			    xlabel={K},
 			    ylabel={Time (s)},
 			    legend pos=south east,
-			    xmajorgrids=true,
-			    ymajorgrids=true,
-			    grid style=dashed,
+			    xmode = log,
+			    %xmajorgrids=true,
+			    %ymajorgrids=true,
+			    %grid style=dashed,
 			    mark size=4pt
 			]
 			 
@@ -183,21 +195,24 @@ The DisjointSearch (or the naive approach) approach runs a Dijkstra's algorithm 
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10, 9.39)(100, 11.84)(500, 14.41)(1000, 20.25)(5000, 22.67)(10000, 24.47)
+			    (10, 9.39)(100, 11.84)(1000, 20.25)(10000, 24.47)
+			    %(10, 9.39)(100, 11.84)(500, 14.41)(1000, 20.25)(5000, 22.67)(10000, 24.47)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-			    (10, 3.9)(100, 6.0)(500, 8.07)(1000, 9.67)(5000, 14.56)(10000, 14.58)
+			    (10, 3.9)(100, 6.0)(1000, 9.67)(10000, 14.58)
+			    %(10, 3.9)(100, 6.0)(500, 8.07)(1000, 9.67)(5000, 14.56)(10000, 14.58)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10, 3.31)(100, 5.64)(500, 7.69)(1000, 9.21)(5000, 13.46)(10000, 13.78)
+			    (10, 3.31)(100, 5.64)(1000, 9.21)(10000, 13.78)
+			    %(10, 3.31)(100, 5.64)(500, 7.69)(1000, 9.21)(5000, 13.46)(10000, 13.78)
 			    };
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			 
@@ -232,9 +247,10 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between RRP and R
 			    xlabel={K},
 			    ylabel={Time (s)},
 			    legend pos=south east,
-			    xmajorgrids=true,
-			    ymajorgrids=true,
-			    grid style=dashed,
+			    xmode = log,
+			    %xmajorgrids=true,
+			    %ymajorgrids=true,
+			    %grid style=dashed,
 			    mark size=4pt
 			]
 			 
@@ -250,21 +266,24 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between RRP and R
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10, 9.2)(100, 11.7)(500, 13.79)(1000, 16.54)(5000, 19.49)(10000, 24.37)
+			    (10, 9.2)(100, 11.7)(1000, 16.54)(10000, 24.37)
+			    %(10, 9.2)(100, 11.7)(500, 13.79)(1000, 16.54)(5000, 19.49)(10000, 24.37)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-				(10, 3.82)(100, 5.97)(500, 8.02)(1000, 9.6)(5000, 14.5)(10000, 14.52)
+			    (10, 3.82)(100, 5.97)(1000, 9.6)(10000, 14.52)
+				%(10, 3.82)(100, 5.97)(500, 8.02)(1000, 9.6)(5000, 14.5)(10000, 14.52)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10, 4.72)(100, 7.23)(500, 9.41)(1000, 11.04)(5000, 15.48)(10000, 15.74)
+			    (10, 4.72)(100, 7.23)(1000, 11.04)(10000, 15.74)
+			    %(10, 4.72)(100, 7.23)(500, 9.41)(1000, 11.04)(5000, 15.48)(10000, 15.74)
 			    };
 			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -281,9 +300,10 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between RRP and R
 			    xlabel={K},
 			    ylabel={Time (s)},
 			    legend pos=south east,
-			    xmajorgrids=true,
-			    ymajorgrids=true,
-			    grid style=dashed,
+			    xmode = log,
+			    %xmajorgrids=true,
+			    %ymajorgrids=true,
+			    %grid style=dashed,
 			    mark size=4pt
 			]
 			 
@@ -299,21 +319,24 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between RRP and R
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10, 9.25)(100, 11.85)(500, 13.84)(1000, 16.55)(5000, 19.6)(10000, 24.66)
+			    (10, 9.25)(100, 11.85)(1000, 16.55)(10000, 24.66)
+			    %(10, 9.25)(100, 11.85)(500, 13.84)(1000, 16.55)(5000, 19.6)(10000, 24.66)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-				(10, 3.76)(100, 6.01)(500, 8.14)(1000, 9.68)(5000, 14.71)(10000, 15.24)
+			    (10, 3.76)(100, 6.01)(1000, 9.68)(10000, 15.24)
+				%(10, 3.76)(100, 6.01)(500, 8.14)(1000, 9.68)(5000, 14.71)(10000, 15.24)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10, 4.37)(100, 6.74)(500, 8.87)(1000, 10.42)(5000, 14.79)(10000, 15.42)
+			    (10, 4.37)(100, 6.74)(1000, 10.42)(10000, 15.42)
+			    %(10, 4.37)(100, 6.74)(500, 8.87)(1000, 10.42)(5000, 14.79)(10000, 15.42)
 			    };
 			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -330,9 +353,10 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between RRP and R
 			    xlabel={K},
 			    ylabel={Time (s)},
 			    legend pos=south east,
-			    xmajorgrids=true,
-			    ymajorgrids=true,
-			    grid style=dashed,
+			    xmode = log,
+			    %xmajorgrids=true,
+			    %ymajorgrids=true,
+			    %grid style=dashed,
 			    mark size=4pt
 			]
 			 
@@ -348,21 +372,24 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between RRP and R
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10, 9.36)(100, 11.73)(500, 14.41)(1000, 16.21)(5000, 19.95)(10000, 24.64)
+			    (10, 9.36)(100, 11.73)(1000, 16.21)(10000, 24.64)
+			    %(10, 9.36)(100, 11.73)(500, 14.41)(1000, 16.21)(5000, 19.95)(10000, 24.64)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-				(10, 3.79)(100, 5.99)(500, 8.1)(1000, 9.81)(5000, 14.66)(10000, 14.94)
+			    (10, 3.79)(100, 5.99)(1000, 9.81)(10000, 14.94)
+				%(10, 3.79)(100, 5.99)(500, 8.1)(1000, 9.81)(5000, 14.66)(10000, 14.94)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10, 4.22)(100, 6.63)(500, 8.77)(1000, 10.35)(5000, 14.75)(10000, 14.73)
+			    (10, 4.22)(100, 6.63)(1000, 10.35)(10000, 14.73)
+			    %(10, 4.22)(100, 6.63)(500, 8.77)(1000, 10.35)(5000, 14.75)(10000, 14.73)
 			    };
 			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -385,14 +412,15 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			    xlabel={K},
 			    ylabel={Time (s)},
 			    legend pos=south east,
-			    xmajorgrids=true,
-			    ymajorgrids=true,
-			    grid style=dashed,
+			    xmode = log,
+			    %xmajorgrids=true,
+			    %ymajorgrids=true,
+			    %grid style=dashed,
 			    mark size=3pt,
 			    xtick=data,
 			    % unit vector ratio=1 1 1,
 			    % x=0.0015cm,
-			    xticklabels={10, 100, 500, 1000, 5000, 10000}
+			    %xticklabels={10, 100, 500, 1000, 5000, 10000}
 			]
 			 
 			\addplot[
@@ -400,8 +428,9 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			    mark=triangle,
 			    ]
 			    coordinates {
+			    (10, 8.86)(100, 11.22)(1000, 19.94)(10000, 24.33)
 			    % (10, 8.86)(100, 11.22)(500, 18.45)(1000, 19.94)(5000, 24.31)(10000, 24.33)
-			    (1, 8.86)(2, 11.22)(3, 18.45)(4, 19.94)(5, 24.31)(6, 24.33)
+			    %(1, 8.86)(2, 11.22)(3, 18.45)(4, 19.94)(5, 24.31)(6, 24.33)
 			    };
 			% \addplot[
 			%     color=Maroon,
@@ -416,24 +445,27 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			    mark=+,
 			    ]
 			    coordinates {
+			    (10, 9.33)(100, 11.81)(1000, 15.52)(10000, 19.71)
 				% (10, 9.33)(100, 11.81)(500, 13.82)(1000, 15.52)(5000, 19.66)(10000, 19.71)
-				(1, 9.33)(2, 11.81)(3, 13.82)(4, 15.52)(5, 19.66)(6, 19.71)
+				%(1, 9.33)(2, 11.81)(3, 13.82)(4, 15.52)(5, 19.66)(6, 19.71)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=diamond,
 			    ]
 			    coordinates {
+			    (10, 4.27)(100, 11.19)(1000, 14.96)(10000, 18.84)
 			    % (10, 4.27)(100, 11.19)(500, 13.4)(1000, 14.96)(5000, 19.02)(10000, 18.84)
-			    (1, 4.27)(2, 11.19)(3, 13.4)(4, 14.96)(5, 19.02)(6, 18.84)
+			    %(1, 4.27)(2, 11.19)(3, 13.4)(4, 14.96)(5, 19.02)(6, 18.84)
 			    };
 			\addplot[
 			    color=Magenta,
 			    mark=x,
 			    ]
 			    coordinates {
+			    (10, 12.61)(100, 16.01)(1000, 21.12)(10000, 26.04)
 			    % (10, 12.61)(100, 16.01)(500, 19.3)(1000, 21.12)(5000, 26.01)(10000, 26.04)
-			    (1, 12.61)(2, 16.01)(3, 19.3)(4, 21.12)(5, 26.01)(6, 26.04)
+			    %(1, 12.61)(2, 16.01)(3, 19.3)(4, 21.12)(5, 26.01)(6, 26.04)
 			    };
 			    % \legend{5 by 5,25 by 25,125 by 125,625 by 625,3125 by 3125}
 			    \legend{25 by 25,125 by 125,625 by 625,3125 by 3125}
@@ -449,12 +481,13 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			    xlabel={K},
 			    ylabel={Time (s)},
 			    legend pos=south east,
-			    xmajorgrids=true,
-			    ymajorgrids=true,
-			    grid style=dashed,
+			    xmode = log,
+			    %xmajorgrids=true,
+			    %ymajorgrids=true,
+			    %grid style=dashed,
 			    mark size=3pt,
 			    xtick=data,
-			    xticklabels={10, 100, 500, 1000, 5000, 10000}
+			    %xticklabels={10, 100, 500, 1000, 5000, 10000}
 			]
 			 
 			\addplot[
@@ -462,8 +495,9 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			    mark=triangle,
 			    ]
 			    coordinates {
+			    (10, 4.28)(100, 6.74)(1000, 10.52)(10000, 19.0)
 			    % (10, 4.28)(100, 6.74)(500, 8.92)(1000, 10.52)(5000, 16.09)(10000, 19.0)
-			    (1, 4.28)(2, 6.74)(3, 8.92)(4, 10.52)(5, 16.09)(6, 19.0)
+			    %(1, 4.28)(2, 6.74)(3, 8.92)(4, 10.52)(5, 16.09)(6, 19.0)
 			    };
 			% \addplot[
 			%     color=Maroon,
@@ -478,24 +512,27 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			    mark=+,
 			    ]
 			    coordinates {
+			    (10, 4.19)(100, 6.56)(1000, 10.13)(10000, 15.12)
 				% (10, 4.19)(100, 6.56)(500, 8.7)(1000, 10.13)(5000, 14.39)(10000, 15.12)
-				(1, 4.19)(2, 6.56)(3, 8.7)(4, 10.13)(5, 14.39)(6, 15.12)
+				%(1, 4.19)(2, 6.56)(3, 8.7)(4, 10.13)(5, 14.39)(6, 15.12)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=diamond,
 			    ]
 			    coordinates {
+			    (10, 4.25)(100, 6.4)(1000, 9.86)(10000, 13.97)
 			    % (10, 4.25)(100, 6.4)(500, 8.4)(1000, 9.86)(5000, 13.92)(10000, 13.97)
-			    (1, 4.25)(2, 6.4)(3, 8.4)(4, 9.86)(5, 13.92)(6, 13.97)
+			    %(1, 4.25)(2, 6.4)(3, 8.4)(4, 9.86)(5, 13.92)(6, 13.97)
 			    };
 			\addplot[
 			    color=Magenta,
 			    mark=x,
 			    ]
 			    coordinates {
+			    (10, 4.97)(100, 7.57)(1000, 11.44)(10000, 20.41)
 			    % (10, 4.97)(100, 7.57)(500, 9.86)(1000, 11.44)(5000, 16.81)(10000, 20.41)
-			    (1, 4.97)(2, 7.57)(3, 9.86)(4, 11.44)(5, 16.81)(6, 20.41)
+			    %(1, 4.97)(2, 7.57)(3, 9.86)(4, 11.44)(5, 16.81)(6, 20.41)
 			    };
 			    % \legend{5 by 5,25 by 25,125 by 125,625 by 625,3125 by 3125}
 			    \legend{25 by 25,125 by 125,625 by 625,3125 by 3125}
@@ -523,9 +560,9 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 		    % legend pos=south west,
 		    legend style={at={(0.03,0.5)},anchor=west},
 		    % legend style={at={(0,-0.1)},anchor=north},
-		    xmajorgrids=true,
-		    ymajorgrids=true,
-		    grid style=dashed,
+		    %xmajorgrids=true,
+		    %ymajorgrids=true,
+		    %grid style=dashed,
 		    mark size=4pt,
 		    xtick=data,
 		    xticklabels={1, 2, 4, 8}
@@ -574,9 +611,9 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 		    xlabel={Region Size},
 		    ylabel={Time (s)},
 		    legend pos=north east,
-		    xmajorgrids=true,
-		    ymajorgrids=true,
-		    grid style=dashed,
+		    %xmajorgrids=true,
+		    %ymajorgrids=true,
+		    %grid style=dashed,
 		    mark size=4pt,
 		    xtick=data,
 		    xticklabels={1, 2, 4, 8}
