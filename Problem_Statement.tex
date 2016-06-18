@@ -25,7 +25,7 @@ Given a graph $G(V, E)$ where,
 $Vs \subset V$ have spatial attributes; i.e. $\forall v \in Vs \Leftrightarrow v.spatial$ attribute exists\\
 
 
-\textbf{RangeReachPaths S(G, v, R, K):} an ordered list of K shortest paths starting from v that reach a region R in graph G, where R is a spatial range predicate. Let's abbreviate this as RRP(G, v, R, K).
+\textbf{RangeReachPaths S(G, v, R, K):} an ordered list of K shortest paths starting from v that reach a region R in graph G, where R is a spatial range predicate. Let's abbreviate this as {\rrp}(G, v, R, K).
 
 \textbf{Path, P(u, w):} A set of vertices along the way from u to w \(\Rightarrow w\ is\ reachable\ from\ u\)
 
@@ -39,4 +39,4 @@ $Vs \subset V$ have spatial attributes; i.e. $\forall v \in Vs \Leftrightarrow v
 
 \fi
 
-See Figure \ref{fig:begin-example} to understand the problem better. Let `Jia' be the source vertex, v and R be the region of interest. A, B, ... K vertices have spatial attributes like latitude and longitude information. \{A, B, C, D, E, J\} vertices fall outside the region and so are not returned by RRP. Vertex K falls inside R but cannot be reached from v, so are not returned by RRP. \{F, H, G, I\} vertices satisfy both these conditions as they fall inside the region and are also reachable from v. Therefore, RRP may return shortest paths to them. These paths with rich social information about the relationship with v, can be fed into a recommendation system which can rank them.
+See Figure \ref{fig:begin-example} to understand the problem better. Let `Jia' be the source vertex, v and R be the region of interest. A, B, ... K vertices have spatial attributes like latitude and longitude information. \{A, B, C, D, E, J\} vertices fall outside the region and so are not returned by {\rrp}. Vertex K falls inside R but cannot be reached from v, so are not returned by {\rrp}. \{F, H, G, I\} vertices satisfy both these conditions as they fall inside the region and are also reachable from v. Therefore, {\rrp} may return shortest paths to them. These paths with rich social information about the relationship with v, can be fed into a recommendation system which can rank them.

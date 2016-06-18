@@ -1,4 +1,4 @@
-\section{Solution, our Approach to RRP(G, v, R)}
+\section{Solution, our Approach to {\rrp}(G, v, R)}
 
 {The solution is two fold, first we preprocess the data and create an index. Then we use a modified A* algorithm to traverse the graph using the index and answer any query.}
 
@@ -281,7 +281,7 @@ Algorithm \ref{alg2}, GeoReachPaths-Social, describes how to create an index usi
 
 \subsection{Answering RangeReachPaths(G, s, R) queries} \label{querying}
 
-We use a modified A* greedy algorithm for answering RRP queries using the GeoReachPaths index. The main goal is to prune as much graph as possible during the traversal. The algorithm takes a graph G, a starting vertex s and a query rectangle R as input and returns the top-K paths starting from s and ending in R in an iterative manner.
+We use a modified A* greedy algorithm for answering {\rrp} queries using the GeoReachPaths index. The main goal is to prune as much graph as possible during the traversal. The algorithm takes a graph G, a starting vertex s and a query rectangle R as input and returns the top-K paths starting from s and ending in R in an iterative manner.
 
 The crux of A* algorithm is the heuristic function. Our heuristic function takes a vertex and a region and returns the heuristic distance which will be used by A* to decide which path to traverse. In order to design such heuristic function we will use the social part of GeoReachPaths index as explained in algorithm \ref{alg3}. For this we use the triangle inequality property to get a lower bound on the distance between two vertices.
 
@@ -303,7 +303,7 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices
 % \label{alg2}
 % \begin{multicols}{2}
 % \begin{algorithmic}[1]
-% \Function{RRP}{G, s, R, K}
+% \Function{{\rrp}}{G, s, R, K}
 % 	\State $nearest\_vertices \gets []$
 % 	\State \Call{INIT}{G, s}
 % 	\State $Q \gets [s]$
@@ -399,7 +399,7 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices
 \begin{scriptsize}
 \label{alg3}
 \begin{algorithmic}[1]
-\Function{RRP}{G, s, R, K}
+\Function{{\rrp}}{G, s, R, K}
 	\State $nearest\_vertices \gets []$
 	\State $Q \gets [s]$
 	\State $best\_index \gets 0$

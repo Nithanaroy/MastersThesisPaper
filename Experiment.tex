@@ -60,15 +60,15 @@ Unless specified each run uses the default parameter values shown in Table \ref{
 	    (10, 20.5)(100, 22.81)(1000, 25.75)(10000, 29.71)
 	    %(10, 20.5)(100, 22.81)(500, 23.04)(1000, 25.75)(5000, 26.61)(10000, 29.71)
 	    };
-	    \legend{RRP, DisjointSearch}
+	    \legend{{\rrp}, DisjointSearch}
 	 
 	\end{axis}
 	\end{tikzpicture}
-	\caption{Runtime comparison between DisjointSearch and RRP algorithms}
+	\caption{Runtime comparison between DisjointSearch and {\rrp} algorithms}
 	\label{fig:plot-01}
 \end{figure}
 
-The DisjointSearch (or the naive approach) approach runs a Dijkstra's algorithm until K shortest paths in the region are found. Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch approach for the same source vertex and region. The DisjointSearch approach totally takes a disconnected approach between spatial and social constraints while RRP does a joint search in both the domains using a heuristic. We can see that as K increases, the time taken also increases. Though it may be very unlikely that we query for K $>$ 20, RRP still outperforms DisjointSearch approach by at least 2 times even in the worst cases. To be specific, the region in the query has 2,804 spatial nodes and we set K as high as 10,000 nodes (viz. 100\%) in that region which is very unlikely and testing the limits. Now that we know the final outcome, lets split the RRP into components and analyze each. As RRP is made of Spatial Index and Social Index, we can run RRP multiple times with and without each index.
+The DisjointSearch (or the naive approach) approach runs a Dijkstra's algorithm until K shortest paths in the region are found. Figure \ref{fig:plot-01} compares the time taken by {\rrp} and DisjointSearch approach for the same source vertex and region. The DisjointSearch approach totally takes a disconnected approach between spatial and social constraints while {\rrp} does a joint search in both the domains using a heuristic. We can see that as K increases, the time taken also increases. Though it may be very unlikely that we query for K $>$ 20, {\rrp} still outperforms DisjointSearch approach by at least 2 times even in the worst cases. To be specific, the region in the query has 2,804 spatial nodes and we set K as high as 10,000 nodes (viz. 100\%) in that region which is very unlikely and testing the limits. Now that we know the final outcome, lets split the {\rrp} into components and analyze each. As {\rrp} is made of Spatial Index and Social Index, we can run {\rrp} multiple times with and without each index.
 
 \begin{figure*}[t]
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -115,13 +115,13 @@ The DisjointSearch (or the naive approach) approach runs a Dijkstra's algorithm 
 			    (10, 4.21)(100, 6.57)(1000, 10.28)(10000, 14.71)
 			    %(10, 4.21)(100, 6.57)(500, 8.81)(1000, 10.28)(5000, 13.4)(10000, 14.71)
 			    };
-			%    \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
-			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
+			%    \legend{DisjointSearch, {\rrpspatial}, {\rrpsocial}, RRP}
+			    \legend{{\rrpspatial}, {\rrpsocial}, {\rrp}}
 			 
 			\end{axis}
 		\end{tikzpicture}
-		% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms for RZ = 10}
-		\caption{Runtime comparison between the types of RRP algorithms for RZ = 25}
+		% \caption{Runtime comparison between DisjointSearch and types of {\rrp} algorithms for RZ = 10}
+		\caption{Runtime comparison between the types of {\rrp} algorithms for RZ = 25}
 		\label{fig:plot-02}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -168,13 +168,13 @@ The DisjointSearch (or the naive approach) approach runs a Dijkstra's algorithm 
 			    (10, 4.97)(100, 7.57)(1000, 11.44)(10000, 18.41)
 			    %(10, 4.97)(100, 7.57)(500, 9.86)(1000, 11.44)(5000, 15.81)(10000, 18.41)
 			    };
-			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
-			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
+			    % \legend{DisjointSearch, {\rrpspatial}, {\rrpsocial}, {\rrp}}
+			    \legend{{\rrpspatial}, {\rrpsocial}, {\rrp}}
 			 
 			\end{axis}
 		\end{tikzpicture}
-		% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms for RZ = 1,000}
-		\caption{Runtime comparison between the types of RRP algorithms for RZ = 3125}
+		% \caption{Runtime comparison between DisjointSearch and types of {\rrp} algorithms for RZ = 1,000}
+		\caption{Runtime comparison between the types of {\rrp} algorithms for RZ = 3125}
 		\label{fig:plot-03}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -214,18 +214,18 @@ The DisjointSearch (or the naive approach) approach runs a Dijkstra's algorithm 
 			    (10, 3.31)(100, 5.64)(1000, 9.21)(10000, 13.78)
 			    %(10, 3.31)(100, 5.64)(500, 7.69)(1000, 9.21)(5000, 13.46)(10000, 13.78)
 			    };
-			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
+			    \legend{{\rrpspatial}, {\rrpsocial}, {\rrp}}
 			 
 			\end{axis}
 		\end{tikzpicture}
-		\caption{Runtime comparison between the types of RRP algorithms for RZ = 625 \textbf{and for lower quality landmark}}
+		\caption{Runtime comparison between the types of {\rrp} algorithms for RZ = 625 \textbf{and for lower quality landmark}}
 		\label{fig:plot-09}
 	\end{subfigure}
-	\caption{Runtime comparison between the types of RRP algorithms for different resolutions}
+	\caption{Runtime comparison between the types of {\rrp} algorithms for different resolutions}
 \end{figure*}
 
 
-So Figure \ref{fig:plot-02} breaks down the components of RRP into RRP-OnlySpatial, RRP-OnlySocial and Both (marked as RRP in the plot's legend) with resolution of 25 by 25. RRP-OnlySpatial uses only the Spatial index while traversing the graph. Though using either of the indices beat DisjointSearch algorithm, we can now clearly see in this case using RRP-OnlySocial index outperforms others for smaller K. To understand why this is the case, we have to revisit how our heuristic algorithm works. Our heuristic function uses the Social index with landmark(s). Combined with triangle inequality we get a lower bound on the distance between the source vertex and a destination vertex in the region. If the lower bound is tight, we get better pruning power of RRP. As discussed the quality of landmark(s) plays an important role in the performance. So here using the spatial index we are only adding the overhead by querying that index, therefore the curve using both the indices is slightly underperforming intially. But as K increases, the heursitic's bound weakens as \textbf{v} in Figure \ref{fig:tri-ine} is no longer small compared to \textbf{u}. At the same time, spatial index helps RRP to make better decisions whenever social index fails. The bottom line, using social index gives better results when:
+So Figure \ref{fig:plot-02} breaks down the components of {\rrp} into {\rrpspatial}, {\rrpsocial} and Both (marked as {\rrp} in the plot's legend) with resolution of 25 by 25. {\rrpspatial} uses only the Spatial index while traversing the graph. Though using either of the indices beat DisjointSearch algorithm, we can now clearly see in this case using {\rrpsocial} index outperforms others for smaller K. To understand why this is the case, we have to revisit how our heuristic algorithm works. Our heuristic function uses the Social index with landmark(s). Combined with triangle inequality we get a lower bound on the distance between the source vertex and a destination vertex in the region. If the lower bound is tight, we get better pruning power of {\rrp}. As discussed the quality of landmark(s) plays an important role in the performance. So here using the spatial index we are only adding the overhead by querying that index, therefore the curve using both the indices is slightly underperforming intially. But as K increases, the heursitic's bound weakens as \textbf{v} in Figure \ref{fig:tri-ine} is no longer small compared to \textbf{u}. At the same time, spatial index helps {\rrp} to make better decisions whenever social index fails. The bottom line, using social index gives better results when:
 \begin{itemize}
   \item Quality of the heuristic, indirectly landmarks, is very good
   \item Graph is very dense that most of the vertices can reach the region
@@ -233,7 +233,7 @@ So Figure \ref{fig:plot-02} breaks down the components of RRP into RRP-OnlySpati
 
 However, we can see that as the value of K increases, using both the indices certainly helps as un-necessary graph traversals are further reduced by spatial index and its over head is overcome. We will see this clearer in a later when the quality of the landmark is not as good as this case. We used a very low resolution of 25 by 25 and now lets see how the runtimes change when we increase it by 125 times.
 
-Just as expected as shown in Figure \ref{fig:plot-03}, the gap between RRP and RRP-OnlySocial indices further increases when resolution (RZ) is set to 3125. The function LIES\_IN which checks whether a vertex can reach a region using spatial index takes longer when size of the index entry increases for a given vertex. To totally confirm that this is the case, we implemented LIES\_IN in two more ways which are equivalent w.r.t. runtime but cash on \textit{tiny} advantages based on the size of R and size of spatial index. This is exactly the same parameter VertexReachesAlgo in Table \ref{tab:default-param}. Let us see briefly how each is implemented.
+Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} and {\rrpsocial} indices further increases when resolution (RZ) is set to 3125. The function LIES\_IN which checks whether a vertex can reach a region using spatial index takes longer when size of the index entry increases for a given vertex. To totally confirm that this is the case, we implemented LIES\_IN in two more ways which are equivalent w.r.t. runtime but cash on \textit{tiny} advantages based on the size of R and size of spatial index. This is exactly the same parameter VertexReachesAlgo in Table \ref{tab:default-param}. Let us see briefly how each is implemented.
 \begin{itemize}
   \item \textbf{Type 1}: In this we use axes transformation technique to check if a vertex reaches a region. We transform the axes such that the southwest corner of the region in the query, is set as origin (0,0). Then for checking a vertex falls in this region, we query the spatial index for the vertex and for each block number that it can reach, we transform that block into the new co-ordinate system. Then using this transformed 2D block number, we use simple comparison of the block with all four corners of the region.
   \item \textbf{Type 2}: In this we enumerate the region (R) in the query to block numbers for as many levels as there in the spatial index. Then to check if a vertex reaches this region, foreach block in R, we probe for it in the blocks reachable by the vertex. This probing can be done in constant time if blocks reachable by a vertex are stored in a HashSet. This approach performs better than Type 1 if region is really small as we do not have the overhead of transforming into a new co-ordinate system.
@@ -285,13 +285,13 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between RRP and R
 			    (10, 4.72)(100, 7.23)(1000, 11.04)(10000, 15.74)
 			    %(10, 4.72)(100, 7.23)(500, 9.41)(1000, 11.04)(5000, 15.48)(10000, 15.74)
 			    };
-			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
-			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
+			    % \legend{DisjointSearch, {\rrpspatial}, {\rrpsocial}, {\rrp}}
+			    \legend{{\rrpspatial}, {\rrpsocial}, {\rrp}}
 			 
 			\end{axis}
 		\end{tikzpicture}
-		% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms using VertexReachAlgo Type 1 and RZ = 100}
-		\caption{Runtime comparison between the types of RRP algorithms using VertexReachAlgo Type 1 and RZ = 625}
+		% \caption{Runtime comparison between DisjointSearch and types of {\rrp} algorithms using VertexReachAlgo Type 1 and RZ = 100}
+		\caption{Runtime comparison between the types of {\rrp} algorithms using VertexReachAlgo Type 1 and RZ = 625}
 		\label{fig:plot-04}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -338,13 +338,13 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between RRP and R
 			    (10, 4.37)(100, 6.74)(1000, 10.42)(10000, 15.42)
 			    %(10, 4.37)(100, 6.74)(500, 8.87)(1000, 10.42)(5000, 14.79)(10000, 15.42)
 			    };
-			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
-			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
+			    % \legend{DisjointSearch, {\rrpspatial}, {\rrpsocial}, {\rrp}}
+			    \legend{{\rrpspatial}, {\rrpsocial}, {\rrp}}
 			 
 			\end{axis}
 		\end{tikzpicture}
-		% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms using VertexReachAlgo Type 2 and RZ = 100}
-		\caption{Runtime comparison between the types of RRP algorithms using VertexReachAlgo Type 2 and RZ = 625}
+		% \caption{Runtime comparison between DisjointSearch and types of {\rrp} algorithms using VertexReachAlgo Type 2 and RZ = 100}
+		\caption{Runtime comparison between the types of {\rrp} algorithms using VertexReachAlgo Type 2 and RZ = 625}
 		\label{fig:plot-05}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -391,19 +391,19 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between RRP and R
 			    (10, 4.22)(100, 6.63)(1000, 10.35)(10000, 14.73)
 			    %(10, 4.22)(100, 6.63)(500, 8.77)(1000, 10.35)(5000, 14.75)(10000, 14.73)
 			    };
-			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
-			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
+			    % \legend{DisjointSearch, {\rrpspatial}, {\rrpsocial}, {\rrp}}
+			    \legend{{\rrpspatial}, {\rrpsocial}, {\rrp}}
 			 
 			\end{axis}
 		\end{tikzpicture}
-		% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms using VertexReachAlgo Type 3 and RZ = 100}
-		\caption{Runtime comparison between the types of RRP algorithms using VertexReachAlgo Type 3 and RZ = 625}
+		% \caption{Runtime comparison between DisjointSearch and types of {\rrp} algorithms using VertexReachAlgo Type 3 and RZ = 100}
+		\caption{Runtime comparison between the types of {\rrp} algorithms using VertexReachAlgo Type 3 and RZ = 625}
 		\label{fig:plot-06}
 	\end{subfigure}
-	\caption{Runtime comparison between the types of RRP algorithms for various VertexReachAlgo Types}
+	\caption{Runtime comparison between the types of {\rrp} algorithms for various VertexReachAlgo Types}
 \end{figure*}
 
-Now that we know how each algorithm for LIES\_IN is implemented, we can clearly see that from Figures \ref{fig:plot-04}, \ref{fig:plot-05}, \ref{fig:plot-06} that all perform the same way. However, if we mash them together keeping the K constant, we see that Algorithm of Type 3 outperforms in most cases. This confirms the previous doubt that if the resolution is too high like 3125 by 3125 the overhead in LIES\_IN function overcomes the advantage gained by graph pruning in a dense graph. Now to figure out the sweet spot for right value of RZ, we perform experiments comparing K VS Resolution VS Time for each variant of RRP. 
+Now that we know how each algorithm for LIES\_IN is implemented, we can clearly see that from Figures \ref{fig:plot-04}, \ref{fig:plot-05}, \ref{fig:plot-06} that all perform the same way. However, if we mash them together keeping the K constant, we see that Algorithm of Type 3 outperforms in most cases. This confirms the previous doubt that if the resolution is too high like 3125 by 3125 the overhead in LIES\_IN function overcomes the advantage gained by graph pruning in a dense graph. Now to figure out the sweet spot for right value of RZ, we perform experiments comparing K VS Resolution VS Time for each variant of {\rrp}. 
 
 \begin{figure}[t]
 	\begin{subfigure}[t]{0.25\textwidth}
@@ -472,7 +472,7 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			 
 			\end{axis}
 		\end{tikzpicture}
-		\caption{Runtime comparison between Resolution and K using only SpatialIndex of RRP}
+		\caption{Runtime comparison between Resolution and K using only SpatialIndex of {\rrp}}
 		\label{fig:plot-07}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.25\textwidth}
@@ -539,17 +539,17 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			 
 			\end{axis}
 		\end{tikzpicture}
-		\caption{Runtime comparison between Resolution and K using both Social+Spatial indices of RRP}
+		\caption{Runtime comparison between Resolution and K using both Social+Spatial indices of {\rrp}}
 		\label{fig:plot-08}
 	\end{subfigure}
-	\caption{Runtime comparison between Resolution and K for different types of RRP algorithms}
+	\caption{Runtime comparison between Resolution and K for different types of {\rrp} algorithms}
 \end{figure}
 
-From Figure \ref{fig:plot-07} we can see that as resolution increases for a fixed K and Spatial Index variant of RRP, performance degrades for very high resolutions due to the overhead by LIES\_IN function. For very low resolutions, as each block is almost the size of Texas, even if a user checks-in at one restaurant there, he/she is considered reachable to that block. So it returns that most vertices can reach R, making it less useful to use a spatial index. The sweet spot so is in between the both extremes, which is 625 in this case. Similar conclusions can be made in next case \ref {fig:plot-08} where both indices are used. But social index optimizes the loss brought by spatial index overhead and so the extreme cases also perform at par with others for smaller K. For larger K even quality of heuristic goes down, so the gap widens.
+From Figure \ref{fig:plot-07} we can see that as resolution increases for a fixed K and Spatial Index variant of {\rrp}, performance degrades for very high resolutions due to the overhead by LIES\_IN function. For very low resolutions, as each block is almost the size of Texas, even if a user checks-in at one restaurant there, he/she is considered reachable to that block. So it returns that most vertices can reach R, making it less useful to use a spatial index. The sweet spot so is in between the both extremes, which is 625 in this case. Similar conclusions can be made in next case \ref {fig:plot-08} where both indices are used. But social index optimizes the loss brought by spatial index overhead and so the extreme cases also perform at par with others for smaller K. For larger K even quality of heuristic goes down, so the gap widens.
 
 So after these experiments, we find that when the graph is really dense using the social index with a high quality landmark is sufficient. Now let us see how things change when the quality of landmark(s) is not as good. For the next query, the region is even more densely connected and the source vertex is the same, however we fed a lower quality landmark. This region has 21,239 spatial nodes which is almost 10 times the count of the previous one.
 
-Figure \ref{fig:plot-09} proves why just having a social index wont help like before. For this region, we purposefully chose a lower quality landmark. In such cases spatial index prunes majority of the graph as we have a decent resolution of 625 by 625. Though social index equally performed social+spatial index intially, it lost soon as the landmark quality further degraded for higher K for the same reason explained before. The correctness is never compromised, it is only that RRP tends to Dijkstra's search if landmark quality is not good. Now that we are convinced when to use each type of index, let us see how each of our algorithms perform with change in region size.
+Figure \ref{fig:plot-09} proves why just having a social index wont help like before. For this region, we purposefully chose a lower quality landmark. In such cases spatial index prunes majority of the graph as we have a decent resolution of 625 by 625. Though social index equally performed social+spatial index intially, it lost soon as the landmark quality further degraded for higher K for the same reason explained before. The correctness is never compromised, it is only that {\rrp} tends to Dijkstra's search if landmark quality is not good. Now that we are convinced when to use each type of index, let us see how each of our algorithms perform with change in region size.
 
 \begin{figure}[t]
 \begin{subfigure}[t]{0.25\textwidth}
@@ -596,13 +596,13 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 		    coordinates {
 		    (1, 4.08)(2, 4.64)(3, 4.59)(4, 5.33)
 		    };
-		    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
-		    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
+		    % \legend{DisjointSearch, {\rrpspatial}, {\rrpsocial}, {\rrp}}
+		    \legend{{\rrpspatial}, {\rrpsocial}, {\rrp}}
 		 
 		\end{axis}
 	\end{tikzpicture}
-	% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms for changes in region size for a source vertex S1}
-	\caption{Runtime comparison between types of RRP algorithms for changes in region size for a source vertex S1}
+	% \caption{Runtime comparison between DisjointSearch and types of {\rrp} algorithms for changes in region size for a source vertex S1}
+	\caption{Runtime comparison between types of {\rrp} algorithms for changes in region size for a source vertex S1}
 	\label{fig:plot-10}
 \end{subfigure}
 \begin{subfigure}[t]{0.25\textwidth}
@@ -647,17 +647,17 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 		    coordinates {
 		    (1, 4.58)(2, 4.64)(3, 4.66)(4, 6.42)
 		    };
-		    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
-		    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
+		    % \legend{DisjointSearch, {\rrpspatial}, {\rrpsocial}, {\rrp}}
+		    \legend{{\rrpspatial}, {\rrpsocial}, {\rrp}}
 		 
 		\end{axis}
 	\end{tikzpicture}
-	% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms for changes in region size for a source vertex S2}
-	\caption{Runtime comparison between the types of RRP algorithms for changes in region size for a source vertex S2}
+	% \caption{Runtime comparison between DisjointSearch and types of {\rrp} algorithms for changes in region size for a source vertex S2}
+	\caption{Runtime comparison between the types of {\rrp} algorithms for changes in region size for a source vertex S2}
 	\label{fig:plot-11}
 \end{subfigure}
-\caption{Runtime comparison between the types of RRP algorithms for changes in region size for different source verteices}
+\caption{Runtime comparison between the types of {\rrp} algorithms for changes in region size for different source vertices}
 \label{fig:plot1011}
 \end{figure}
 
-In Figure \ref{fig:plot-10} we can see how every algorithm linearly increase the time taken w.r.t. the size of the region. In Figure \ref{fig:plot1011}, in both the cases users near the source vertex have many check-ins in the given regions and so the spatial index performs worse initially due to its overhead but gradually performs better. The gap further reduces when we choose a user whose social neighbours do not have many check-ins in the query regions and has to traverse the social graph further down to find the result as shown in Figure \ref{fig:plot-11}.
+In Figure \ref{fig:plot-10} we can see how every algorithm linearly increase the time taken w.r.t. the size of the region. In Figure \ref{fig:plot1011}, in both the cases users near the source vertex have many check-ins in the given regions and so the spatial index performs worse initially due to its overhead but gradually performs better. The gap further reduces when we choose a user whose social neighbors do not have many check-ins in the query regions and has to traverse the social graph further down to find the result as shown in Figure \ref{fig:plot-11}.
