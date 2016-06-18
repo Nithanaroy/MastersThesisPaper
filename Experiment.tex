@@ -31,7 +31,8 @@ The DisjointSearch approach runs a Dijkstra's algorithm until K shortest paths i
 	\begin{axis}[
 	    xlabel={K},
 	    ylabel={Time (s)},
-	    legend style={at={(0.03,0.5)},anchor=west},
+	    % legend style={at={(0.03,0.5)},anchor=west},
+	    legend pos=south east,
 	    xmajorgrids=true,
 	    ymajorgrids=true,
 	    % xtick={0, 10, 20, 40, 80, 160, 320, 640, 1280},
@@ -46,7 +47,7 @@ The DisjointSearch approach runs a Dijkstra's algorithm until K shortest paths i
 	    mark size=4pt
 	    ]
 	    coordinates {
-	    (10,8.91)(20,10.72)(40,16.41)(80,12.82)(160,14.14)(320,15.69)(640,17.76)(1280,21.03)
+	    (10, 4.23)(100, 6.52)(500, 9.33)(1000, 9.81)(5000, 13.88)(10000, 13.88)
 	    };
 	\addplot[
 	    color=blue,
@@ -54,7 +55,7 @@ The DisjointSearch approach runs a Dijkstra's algorithm until K shortest paths i
 	    mark size=3pt
 	    ]
 	    coordinates {
-	    (10,67.72)(20,67.66)(40,65.46)(80,68.9)(160,69.44)(320,70.13)(640,70.78)(1280,71.75)
+	    (10, 20.5)(100, 22.81)(500, 23.04)(1000, 25.75)(5000, 26.61)(10000, 29.71)
 	    };
 	    \legend{RRP, DisjointSearch}
 	 
@@ -91,21 +92,21 @@ Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch appro
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10,7.43)(20,13.91)(40,14.73)(80,15.81)(160,16.95)(320,18.53)(640,20.58)(1280,28.27)
+			    (10, 9.07)(100, 11.36)(500, 13.59)(1000, 15.36)(5000, 19.45)(10000, 19.55)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-			    (10,6.62)(20,8.2)(40,9.08)(80,9.97)(160,11.02)(320,12.56)(640,14.44)(1280,22.67)
+			    (10, 3.75)(100, 6.04)(500, 8.12)(1000, 9.81)(5000, 14.58)(10000, 17.65)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10,8.8)(20,10.66)(40,11.67)(80,12.8)(160,14)(320,15.66)(640,17.6)(1280,20.8)
+			    (10, 4.21)(100, 6.57)(500, 8.81)(1000, 10.28)(5000, 13.4)(10000, 14.71)
 			    };
 			%    \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -113,7 +114,7 @@ Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch appro
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms for RZ = 10}
-		\caption{Runtime comparison between the types of RRP algorithms for RZ = 10}
+		\caption{Runtime comparison between the types of RRP algorithms for RZ = 25}
 		\label{fig:plot-02}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -140,21 +141,21 @@ Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch appro
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10.0, 0.36)(20.0, 0.58)(40.0, 0.83)(80.0, 1.47)(160.0, 7.04)(320.0, 7.97)(640.0, 8.93)(1280.0, 10.13)
+			    (10, 3.93)(100, 11.0)(500, 14.05)(1000, 14.35)(5000, 18.17)(10000, 18.19)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-			    (10.0, 1.85)(20.0, 2.19)(40.0, 2.19)(80.0, 2.83)(160.0, 3.44)(320.0, 4.1)(640.0, 9.72)(1280.0, 10.82)
+			    (10, 3.89)(100, 6.34)(500, 8.96)(1000, 9.37)(5000, 14.68)(10000, 16.69)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10.0, 1.89)(20.0, 2.15)(40.0, 2.32)(80.0, 3.11)(160.0, 3.77)(320.0, 4.55)(640.0, 5.45)(1280.0, 6.54)
+			    (10, 4.23)(100, 6.52)(500, 9.33)(1000, 9.81)(5000, 13.88)(10000, 13.88)
 			    };
 			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -162,7 +163,7 @@ Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch appro
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms for RZ = 100}
-		\caption{Runtime comparison between the types of RRP algorithms for RZ = 100}
+		\caption{Runtime comparison between the types of RRP algorithms for RZ = 125}
 		\label{fig:plot-09}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -189,21 +190,21 @@ Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch appro
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10,4.72)(20,10.9)(40,11.74)(80,12.22)(160,13.27)(320,14.1)(640,15.5)(1280,17.6)
+			    (10, 9.07)(100, 11.36)(500, 13.59)(1000, 15.36)(5000, 19.45)(10000, 19.55)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-				(10,3.78)(20,4.94)(40,5.38)(80,5.97)(160,6.79)(320,7.63)(640,8.71)(1280,10.61)
+				(10, 3.75)(100, 6.04)(500, 8.12)(1000, 9.81)(5000, 14.58)(10000, 16.55)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10,4.97)(20,6.53)(40,7.08)(80,7.81)(160,8.62)(320,9.65)(640,10.84)(1280,17.7)
+			    (10, 4.21)(100, 6.57)(500, 8.81)(1000, 10.28)(5000, 12.4)(10000, 14.71)
 			    };
 			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -211,7 +212,7 @@ Figure \ref{fig:plot-01} compares the time taken by RRP and DisjointSearch appro
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms for RZ = 1,000}
-		\caption{Runtime comparison between the types of RRP algorithms for RZ = 1,000}
+		\caption{Runtime comparison between the types of RRP algorithms for RZ = 625}
 		\label{fig:plot-03}
 	\end{subfigure}
 	\caption{Runtime comparison between the types of RRP algorithms for different resolutions}
@@ -266,21 +267,21 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10,9.17)(20,9.91)(40,10.65)(80,11.09)(160,11.89)(320,12.84)(640,13.92)(1280,20.58)
+			    (10, 9.2)(100, 11.7)(500, 13.79)(1000, 16.54)(5000, 19.49)(10000, 24.37)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-				(10,3.86)(20,4.93)(40,5.33)(80,6.02)(160,6.71)(320,12.5)(640,8.72)(1280,10.84)
+				(10, 3.82)(100, 5.97)(500, 8.02)(1000, 9.6)(5000, 14.5)(10000, 14.52)
 			    };
 			\addplot[
 			    color=ForestGreen,
-			    mark=*,
+			    mark=x,
 			    ]
 			    coordinates {
-			    (10,4.42)(20,5.49)(40,6.02)(80,6.7)(160,7.48)(320,8.35)(640,14.28)(1280,11.58)
+			    (10, 4.72)(100, 7.23)(500, 9.41)(1000, 11.04)(5000, 15.48)(10000, 15.74)
 			    };
 			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -288,7 +289,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms using VertexReachAlgo Type 1 and RZ = 100}
-		\caption{Runtime comparison between the types of RRP algorithms using VertexReachAlgo Type 1 and RZ = 100}
+		\caption{Runtime comparison between the types of RRP algorithms using VertexReachAlgo Type 1 and RZ = 625}
 		\label{fig:plot-04}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -315,21 +316,21 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10,9.22)(20,9.81)(40,10.68)(80,12.07)(160,11.82)(320,12.8)(640,13.97)(1280,20.44)
+			    (10, 9.25)(100, 11.85)(500, 13.84)(1000, 16.55)(5000, 19.6)(10000, 24.66)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-				(10,3.86)(20,4.88)(40,5.36)(80,6.95)(160,6.69)(320,12.5)(640,8.67)(1280,10.86)
+				(10, 3.76)(100, 6.01)(500, 8.14)(1000, 9.68)(5000, 14.71)(10000, 15.24)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10,4.33)(20,5.33)(40,5.92)(80,6.94)(160,7.27)(320,8.15)(640,14.12)(1280,11.13)
+			    (10, 4.37)(100, 6.74)(500, 8.87)(1000, 10.42)(5000, 14.79)(10000, 15.42)
 			    };
 			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -337,7 +338,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms using VertexReachAlgo Type 2 and RZ = 100}
-		\caption{Runtime comparison between the types of RRP algorithms using VertexReachAlgo Type 2 and RZ = 100}
+		\caption{Runtime comparison between the types of RRP algorithms using VertexReachAlgo Type 2 and RZ = 625}
 		\label{fig:plot-05}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -364,21 +365,21 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10,9.02)(20,9.81)(40,10.58)(80,11.08)(160,12.16)(320,12.82)(640,14.04)(1280,20.53)
+			    (10, 9.36)(100, 11.73)(500, 14.41)(1000, 16.21)(5000, 19.95)(10000, 24.64)
 			    };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-				(10,3.83)(20,4.85)(40,5.37)(80,5.96)(160,6.76)(320,12.57)(640,8.69)(1280,10.55)
+				(10, 3.79)(100, 5.99)(500, 8.1)(1000, 9.81)(5000, 14.66)(10000, 14.94)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10,4.27)(20,5.25)(40,5.88)(80,6.53)(160,7.23)(320,8.16)(640,14)(1280,11.04)
+			    (10, 4.22)(100, 6.63)(500, 8.77)(1000, 10.35)(5000, 14.75)(10000, 14.73)
 			    };
 			    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 			    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -386,7 +387,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between DisjointSearch and types of RRP algorithms using VertexReachAlgo Type 3 and RZ = 100}
-		\caption{Runtime comparison between the types of RRP algorithms using VertexReachAlgo Type 3 and RZ = 100}
+		\caption{Runtime comparison between the types of RRP algorithms using VertexReachAlgo Type 3 and RZ = 625}
 		\label{fig:plot-06}
 	\end{subfigure}
 	\caption{Runtime comparison between the types of RRP algorithms for various VertexReachAlgo Types}
@@ -398,13 +399,17 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 	\begin{subfigure}[t]{0.5\textwidth}
 		\begin{tikzpicture}[every plot/.append style={very thick}][scale=0.85]
 			\begin{axis}[
-			    xlabel={Resolution, RZ},
+			    xlabel={K},
 			    ylabel={Time (s)},
 			    legend pos=south east,
 			    xmajorgrids=true,
 			    ymajorgrids=true,
 			    grid style=dashed,
-			    mark size=3pt
+			    mark size=3pt,
+			    xtick=data,
+			    % unit vector ratio=1 1 1,
+			    % x=0.0015cm,
+			    xticklabels={10, 100, 500, 1000, 5000, 10000}
 			]
 			 
 			\addplot[
@@ -412,37 +417,42 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10.0, 7.45)(20.0, 13.99)(40.0, 14.93)(80.0, 16.04)(160.0, 17.13)(320.0, 18.54)(640.0, 20.37)(1280.0, 23.46)
+			    % (10, 8.86)(100, 11.22)(500, 18.45)(1000, 19.94)(5000, 24.31)(10000, 24.33)
+			    (1, 8.86)(2, 11.22)(3, 18.45)(4, 19.94)(5, 24.31)(6, 24.33)
 			    };
-			\addplot[
-			    color=Maroon,
-			    mark=square,
-			    ]
-			    coordinates {
-			    (10.0, 6.76)(20.0, 13.5)(40.0, 14.43)(80.0, 15.14)(160.0, 16.49)(320.0, 17.95)(640.0, 19.7)(1280.0, 22.01)
-			    };
+			% \addplot[
+			%     color=Maroon,
+			%     mark=square,
+			%     ]
+			%     coordinates {
+			%     % (10, 4.14)(100, 11.64)(500, 13.52)(1000, 15.1)(5000, 19.33)(10000, 19.31)
+			%     (1, 4.14)(2, 11.64)(3, 18.52)(4, 15.1)(5, 19.33)(6, 19.31)
+			%     };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-				(10.0, 14.44)(20.0, 16.36)(40.0, 17.74)(80.0, 18.79)(160.0, 19.97)(320.0, 21.75)(640.0, 23.92)(1280.0, 31.98)
+				% (10, 9.33)(100, 11.81)(500, 13.82)(1000, 15.52)(5000, 19.66)(10000, 19.71)
+				(1, 9.33)(2, 11.81)(3, 13.82)(4, 15.52)(5, 19.66)(6, 19.71)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=diamond,
 			    ]
 			    coordinates {
-			    (10.0, 13.6)(20.0, 15.28)(40.0, 16.44)(80.0, 17.59)(160.0, 18.7)(320.0, 20.29)(640.0, 22.58)(1280.0, 25.66)
+			    % (10, 4.27)(100, 11.19)(500, 13.4)(1000, 14.96)(5000, 19.02)(10000, 18.84)
+			    (1, 4.27)(2, 11.19)(3, 13.4)(4, 14.96)(5, 19.02)(6, 18.84)
 			    };
 			\addplot[
 			    color=Magenta,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10.0, 12.44)(20.0, 19.99)(40.0, 21.24)(80.0, 22.7)(160.0, 23.85)(320.0, 25.78)(640.0, 28.97)(1280.0, 32.39)
+			    % (10, 12.61)(100, 16.01)(500, 19.3)(1000, 21.12)(5000, 26.01)(10000, 26.04)
+			    (1, 12.61)(2, 16.01)(3, 19.3)(4, 21.12)(5, 26.01)(6, 26.04)
 			    };
-			    \legend{10 by 10,100 by 100,500 by 500,1000 by 1000,5000 by 5000}
+			    \legend{5 by 5,25 by 25,125 by 125,625 by 625,3125 by 3125}
 			 
 			\end{axis}
 		\end{tikzpicture}
@@ -452,13 +462,15 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 	\begin{subfigure}[t]{0.5\textwidth}
 		\begin{tikzpicture}[every plot/.append style={very thick}][scale=0.85]
 			\begin{axis}[
-			    xlabel={Resolution, RZ},
+			    xlabel={K},
 			    ylabel={Time (s)},
 			    legend pos=south east,
 			    xmajorgrids=true,
 			    ymajorgrids=true,
 			    grid style=dashed,
-			    mark size=3pt
+			    mark size=3pt,
+			    xtick=data,
+			    xticklabels={10, 100, 500, 1000, 5000, 10000}
 			]
 			 
 			\addplot[
@@ -466,35 +478,40 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 			    mark=triangle,
 			    ]
 			    coordinates {
-			    (10.0, 8.98)(20.0, 11.02)(40.0, 12.12)(80.0, 18.26)(160.0, 14.68)(320.0, 16.45)(640.0, 18.44)(1280.0, 22.71)
+			    % (10, 4.28)(100, 6.74)(500, 8.92)(1000, 10.52)(5000, 16.09)(10000, 19.0)
+			    (1, 4.28)(2, 6.74)(3, 8.92)(4, 10.52)(5, 16.09)(6, 19.0)
 			    };
-			\addplot[
-			    color=Maroon,
-			    mark=square,
-			    ]
-			    coordinates {
-			    (10.0, 8.6)(20.0, 10.6)(40.0, 11.46)(80.0, 12.52)(160.0, 13.84)(320.0, 15.53)(640.0, 17.42)(1280.0, 20.44)
-			    };
+			% \addplot[
+			%     color=Maroon,
+			%     mark=square,
+			%     ]
+			%     coordinates {
+			%     % (10, 4.26)(100, 6.67)(500, 8.83)(1000, 10.23)(5000, 14.64)(10000, 14.62)
+			%     (1, 4.26)(2, 6.67)(3, 8.83)(4, 10.23)(5, 14.64)(6, 14.62)
+			%     };
 			\addplot[
 			    color=red,
 			    mark=+,
 			    ]
 			    coordinates {
-				(10.0, 11.2)(20.0, 13.47)(40.0, 14.66)(80.0, 16.05)(160.0, 17.49)(320.0, 19.49)(640.0, 26.56)(1280.0, 25.67)
+				% (10, 4.19)(100, 6.56)(500, 8.7)(1000, 10.13)(5000, 14.39)(10000, 15.12)
+				(1, 4.19)(2, 6.56)(3, 8.7)(4, 10.13)(5, 14.39)(6, 15.12)
 			    };
 			\addplot[
 			    color=ForestGreen,
 			    mark=diamond,
 			    ]
 			    coordinates {
-			    (10.0, 10.28)(20.0, 12.57)(40.0, 13.79)(80.0, 19.53)(160.0, 16.38)(320.0, 18.3)(640.0, 20.42)(1280.0, 23.98)
+			    % (10, 4.25)(100, 6.4)(500, 8.4)(1000, 9.86)(5000, 13.92)(10000, 13.97)
+			    (1, 4.25)(2, 6.4)(3, 8.4)(4, 9.86)(5, 13.92)(6, 13.97)
 			    };
 			\addplot[
 			    color=Magenta,
 			    mark=x,
 			    ]
 			    coordinates {
-			    (10.0, 15.01)(20.0, 17.83)(40.0, 19.39)(80.0, 20.89)(160.0, 22.45)(320.0, 24.68)(640.0, 27.79)(1280.0, 31.93)
+			    % (10, 4.97)(100, 7.57)(500, 9.86)(1000, 11.44)(5000, 16.81)(10000, 20.41)
+			    (1, 4.97)(2, 7.57)(3, 9.86)(4, 11.44)(5, 16.81)(6, 20.41)
 			    };
 			    \legend{10 by 10,100 by 100,500 by 500,1000 by 1000,5000 by 5000}
 			 
@@ -506,7 +523,7 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 	\caption{Runtime comparison between Resolution and K for different types of RRP algorithms}
 \end{figure*}
 
-From Figure \ref{fig:plot-07} we can see that as resolution increases for a fixed K and Spatial Index variant of RRP, performance degrades for very high resolutions due to the overhead by LIES\_IN function. For very low resolutions, as each block is almost the size of Texas, even if a user checks-in at one restaurant there, he/she is considered reachable to that block. So it turns many vertices can reach majority of the blocks making it less useful to use a spatial index. The sweet spot so is in between the both extremes, which is 100 in this case. Similar conclusions can be made in next case \ref {fig:plot-08} where both indices are used. The humps are due to the inefficiency of the landmark and nothing to do with Spatial Index.
+From Figure \ref{fig:plot-07} we can see that as resolution increases for a fixed K and Spatial Index variant of RRP, performance degrades for very high resolutions due to the overhead by LIES\_IN function. For very low resolutions, as each block is almost the size of Texas, even if a user checks-in at one restaurant there, he/she is considered reachable to that block. So it turns many vertices can reach majority of the blocks making it less useful to use a spatial index. The sweet spot so is in between the both extremes, which is 625 in this case. Similar conclusions can be made in next case \ref {fig:plot-08} where both indices are used. The humps are due to the inefficiency of the landmark and nothing to do with Spatial Index.
 
 So after these experiments, we find that when the graph is really dense using the social index with a high quality landmark is sufficient. Now let us see how things change when the quality of landmark(s) is not as good. For the next query, the region is even more densely connected and the source vertex is the same, however we fed a moderate quality landmark. This region has 21,239 spatial nodes which is almost 10 times the count of the previous one.
 
@@ -539,21 +556,21 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 		    mark=x,
 		    ]
 		    coordinates {
-		    (1, 8.615309954)(2, 7.099899054)(4, 8.293120861)(8, 8.6691780567)
+		    (1, 12.77)(2, 10.58)(4, 10.48)(8, 8.42)
 		    };
 		\addplot[
 		    color=red,
 		    mark=+,
 		    ]
 		    coordinates {
-		    (1, 3.703080177)(2, 3.414629221)(4, 3.415085077)(8, 4.441617966)
+		    (1, 5.08)(2, 4.64)(4, 4.59)(8, 5.33)
 		    };
 		\addplot[
 		    color=ForestGreen,
 		    mark=triangle,
 		    ]
 		    coordinates {
-		    (1, 4.227499962)(2, 3.817003012)(4, 3.868695974)(8, 4.559159994)
+		    (1, 5.98)(2, 5.25)(4, 5.24)(8, 5.73)
 		    };
 		    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 		    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
@@ -588,21 +605,21 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 		    mark=x,
 		    ]
 		    coordinates {
-		    (1, 9.34)(2, 7.45)(4, 6.32)(8, 6.73)
+		    (1, 12.7)(2, 10.33)(4, 10.35)(8, 8.77)
 		    };
 		\addplot[
 		    color=red,
 		    mark=+,
 		    ]
 		    coordinates {
-		    (1, 4.15)(2, 3.42)(4, 3.39)(8, 5.55)
+		    (1, 5.58)(2, 4.64)(4, 4.66)(8, 6.42)
 		    };
 		\addplot[
 		    color=ForestGreen,
 		    mark=triangle,
 		    ]
 		    coordinates {
-		    (1, 4.8)(2, 3.86)(4, 3.86)(8, 6.01)
+		    (1, 6.33)(2, 5.42)(4, 5.42)(8, 7.33)
 		    };
 		    % \legend{DisjointSearch, RRP-OnlySpatial, RRP-OnlySocial, RRP}
 		    \legend{RRP-OnlySpatial, RRP-OnlySocial, RRP}
