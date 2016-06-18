@@ -395,9 +395,9 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between Both and 
 
 Now that we know how each algorithm for LIES\_IN is implemented, we can clearly see that from Figures \ref{fig:plot-04}, \ref{fig:plot-05}, \ref{fig:plot-06} that all perform the same way. However, if we mash them together keeping the K constant, we see that Algorithm of Type 3 outperforms in most cases. This confirms the previous doubt that if the resolution is too high like 1,000 by 1,000 the overhead in LIES\_IN function overcomes the advantage gained by graph pruning in a dense graph. Now to figure out the sweet spot for right value of RZ, we perform experiments comparing K VS Resolution VS Time for each variant of RRP. 
 
-\begin{figure*}[t]
-	\begin{subfigure}[t]{0.5\textwidth}
-		\begin{tikzpicture}[every plot/.append style={very thick}][scale=0.85]
+\begin{figure}[t]
+	\begin{subfigure}[t]{0.25\textwidth}
+		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.475]
 			\begin{axis}[
 			    xlabel={K},
 			    ylabel={Time (s)},
@@ -459,8 +459,8 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 		\caption{Runtime comparison between Resolution and K using only SpatialIndex of RRP}
 		\label{fig:plot-07}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.5\textwidth}
-		\begin{tikzpicture}[every plot/.append style={very thick}][scale=0.85]
+	\begin{subfigure}[t]{0.25\textwidth}
+		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.475]
 			\begin{axis}[
 			    xlabel={K},
 			    ylabel={Time (s)},
@@ -521,7 +521,7 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 		\label{fig:plot-08}
 	\end{subfigure}
 	\caption{Runtime comparison between Resolution and K for different types of RRP algorithms}
-\end{figure*}
+\end{figure}
 
 From Figure \ref{fig:plot-07} we can see that as resolution increases for a fixed K and Spatial Index variant of RRP, performance degrades for very high resolutions due to the overhead by LIES\_IN function. For very low resolutions, as each block is almost the size of Texas, even if a user checks-in at one restaurant there, he/she is considered reachable to that block. So it turns many vertices can reach majority of the blocks making it less useful to use a spatial index. The sweet spot so is in between the both extremes, which is 625 in this case. Similar conclusions can be made in next case \ref {fig:plot-08} where both indices are used. The humps are due to the inefficiency of the landmark and nothing to do with Spatial Index.
 
@@ -529,9 +529,9 @@ So after these experiments, we find that when the graph is really dense using th
 
 Figure \ref{fig:plot-09} proves why just having a social index wont help like before. For this region, we purposefully chose a moderate landmark. In such cases spatial index prunes majority of the graph as we have a decent resolution of 100 by 100. Though social index outperformed social+spatial index, it lost soon as the landmark wasn't good enough. The correctness is never compromised, it is only that RRP tends to Dijkstra's search if landmark quality is not good. Now that we are convinced when to use each type of index, let us see how each of our algorithms perform with change in region size.
 
-\begin{figure*}[t]
-\begin{subfigure}[t]{0.5\textwidth}
-	\begin{tikzpicture}[every plot/.append style={very thick}][scale=0.85]
+\begin{figure}[t]
+\begin{subfigure}[t]{0.25\textwidth}
+	\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.475]
 		\begin{axis}[
 		    xlabel={Region Size},
 		    ylabel={Time (s)},
@@ -581,8 +581,8 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 	\caption{Runtime comparison between types of RRP algorithms for changes in region size for a source vertex S1}
 	\label{fig:plot-10}
 \end{subfigure}
-\begin{subfigure}[t]{0.5\textwidth}
-	\begin{tikzpicture}[every plot/.append style={very thick}][scale=0.85]
+\begin{subfigure}[t]{0.25\textwidth}
+	\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.475]
 		\begin{axis}[
 		    xlabel={Region Size},
 		    ylabel={Time (s)},
@@ -631,6 +631,6 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 	\label{fig:plot-11}
 \end{subfigure}
 \caption{Runtime comparison between the types of RRP algorithms for changes in region size for different source verteices}
-\end{figure*}
+\end{figure}
 
 In Figure \ref{fig:plot-10} we can see how every algorithm linearly increase the time taken w.r.t. the size of the region. Here the source vertex has many check-ins in each region and so the spatial index performs worse initially due to its overhead but gradually performs better than social and social+spatial indices as the size of the region increases. This is even more evident when we choose a user who doesn't have many check-ins the query regions and has to traverse the social graph to find paths as shown in Figure \ref{fig:plot-11}.
