@@ -1,3 +1,13 @@
 Problem statement section should give a brief and precise definition of problem.
 
 For solution section the index structure should be demonstrated in a different way. Construction and structure should be totally separate. 
+
+
+New Refs:
+16. F. M. Bass. A new product growth model for consumer durables. Management Science, 15:215–227, 1969.
+17. J. J. Brown and P. H. Reinegen. Social ties and word-of-mouth referral behavior. Journal of Consumer Research.
+18. P. Domingos and M. Richardson. Miningthe network value of customers. In Seventh International Conference
+on Knowledge scovery and Data Mining (KDD), pages 57–66, 2001.
+19. Even-Dar, Eyal, and Asaf Shapira. "A note on maximizing the spread of influence in social networks." International Workshop on Web and Internet Economics. Springer Berlin Heidelberg, 2007.
+20. M. Richardson and P. Domingos. Mining knowledge-sharing sites for viral marketing. In Eighth International
+Conference on Knowledge scovery and Data Mining (KDD), pages 61–70, 2002.

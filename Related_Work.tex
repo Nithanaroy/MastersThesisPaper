@@ -1,4 +1,4 @@
-\section{Related Work to {\rrp}(G, v, R)}
+\section{Related Work to {\rrp}(G, v, R)} \label{sec:relwork}
 A naive solution to {\rrp} can be to first find all vertices that fall inside R and then find shortest path to each. To filter vertices that fall inside R we can use a spatial index like a Quad tree or a R-tree. Then to find the shortest paths to each we can use an algorithm like Dijkstra's ~\cite{S1990} or Bellman Ford~\cite{R1956}. The paper~\cite{NSD2013} provides a distributed framework for this decoupled approach. They reduce a socio-spatial problem into smaller sub-problems and implement them as distributed functions.
 
 Another idea is to combine the socio-spatial predicates for better pruning and paper~\cite{KJY+2015} proposes an idea where they prune the graph in a round robin manner by social and spatial distance functions. Using this algorithm we can answer queries like my friends who are socially and spatially closer to me.

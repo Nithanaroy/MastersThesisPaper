@@ -1,4 +1,5 @@
-\section{Experiments}
+\section{Experiments} \label{sec:experiment}
+
 In this section we experimentally verify the RRP algorithm with various input parameters. For this we used a Intel Core i7 2.66 GHz processor with 8GB RAM and running MAC OSX. 
 
 We use real Yelp Dataset\footnote{https://www.yelp.com/dataset\_challenge} which has both social and spatial components as introduced in the beginning. The dataset has 552K social nodes, 77K spatial nodes, 3.5M social edges and 2.2M spatial edges. As social edges indicate friendship strength between users, we generate a random number between 1 to 10 to signify the social distance between two users. Similarly, as every spatial edge is a check-in at a business, we indicate the rating given by the user by a random number between 1 and 10. In both cases larger the number, lower is the friendship strength and lower is the rating respectively. 
@@ -15,9 +16,9 @@ Unless specified each run uses the default parameter values shown in Table \ref{
 			Parameter & Value & Range \\ \hline
 			\hline
 			% K & 160 & 10, 20, 40, 80, 160, 320, 640, 1280 \\
-			K & 100 & 10, 100, 500, 1000, 5000, 10000 \\
+			K & 100 & 10, 100, 1000, 10000 \\
 			% RZ & 100 & 10, 100, 500, 1000, 5000 \\
-			RZ & 125 & 5, 25, 125, 625, 3125 \\
+			RZ & 125 & 25, 125, 625, 3125 \\
 			VertexReachesAlgo & Type 3 & Type 1, Type 2, Type 3 \\
 			M & 10K & - \\
 			RF & 4 & - \\
@@ -406,8 +407,8 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 Now that we know how each algorithm for LIES\_IN is implemented, we can clearly see that from Figures \ref{fig:plot-04}, \ref{fig:plot-05}, \ref{fig:plot-06} that all perform the same way. However, if we mash them together keeping the K constant, we see that Algorithm of Type 3 outperforms in most cases. This confirms the previous doubt that if the resolution is too high like 3125 by 3125 the overhead in LIES\_IN function overcomes the advantage gained by graph pruning in a dense graph. Now to figure out the sweet spot for right value of RZ, we perform experiments comparing K VS Resolution VS Time for each variant of {\rrp}. 
 
 \begin{figure}[t]
-	\begin{subfigure}[t]{0.25\textwidth}
-		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.475]
+	\begin{subfigure}[t]{0.20\textwidth}
+		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.43]
 			\begin{axis}[
 			    xlabel={K},
 			    ylabel={Time (s)},
@@ -475,12 +476,12 @@ Now that we know how each algorithm for LIES\_IN is implemented, we can clearly 
 		\caption{Runtime comparison between Resolution and K using only SpatialIndex of {\rrp}}
 		\label{fig:plot-07}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.25\textwidth}
-		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.475]
+	\begin{subfigure}[t]{0.20\textwidth}
+		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.43]
 			\begin{axis}[
 			    xlabel={K},
 			    ylabel={Time (s)},
-			    legend pos=south east,
+			    legend pos=north west,
 			    xmode = log,
 			    %xmajorgrids=true,
 			    %ymajorgrids=true,
@@ -552,8 +553,8 @@ So after these experiments, we find that when the graph is really dense using th
 Figure \ref{fig:plot-09} proves why just having a social index wont help like before. For this region, we purposefully chose a lower quality landmark. In such cases spatial index prunes majority of the graph as we have a decent resolution of 625 by 625. Though social index equally performed social+spatial index intially, it lost soon as the landmark quality further degraded for higher K for the same reason explained before. The correctness is never compromised, it is only that {\rrp} tends to Dijkstra's search if landmark quality is not good. Now that we are convinced when to use each type of index, let us see how each of our algorithms perform with change in region size.
 
 \begin{figure}[t]
-\begin{subfigure}[t]{0.25\textwidth}
-	\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.475]
+\begin{subfigure}[t]{0.20\textwidth}
+	\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.43]
 		\begin{axis}[
 		    xlabel={Region Size},
 		    ylabel={Time (s)},
@@ -605,8 +606,8 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 	\caption{Runtime comparison between types of {\rrp} algorithms for changes in region size for a source vertex S1}
 	\label{fig:plot-10}
 \end{subfigure}
-\begin{subfigure}[t]{0.25\textwidth}
-	\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.475]
+\begin{subfigure}[t]{0.20\textwidth}
+	\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.43]
 		\begin{axis}[
 		    xlabel={Region Size},
 		    ylabel={Time (s)},
