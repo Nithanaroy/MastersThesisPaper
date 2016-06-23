@@ -4,6 +4,14 @@ In this section we experimentally verify the RRP algorithm with various input pa
 
 We use real Yelp Dataset\footnote{https://www.yelp.com/dataset\_challenge} which has both social and spatial components as introduced in the beginning. The dataset has 552K social nodes, 77K spatial nodes, 3.5M social edges and 2.2M spatial edges. As social edges indicate friendship strength between users, we generate a random number between 1 to 10 to signify the social distance between two users. Similarly, as every spatial edge is a check-in at a business, we indicate the rating given by the user by a random number between 1 and 10. In both cases larger the number, lower is the friendship strength and lower is the rating respectively. 
 
+The shortest paths returned by {\rrp} are fed into a web application which visualizes the results as shown in Figure \ref{fig:web-app}. The red markers are the places which the user 2AGGIi5EiVLM1XhBXaaAVw visited and flag markers are her recommendations based on social distances. All the recommedations are for the region marked by a black rectangle. The figure also shows the shortest paths listed in ascending order by social distances. Hovering over a node in the path, shows all the rich attributes that can be used by a recommendation system. The details of the application and its source code are available at \url{https://github.com/Nithanaroy/GeoReachRecommender}.
+
+\begin{figure}[t]
+	\centering \includegraphics[width=0.40\textwidth]{images/web-app-screenshot.eps}
+    \caption{Web Application showing the source vertex, region of interest and the shortest paths}
+    \label{fig:web-app}
+\end{figure}
+
 Unless specified each run uses the default parameter values shown in Table \ref{tab:default-param}. Parameter K is the shorthand for top-k, i.e. any query requests 100 shortest paths by default. RZ is the shorthand for resolution which determines the number of blocks the world is divided into. RZ $\gets$ 125 implies that the world is equally into 125 by 125 blocks along latitudes and longitudes. \textit{VertexReachesAlgo} parameter defines how line~\ref{alg:liesin} of algorithm \ref{alg3} is implemented. Throughout this section, let us refer to it as LIES\_IN. We had three implementations which check whether the query region R overlaps with regions reachable from a vertex. We will describe each type near those experiments. M and RF are the same parameters described before as the maximum allowed size of an GeoReachSpatial-index entry for a vertex and reduction factor between levels of the GeoReachSpatial-index respectively.
 
 \begin{table}[h]

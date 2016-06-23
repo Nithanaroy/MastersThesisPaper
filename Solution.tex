@@ -1,28 +1,35 @@
 \section{Solution, our Approach to {\rrp}(G, v, R)} \label{sec:solution}
 
-{The solution is two fold, first we preprocess the data and create an index. Then we use a modified A* algorithm to traverse the graph using the index and answer any query.}
+The solution is two fold, first we preprocess the data and create an index. Then we use a modified A* algorithm to traverse the graph using the index and answer any query.
 
-{We will use a running example to explain the main idea and then formally present an algorithm. Consider Figure \ref{fig:space-partitioned} which has a social graph of friends and their check ins at various restaurants.}
+We will use a running example to explain the main idea and then formally present an algorithm. Consider Figure \ref{fig:running-example-solution} which has a social graph of friends and their check ins at various restaurants.
 
 \begin{figure}[t]
 	\centering \includegraphics[width=0.40\textwidth]{images/space_partitioned_world.eps}
-    \caption{Space partitioned world}
-    \label{fig:space-partitioned}
+    \caption{Running Example}
+    \label{fig:running-example-solution}
 \end{figure}
 
-{In Figure \ref{fig:space-partitioned}, each vertex symbolizes a person and two nodes are connected if there is a social relationship between them. The number on the edge indicates their social distance, lesser implies stronger bond. Forest green edges from the nodes to the map are all check-ins made by people at various restaurants, which are our spatial vertices. }
+In Figure \ref{fig:running-example-solution}, each vertex symbolizes a person and two nodes are connected if there is a social relationship between them. The number on the edge indicates their social distance, lesser implies stronger bond. Forest green edges from the nodes to the map are all check-ins made by people at various restaurants, which are our spatial vertices.
 
 \subsection{Building the index, GeoReachPaths}
 
 \subsubsection{Structure}
 The goal of the index is to quickly prune the graph for any range predicate and a source vertex. Therefore for every vertex we add some spatial and social meta information. Using this meta information, the traversal algorithm at query time can decide whether to visit a sub-graph starting at that node or not.
 
-Using the spatial attributes of the vertices, we create the spatial meta information. We divide the world into a fixed number of blocks in space and number the blocks. Then for each restaurant (i.e. spatial node) we update the meta information for all the people nodes (other vertices) who have checked-in there with the block number where the restaurant belongs. If the world is divided into very fine blocks, each meta entry can be really huge. To compress the index entry, we divide the world again but this time into more coarser blocks and number them. For all the index entries which cross a threshold, we update its block numbers to this coarser division. We repeat this recursively until the threshold is satisfied. Once we have this in place, at query time, while traversing the graph for finding a shortest path, we can straight away prune away traversing sub-graphs starting at a vertex which does not reach the region of interest.
+Using the spatial attributes of the vertices, we create the spatial meta information. We divide the world into a fixed number of blocks in space and number them. Then for each restaurant (i.e. spatial node) we update the meta information for all the people nodes (other vertices) who have checked-in there with the block number where the restaurant belongs. If the world is divided into very fine blocks, each meta entry can be really huge. To compress the index entry, we divide the world again but this time into more coarser blocks and number them. For all the index entries which cross a threshold, we update its block numbers to this coarser division. We repeat this recursively until the threshold is satisfied. Once we have this in place, at query time, while traversing the graph for finding a shortest path, we can straight away prune away traversing sub-graphs starting at a vertex which does not reach the region of interest.
 
 Using the social distances (edge weights) we create social meta information/index. We pick a few vertices from our graph based on some criteria (detailed later) and store shortest distance from each to all vertices it can reach using well known single source shortest algorithms like Dijkstra's. Lets call these selected vertices as landmarks. So social meta information is a table which has shortest distances information from each landmark. Using these landmarks and triangle inequality we obtain an estimate of the shortest distance from any vertex to any other vertex in the graph. This valuable information is used during graph traversal to prune sub-graphs even better and is detailed in section \ref{querying}.
 
 \subsubsection{Using the Spatial Component}
-In to our running example, we divide the entire region into equal sized blocks from 1 to 16 as show in Figure \ref{fig:space-partitioned}. Then for vertex D, meta information would be {[}8{]} as the user checked-in at a restaurant which falls in block number 8. Similarly for vertex G, the meta information would be {[}5, 6, 7{]}. Continuing like this, we populate a meta information table for each vertex which are directly connected to a spatial node.
+
+\begin{figure}[t]
+	\centering \includegraphics[width=0.40\textwidth]{images/entire_world_grid.eps}
+    \caption{Space partitioned world}
+    \label{fig:space-partitioned}
+\end{figure}
+
+A complete picture of equally partitioned world would be as shown in the Figure \ref{fig:space-partitioned}. Here the resolution of the division is 10 by 10. That means the entire world is divided into 10 equal sized blocks horizontally and 10 equal sized blocks vertically. In to our running example, we divide the entire region into equal sized blocks from 1 to 16 as show in Figure \ref{fig:running-example-solution}. Then for vertex D, meta information would be {[}8{]} as the user checked-in at a restaurant which falls in block number 8. Similarly for vertex G, the meta information would be {[}5, 6, 7{]}. Continuing like this, we populate a meta information table for each vertex which are directly connected to a spatial node.
 
 % \begin{table}[h]
 % 	\caption{1-hop reachability meta table}
@@ -250,6 +257,27 @@ Algorithm \ref{alg1} shows how the index, GeoReachPaths-spatial is created. In t
 \end{scriptsize}
 \end{algorithm}
 
+To compute the asymptotic run time and space complexities for algorithm \ref{alg1}, divide into four pieces - graph condensation, 1-hop reachability calculation, DFS for multi-hop reachability and repartition function. The runtime for each would be as follows,
+\begin{itemize}
+
+  \item \textbf{Graph Condensation}: On line~\ref{alg:condense}, we condense the input graph into its strongly connected components. If we use a popular algorithm like Targan's Algorithm, the runtime would be $O(V + E)$~\cite{R1972}.
+
+  \item \textbf{1-hop rechability calculation}: From lines~\ref{alg:onehopstart} to~\ref{alg:onehopend}, we compute the 1-hop reachability on the condensed graph. In the worst case, every vertex will be a strongly connected component and so the size of the graph remains the same after graph condensation. As we traverse the entire graph once and populate 1-hop meta data for each vertex, the complexity for this piece also would be $O(V + E)$. Calls to repartition() function are handled separately.
+
+  \item \textbf{DFS}: For multi-hop reachability, we perform DFS on the graph once on line~\ref{alg:dfs}. As we are using adjacency list for managing our edges, the complexity for DFS would be $O(V + E)$ again. Calls to repartition() function are handled separately.
+
+  \item \textbf{Repartition}: This function is called multiple times to make sure we satisfy the M constraint. The runtime of the function depends on the size of the meta entry for the vertex. For every vertex we start with a default constant resolution, and the total number of blocks the entire world is divided at that resolution would be a constant multiple of it. So, let the total number of blocks in the default resolution be $c$, which would be the worst case size of a vertex's meta information. And until the size of meta information for the vertex falls below M, we keep reducing the resolution by $RF$. Therefore number of times we would run the loop, say $n$ would be,
+  \begin{eqnarray*}
+  	\dfrac{c}{RF^n} \leq M\\
+  	n \leq {\log_{\dfrac{1}{RF}} (\dfrac{M}{c})}
+  \end{eqnarray*}
+  And repartition function is called exactly twice for each vertex, once during 1-hop rechability and once during DFS. Therefore, the time complexity due to this function would be $O(V \times {\log_{\dfrac{1}{RF}} (\dfrac{M}{c})})$. This fraction is very small compared to sum of vertices and edges in the graph.
+\end{itemize}
+
+All the other lines in the algorithm can be computed in constant time. The runtime of GeoReachPaths - spatial would hence be $O(V + E)$.
+
+Space complexity would be amount of memory required to store the multi-hop reachability table. Each index entry has an upper bound of $M$. Hence memory consumption in the worst case would be, $O(V \times M)$.
+
 \subsubsection{Using the social component}
 Now we will use the social distances between nodes and create an index to prune the graph even better. This will take care of the cases when graph is very dense and the spatial index created before may not be of much use for pruning at query time. We will see more details in the next section on querying the graph.
 
@@ -279,9 +307,20 @@ Algorithm \ref{alg2}, GeoReachPaths-Social, describes how to create an index usi
 \end{scriptsize}
 \end{algorithm}
 
+To compute asymptotic run time and space complexities, algorithm \ref{alg2} is divided into two pieces - finding the landmarks, finding shortest distances to each reachable vertex from each landmark. The runtime for each is as follows,
+\begin{itemize}
+	\item \textbf{Finding Landmarks}: There are various ways of picking the landmarks and is totally left to user. In our case we used an approach which finds landmarks in constant number of scans of the entire graph. Therefore, the complexity of this piece is $O(V + E)$.
+
+	\item \textbf{Shortest distance to each landmark}: Here, we find the shortest distances from each landmark to all vertices it can reach. Using adjacency list for storing the edges, we use Dijsktra's algorithm as edges have positive weights. With this setting, the complexity would be $O(landmarks \times E\log V)$. As the number of landmarks is usually very small compared to number of edges in the graph, it would be $O(E\log V)$ in asymptotic notation.
+\end{itemize}
+
+Therefore the runtime for this algorithm using a sensible landmark selection algorithm would be, $O(V + E) + O(E\log V)$.
+
+Space complexity would be memory taken to store the shortest distances to each reachable vertex for all landmarks. As the number of landmarks is very small compared to the number of vertices in the graph, this would be $O(V)$.
+
 \subsection{Answering RangeReachPaths(G, s, R) queries} \label{querying}
 
-We use a modified A* greedy algorithm for answering {\rrp} queries using the GeoReachPaths index. The main goal is to prune as much graph as possible during the traversal. The algorithm takes a graph G, a starting vertex s and a query rectangle R as input and returns the top-K paths starting from s and ending in R in an iterative manner.
+We use a modified A* with landmark~\cite{AC2005} algorithm for answering {\rrp} queries using the GeoReachPaths index. The main goal is to prune as much graph as possible during the traversal. The algorithm takes a graph G, a starting vertex s and a query rectangle R as input and returns the top-K paths starting from s and ending in R in an iterative manner.
 
 The crux of A* algorithm is the heuristic function. Our heuristic function takes a vertex and a region and returns the heuristic distance which will be used by A* to decide which path to traverse. In order to design such heuristic function we will use the social part of GeoReachPaths index as explained in algorithm \ref{alg3}. For this we use the triangle inequality property to get a lower bound on the distance between two vertices.
 
@@ -473,3 +512,15 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices
 
 \end{scriptsize}
 \end{algorithm}
+
+As algorithm \ref{alg3} answers socio-spatial queries using modified A* with landmark algorithm, its complexity depends on the quality of the heuristic function. So rather than one value for asymptotic runtime we will see two extremes here. The algorithm can be divided into three pieces - the Q, heuristic function and vertex visit (which is written as a subroutine as algorithm \ref{alg4}). The runtime for each is as follows,
+
+\begin{itemize}
+
+	\item \textbf{the Q and Vertex visit}: Lines~\ref{alg:theqstart} to~\ref{alg:theqend} of algorithm \ref{alg3} detail the priority queue's role (viz. keyed by actual distance + heuristic distance). Algorithm \ref{alg4} details what happens at every vertex that is not yet visited. The number of times the Q loop executes depends on the way heuristic guides the algorithm. In the best case, we are always on the right path to the shortest distance and so the run time would $O(n)$, where $n$ is the length of the path. As we have to find K such paths, the complexity would become, $O(K \times n)$. In the worst case, the heuristic always picks the wrong path and the algorithm works like a Dijkstra's or a BFS. In such a case, the complexity would be $O(V + E)$ for finding any number of shortest paths as we traversed the entire graph once.
+
+	\item \textbf{the Heuristic}: Here we first filter all vertices that fall in the region of interest, R. If properly implemented this can be done only once per query. Its complexity would be $O(\log_m (V))$ where $m$ is the number of nodes/vertices per memory page (fan out of a tree). Then we find the maximum of all closest distances to all landmarks. This is nothing but finding the K smallest elements in an array, as the number of landmarks are constant. Its complexity would be $O(K + (V-K)\log K)$. So the total complexity would be $O(\log_m (V)) + O(K + (V-K)\log K)$ where $m$ is the number of nodes/vertices per memory page (fan out of a tree).
+\end{itemize}
+
+
+Therefore the runtime of RangeReachPaths would be in between $O(K \times n) + O(\log_m (V)) + O(K + (V-K)\log K)$ and $O(V + E) + O(\log_m (V)) + O(K + (V-K)\log K)$, where $m$ is the number of nodes/vertices per memory page.
