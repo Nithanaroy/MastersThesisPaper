@@ -445,7 +445,7 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices
 	\While{Q is not empty}  \label{alg:theqstart}
 		\State $v \gets \Call{EXTRACT\_MIN}{Q}$
 		
-		\If{v lies in R} \label{alg:liesin}
+		\If{v lies in R}
 			\State nearest\_vertices $<<$ v \Comment{add v to set}
 			\State best\_index $\gets$ best\_index + 1
 			\If{nearest\_vertices.length = K}
@@ -489,7 +489,7 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. We initialize all vertices
 \begin{algorithmic}[1]
 \Function{VISIT}{G, u, v, Q}
 	\For{u $\gets$ G.Adj(v)}
-		\If{R does \textbf{not} lie in GRP-SPATIAL(u)}
+		\If{R does \textbf{not} lie in GRP-SPATIAL(u)} \label{alg:liesin}
 			\State \textbf{continue}
 		\EndIf
 		\If{u is not visited}
