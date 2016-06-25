@@ -1,6 +1,9 @@
 \section{Preliminary}
 \label{sec:preliminary}
 
+\newcommand{\Friendof}{\emph{Friend-of}}
+\newcommand{\Like}{\emph{Like}}
+
 % \begin{figure}[h]
 % 	\centering
 % 	\includegraphics[width=0.44\textwidth]{images/a_social_graph.eps}
@@ -8,20 +11,27 @@
 % 	\label{fig:socio-spatial-graph}
 % \end{figure}
 
-{\bf GeoSocial Graph Data.} Is a weighted directed graph $G=(V,E,S)$ consisting of (1) a set of vertices $V$; (2) a set of directed edges, $E\subset V\times V$ with weights, which represent relationship strengths. If $(u,v)\in E$, there exists one edge from vertex $u$ to $v$; (3) a function $S$ defined on $V$ that decides spatial attribute of a given vertex. $S(v)$ returns spatial property of $v$ (denoted as $v.spatial$), generally for venues, and the value will be null when $v$ brings no spatial attribute, generally for people. $S(v)$ can be a geometrical a point, line, or polygon. For ease of presentation, we assume that a spatial attribute of spatial vertex is represented by a point.
+{\bf GeoSocial Graph Data.} It is a graph contains people, real spatial venues and relationships among these entities. We use the following to model the GeoSocial graph. It is a directed graph $G=(V,E,S)$ consisting of (1) a set of vertices $V$ representing people and spatial venues; (2) a set of directed edges, $E\subset V\times V$ with weights. If $(u,v)\in E$, there exists one edge from vertex $u$ to $v$, which means the two entities possess a real-life connection. The connection can be {\em Friend-of} or {\Like}. The weights of the edge indicates which how strong the two entities are connected. The shorter a distance, the stronger it is; (3) a function $S$ defined on $V$ that decides spatial attribute of a given vertex. $S(v)$ returns spatial property of $v$ (denoted as $v.spatial$), generally for venues, and the value will be null when $v$ brings no spatial attribute, generally for people. $S(v)$ can be a geometrical a point, line, or polygon. For ease of presentation, we assume that a spatial attribute of spatial vertex is represented by a point.
 
-\textbf{Path.} A path is a sequence of vertices and edges that are distinct from one another. A path is denoted as $p =$ ($v_1$, $e_1$,..., $v_{n-1}$, $e_{n-1}$, $v_n$) where $v_i\neq v_j~and~e_i\neq e_j (i\neq j)$. Length of $p$ is denoted as $L(p) = \sum\limits_{i = 1}^{n-1}w(e_i)$. This path starts from vertex $v_1$ to $v_n$. 
+\textbf{Path and Shortest Path.} A path is a sequence of vertices and edges that are distinct from one another. A path is denoted as $p =$ ($v_1$, $e_1$,..., $v_{n-1}$, $e_{n-1}$, $v_n$) where $v_i\neq v_j~and~e_i\neq e_j (i\neq j)$. Length of $p$ is denoted as $L(p) = \sum\limits_{i = 1}^{n-1}w(e_i)$. This path starts from vertex $v_1$ to $v_n$. In a GeoSocial graph $G$, given a source vertex $u$ and destination vertex $v$, there can be multiple paths between them. $Paths(u,v) = \{p|p = (u,e_1,..., v)\}$ is to represent the set of all paths that start from $u$ and end at $v$. Then we can have the shortest path between $u$ and $v$ defined as follows. $ShortestPath(u,v)$ is a path that has the shortest $L(p)$ where $p\in Paths(u,v)$.
 
-\textbf{Shortest Path or Socially closest.} In $G$, there can be multiple paths between two vertices $u$ and $v$. $Paths(u,v) = \{p|p = (u,e_1,..., v)\}$ is to represent the set of all paths that start from $u$ and end at $v$. Shortest path between $u$ and $v$ is a path that has the shortest $L(p)$ where $p\in Paths(u,v)$, denoted as $ShortestPath(u,v)$. As we are in a geospatial graph world, shortest path between two people nodes is an objective way to indicate the strength of their relationship. Similarly shortest path between a person node and a spatial node (generally a venue) is a numerical way to represent the person's preference strength of that venue.
+\textbf{Socially k-Nearest Neighbors with GeoSpatial Range Filter({\query}). } Based on GeoSpatial range filter and social distance, we can define such a new meaningful query:
+\begin{defn}
+	{\query}(v,R,k) = $\widetilde{V}$ where $\widetilde{V}\subset V_{\sqsubset R}$, $\widetilde{V}$ has n elements, $V_{\sqsubset R} = \{u~|~u_{\sqsubset R}\}$ and $\forall w_1\in \widetilde{V}$, $\forall w_2$ $\in$ $V_{\sqsubset R}$ $-$ $V_{\sqsubset R}$, $ShortestPath(v,w_1)$ $\leqslant ShortestPath(v,w_2)$.
+	%For a set $V_{\sqsubset R}$ consists of all the spatial venues that are located in $R$, {\query}(v,R,k) = \{$u_1$,..., $u_k$\} where $u_i\sqsubset R$ and 
+\end{defn}
 
-\textbf{Shortest path between vertex and spatial region.} Given a vertex $v$ and a spatial region $R$, there exist many shortest paths from $v$ to $U$, where $U$ is the set of all vertices in $R$. RangeReachPaths($G$, $v$, $R$, $K$) returns $K$ shortest paths among all shortest paths 
+{\query} gets as input a source vertex $v$, a spatial region $R$ and number of returned venues $k$ and returns a set that consists of $k$ venues that are located in $R$ and can be reachable from $v$ through $k$ shortest path among all located venues.
+%\textbf{Shortest Path or Socially closest.} In $G$, there can be multiple paths between two vertices $u$ and $v$. $Paths(u,v) = \{p|p = (u,e_1,..., v)\}$ is to represent the set of all paths that start from $u$ and end at $v$. Shortest path between $u$ and $v$ is a path that has the shortest $L(p)$ where $p\in Paths(u,v)$, denoted as $ShortestPath(u,v)$. As we are in a geospatial graph world, shortest path between two people nodes is an objective way to indicate the strength of their relationship. Similarly shortest path between a person node and a spatial node (generally a venue) is a numerical way to represent the person's preference strength of that venue.
 
+%\textbf{Shortest path between vertex and spatial region.} Given a vertex $v$ and a spatial region $R$, there exist many shortest paths from $v$ to $U$, where $U$ is the set of all vertices in $R$. RangeReachPaths($G$, $v$, $R$, $K$) returns $K$ shortest paths among all shortest paths 
+\iffalse
 \begin{eqnarray*}
   	(P_1..P_K) \ni P_i = ShortestPath(v, u_i) | u_i \in U\ and\\
   	P_i(v, u_i) \neq P_j(v, u_j) \leftrightarrow u_i \neq u_j
 \end{eqnarray*}
 
-\iffalse
+
 Given a graph $G(V, E)$ where,
 
 \quad$V \rightarrow set\ of\ vertices$
