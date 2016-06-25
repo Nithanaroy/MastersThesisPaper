@@ -1,8 +1,8 @@
 \section{Solution, our Approach to {\rrp}(G, v, R)} \label{sec:solution}
 
-The solution is two fold, first data is preprocessed to create an index. Then a modified A* algorithm traverses the graph using the index to answer any query.
+The solution is two fold, first data is preprocessed to create an index. Then a modified A* algorithm traverses the graph using the index to answer query of type mentioned in section \ref{sec:preliminary}.
 
-A running example is used to explain the main idea followed by a formal algorithm. Consider Figure \ref{fig:running-example-solution} which has a social graph of friends and their check-ins at various restaurants.
+A running example is used to explain the main idea followed by a formal algorithm. Consider Figure \ref{fig:running-example-solution} which has a social graph of friends and their check-ins at various venues.
 
 \begin{figure}[t]
 	\centering \includegraphics[width=0.40\textwidth]{images/space_partitioned_world.eps}
@@ -10,16 +10,16 @@ A running example is used to explain the main idea followed by a formal algorith
     \label{fig:running-example-solution}
 \end{figure}
 
-In Figure \ref{fig:running-example-solution}, each vertex symbolizes a person and two nodes are connected if there is a social relationship between them. The number on the edge indicates their social distance, lesser implies stronger bond. Forest green edges from the nodes to the map are all check-ins made by people at various restaurants (nodes not shown), which are our spatial vertices. Forest green edges are also weighted but are not shown as they are not important for explanation purposes.
+In Figure \ref{fig:running-example-solution}, each vertex symbolizes a person and two nodes are connected if there is a social relationship between them. The number on the edge indicates their social distance, lesser implies stronger bond. Forest green edges from the nodes to the map are all check-ins made by people at various venues (nodes not shown), which are our spatial vertices. Forest green edges are also weighted but are not shown as they are not important for explanation purposes.
 
 \subsection{Building the index, GeoReachPaths}
 
 \subsubsection{Structure}
 The goal of the index is to quickly prune the graph for any range predicate, starting at any source vertex. Therefore for every vertex spatial and social meta information is added. Using this meta information, the traversal algorithm at query time can decide whether to visit a sub-graph starting at that node or not or more generally, this guides the traversal algorithm at query time.
 
-Spatial meta information is created using the spatial attributes of the vertices. The world is divided into a fixed number of blocks in space and are numbered in increasing order. Then for each restaurant (i.e. spatial node) the meta information for all the people nodes (other vertices) who have checked-in there is updated with the block number where the restaurant belongs. If the world is divided into very fine blocks, each meta entry can be really huge. To compress the index entry, we divide the world again but this time into more coarser blocks and are also numbered like before. For all the index entries which cross a threshold, block numbers from the coarser division is used. This is done recursively until the threshold is satisfied for that index entry. Once this is in place, at query time, while traversing the graph for finding a shortest path, sub-graphs starting at a vertex which does not reach the region of interest are straight away pruned.
+Spatial meta information is created using the spatial attributes of the vertices. The world is divided into a fixed number of blocks in space and are numbered in increasing order. Then for each venue (i.e. spatial node) the meta information for all the people nodes (other vertices) who have checked-in there is updated with the block number where the venue belongs. If the world is divided into very fine blocks, each meta entry can be really huge. To compress the index entry, the world is divided again but this time into more coarser blocks and are also numbered like before. For all the index entries which cross a threshold, block numbers from the coarser division are used. This is done recursively until the threshold is satisfied for that index entry. Once this is in place, at query time, while traversing the graph for finding a closest vertex, sub-graphs starting at a vertex which does not reach the region of interest are straight away pruned.
 
-Social meta information/index is created using the social distances (edge weights). A few vertices are picked from the graph based on some criteria (detailed later) and the shortest distances from each to all vertices it can reach are stored using well known single source shortest path algorithms like Dijkstra's. These selected vertices as called landmarks. So social meta information is a table which has shortest distances information from each landmark. Using these landmarks and triangle inequality an estimate of the shortest distance from any vertex to any other vertex in the graph is obtained. This valuable information is used during graph traversal to prune sub-graphs even better and is detailed in section \ref{querying}.
+Social meta information/index is created using the social distances (edge weights). A few vertices are picked from the graph based on some criteria (detailed later) and the shortest distances from each to all vertices it can reach are computed using well known single source shortest path algorithms like Dijkstra's and stored. These selected vertices are termed as landmarks. So social meta information is a table which has shortest distances information from each landmark. Using these landmarks and triangle inequality an estimate of the shortest distance from any vertex to any other vertex in the graph is obtained. This valuable information is used during graph traversal to prune sub-graphs even better and is detailed in section \ref{querying}.
 
 \subsubsection{Using the Spatial Component}
 
@@ -29,7 +29,7 @@ Social meta information/index is created using the social distances (edge weight
     \label{fig:space-partitioned}
 \end{figure}
 
-A complete picture of equally partitioned world would be as shown in the Figure \ref{fig:space-partitioned}. Here the resolution of the division is 10 by 10. That means the entire world is divided into 10 equal sized blocks horizontally and 10 equal sized blocks vertically. In the running example, the entire region is divided into equal sized blocks from 1 to 16 as shown in Figure \ref{fig:running-example-solution}. Then for vertex D, meta information would be [8] as the user checked-in at a restaurant which falls in block number 8. Similarly for vertex G, the meta information would be [5, 6, 7]. Continuing like this, a meta information table for each vertex which are directly connected to a spatial node is populated.
+A complete picture of equally partitioned world would be as shown in the Figure \ref{fig:space-partitioned}. Here the resolution of the division is 10 by 10. That means the entire world is divided into 10 equal sized blocks horizontally and 10 equal sized blocks vertically. In the running example, the entire region is divided into equal sized blocks from 1 to 16 as shown in Figure \ref{fig:running-example-solution}. Then for vertex D, meta information would be [8] as the user checked-in at a venue which falls in block number 8. Similarly for vertex G, the meta information would be [5, 6, 7]. Continuing like this, a meta information table for each vertex which are directly connected to a spatial node is populated.
 
 % \begin{table}[h]
 % 	\caption{1-hop reachability meta table}
@@ -50,7 +50,7 @@ A complete picture of equally partitioned world would be as shown in the Figure 
 % 	\end{center}
 % \end{table}
 
-This is the reachability to restaurants by 1-hop which can answer 1-hop queries. For example, did vertex G check-in at restaurant L1 or did vertex E visit any restaurant in a region L2. The first can be answered by finding its block number using its location and cross-reference it with the list of blocks G can reach from the meta table. More details on answering queries are in the next section.
+This is the reachability to venues by 1-hop which can answer 1-hop queries. For example, did vertex G check-in at venue L1 or did vertex E visit any venue in a region L2. The first can be answered by finding its block number using its location and cross-reference it with the list of blocks G can reach from the meta table. More details on answering queries are in the next section.
 
 If idea of 1-hop reachability is extended to any number of hops, it is multi-hop reachability or simply reachability. These values denote all blocks that are reachable from a vertex in any number of hops/steps. For building multi-hop reachability information, direction of all the edges are reversed or the transpose of a graph is created. Now, for every vertex, its reachability information is appended with meta information of all the vertices it is directly connected to bottom up.
 
@@ -277,7 +277,7 @@ Space complexity would be amount of memory required to store the multi-hop reach
 \subsubsection{Using the social component}
 Social distances between nodes are used to create an additional index to prune the graph even better. This will take care of the cases when the graph is very dense and the spatial index created before may not be of much use for pruning at query time. More details on querying the graph are described in the next section.
 
-The main idea is to select a few nodes in the graph and call them landmarks. Then for each vertex shortest distances to each landmark is stored. Then at query time these precomputed distances and triangle inequality are used to guide as a heuristic in the A* search algorithm. The inspiration is from \cite{AC2005} which introduces a class of algorithms called ALT. The main challenge here however is to find topK paths to a region and not finding the shortest path from a given source to a given destination unlike in \cite{AC2005}.
+The main idea is to select a few nodes in the graph and call them landmarks. Then for each vertex shortest distances to each landmark is stored. Then at query time these precomputed distances and triangle inequality are used to guide as a heuristic in the A* search algorithm. The inspiration is from \cite{AC2005} which introduces a class of algorithms called ALT. The main challenge here however is to find top-k closest vertices to a given vertex in a region and not finding the shortest path from a given source to a given destination unlike in \cite{AC2005}.
 
 The quality of the landmarks determine the pruning power of the index. Choosing the right landmarks requires some domain knowledge of the graph. Once that is picked the process remains the same no matter what the graph represents. \cite{AC2005} talks about multiple ideas on how to find high quality landmarks quickly. The ideal case would be to find as minimum number of landmarks as possible such that every vertex in the graph is connected to at least one of the landmarks.  However leaving out a few vertices that do not reach any landmarks will not hamper the correctness of the algorithm. Therefore finding a sweet spot of number of landmarks which gives the best query performance is crucial and is the main goal of \cite{AC2005}. The main contribution from our side is to use this social index and propose a new heuristic for A* algorithm that finds topK venues satisfying a spatial predicate.
 
@@ -445,7 +445,7 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. All vertices are labelled 
 			\State nearest\_vertices $<<$ v \Comment{add v to set}
 			\State best\_index $\gets$ best\_index + 1
 			\If{nearest\_vertices.length = K}
-				\State \Return \Call{PATHS}{nearest\_vertices}
+				\State \Return nearest\_vertices
 			\EndIf
 			\For{$v \gets Q$} \Comment{Update heuristic for existing in Q}
 				\State $v.key \gets v.d +$ HEURISTIC(u, R, best\_index)
