@@ -312,7 +312,7 @@ Therefore the runtime for this algorithm using a sensible landmark selection alg
 
 Space complexity would be memory taken to store the shortest distances to each reachable vertex for all landmarks. As the number of landmarks is very small compared to the number of vertices in the graph, this would be $O(V)$.
 
-\subsection{Answering RangeReachPaths(G, s, R) queries} \label{querying}
+\subsection{Query Processing} \label{querying}
 
 A modified A* with landmark~\cite{AC2005} algorithm is proposed for answering {\rrp} queries using the GeoReachPaths index. The main goal is to prune as much graph as possible using the spatial index and move in a goal oriented manner towards the region during traversal. The algorithm takes a graph G, a starting vertex s and a query rectangle R as input and returns the top-K vertices by social distance in R in an iterative manner. Being iterative helps pipeline the {\rrp} with other database functions.
 
