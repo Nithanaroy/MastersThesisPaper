@@ -43,6 +43,8 @@ Unless specified each run uses the default parameter values as shown in Table \r
 	    xmode = log,
 	    ymode = log,
 	    legend style={at={(0.03,0.5)},anchor=west},
+	    y label style={at={(axis description cs:0.05,.5)}},
+		legend style={draw=none},
 	    % legend pos=south east,
 	    %xmajorgrids=true,
 	    %ymajorgrids=true,
@@ -275,8 +277,10 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			\begin{axis}[
 			    xlabel={K},
 			    ylabel={Time (s)},
-			    legend pos=south east,
+			    legend pos=north west,
 			    xmode = log,
+			    y label style={at={(axis description cs:0.05,.5)}},
+				legend style={draw=none},
 			    %xmajorgrids=true,
 			    %ymajorgrids=true,
 			    %grid style=dashed,
@@ -320,7 +324,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms using VertexReachAlgo Type 1 and RZ = 100}
-		\caption{Runtime comparison between the types of {\rrp} algorithms using VertexReachAlgo Type 1 and RZ = 625}
+		\caption{VertexReachAlgo Type 1}
 		\label{fig:plot-04}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -328,8 +332,10 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			\begin{axis}[
 			    xlabel={K},
 			    ylabel={Time (s)},
-			    legend pos=south east,
+			    legend pos=north west,
 			    xmode = log,
+			    y label style={at={(axis description cs:0.05,.5)}},
+				legend style={draw=none},
 			    %xmajorgrids=true,
 			    %ymajorgrids=true,
 			    %grid style=dashed,
@@ -373,7 +379,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms using VertexReachAlgo Type 2 and RZ = 100}
-		\caption{Runtime comparison between the types of {\rrp} algorithms using VertexReachAlgo Type 2 and RZ = 625}
+		\caption{VertexReachAlgo Type 2}
 		\label{fig:plot-05}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -381,8 +387,10 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			\begin{axis}[
 			    xlabel={K},
 			    ylabel={Time (s)},
-			    legend pos=south east,
+			    legend pos=north west,
 			    xmode = log,
+			    y label style={at={(axis description cs:0.05,.5)}},
+				legend style={draw=none},
 			    %xmajorgrids=true,
 			    %ymajorgrids=true,
 			    %grid style=dashed,
@@ -426,10 +434,10 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms using VertexReachAlgo Type 3 and RZ = 100}
-		\caption{Runtime comparison between the types of {\rrp} algorithms using VertexReachAlgo Type 3 and RZ = 625}
+		\caption{VertexReachAlgo Type 3}
 		\label{fig:plot-06}
 	\end{subfigure}
-	\caption{Runtime comparison between the types of {\rrp} algorithms for various VertexReachAlgo Types}
+	\caption{Runtime comparison between the types of {\rrp} algorithms for RZ = 625 and various VertexReachAlgo Types}
 \end{figure*}
 
 That is how each of the three LIES\_IN algorithms are implemented. Figures \ref{fig:plot-04}, \ref{fig:plot-05}, \ref{fig:plot-06} clearly show that all perform the same way. However, if on mashing the plots together keeping the K constant, Algorithm of Type 3 outperforms in majority of the cases. This confirms the previous doubt that if the resolution is too high like 3125 by 3125 the overhead in LIES\_IN function overcomes the advantage gained by graph pruning in a dense graph. Now to figure out the sweet spot for right value of RZ, experiments comparing K VS Resolution VS Time for each variant of {\rrp} were studied. 
@@ -450,6 +458,12 @@ That is how each of the three LIES\_IN algorithms are implemented. Figures \ref{
 			    % unit vector ratio=1 1 1,
 			    % x=0.0015cm,
 			    %xticklabels={10, 100, 500, 1000, 5000, 10000}
+			    y label style={font=\large, at={(axis description cs:0.005,.5)}},
+			    x label style={font=\large},
+			    yticklabel style = {font=\large},
+			    xticklabel style = {font=\large},
+			    legend style={font=\large},
+				legend style={draw=none},
 			]
 			 
 			\addplot[
@@ -501,7 +515,7 @@ That is how each of the three LIES\_IN algorithms are implemented. Figures \ref{
 			 
 			\end{axis}
 		\end{tikzpicture}
-		\caption{Runtime comparison between Resolution and K using only SpatialIndex of {\rrp}}
+		\caption{For SpatialIndex of {\rrp}}
 		\label{fig:plot-07}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.23\textwidth}
@@ -517,6 +531,12 @@ That is how each of the three LIES\_IN algorithms are implemented. Figures \ref{
 			    mark size=3pt,
 			    xtick=data,
 			    %xticklabels={10, 100, 500, 1000, 5000, 10000}
+			    y label style={font=\large, at={(axis description cs:0.005,.5)}},
+			    x label style={font=\large},
+			    yticklabel style = {font=\large},
+			    xticklabel style = {font=\large},
+			    legend style={font=\large},
+				legend style={draw=none},
 			]
 			 
 			\addplot[
@@ -568,7 +588,7 @@ That is how each of the three LIES\_IN algorithms are implemented. Figures \ref{
 			 
 			\end{axis}
 		\end{tikzpicture}
-		\caption{Runtime comparison between Resolution and K using both Social+Spatial indices of {\rrp}}
+		\caption{For Social+Spatial indices of {\rrp}}
 		\label{fig:plot-08}
 	\end{subfigure}
 	\caption{Runtime comparison between Resolution and K for different types of {\rrp} algorithms}
@@ -594,7 +614,13 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 			    %grid style=dashed,
 			    mark size=4pt,
 			    xtick=data,
-			    xticklabels={1, 2, 4, 8}
+			    xticklabels={1, 2, 4, 8},
+			    y label style={font=\large, at={(axis description cs:0.005,.5)}},
+			    x label style={font=\large},
+			    yticklabel style = {font=\large},
+			    xticklabel style = {font=\large},
+			    legend style={font=\large},
+				legend style={draw=none},
 			]
 			 
 			% \addplot[
@@ -631,7 +657,7 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms for changes in region size for a source vertex S1}
-		\caption{Runtime comparison between types of {\rrp} algorithms for changes in region size for a source vertex S1}
+		\caption{For source vertex S1}
 		\label{fig:plot-10}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.23\textwidth}
@@ -645,7 +671,14 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 			    %grid style=dashed,
 			    mark size=4pt,
 			    xtick=data,
-			    xticklabels={1, 2, 4, 8}
+			    xticklabels={1, 2, 4, 8},
+			    y label style={font=\large, at={(axis description cs:0.005,.5)}},
+			    x label style={font=\large},
+			    yticklabel style = {font=\large},
+			    xticklabel style = {font=\large},
+			    legend style={font=\large},
+			    x label style={font=\large},
+				legend style={draw=none},
 			]
 			 
 			% \addplot[
@@ -682,10 +715,10 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms for changes in region size for a source vertex S2}
-		\caption{Runtime comparison between the types of {\rrp} algorithms for changes in region size for a source vertex S2}
+		\caption{For source vertex S2}
 		\label{fig:plot-11}
 	\end{subfigure}
-	\caption{Runtime comparison between the types of {\rrp} algorithms for changes in region size for different source vertices}
+	\caption{Runtime comparison between the types of {\rrp} algorithms VS region size for different source vertices}
 	\label{fig:plot1011}
 \end{figure}
 
