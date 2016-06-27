@@ -1,9 +1,6 @@
 \section{Preliminary}
 \label{sec:preliminary}
 
-\newcommand{\Friendof}{\emph{Friend-of}}
-\newcommand{\Like}{\emph{Like}}
-
 % \begin{figure}[h]
 % 	\centering
 % 	\includegraphics[width=0.44\textwidth]{images/a_social_graph.eps}
@@ -15,7 +12,7 @@
 
 \textbf{Path and Shortest Path.} A path is a sequence of vertices and edges that are distinct from one another. A path is denoted as $p =$ ($v_1$, $e_1$,..., $v_{n-1}$, $e_{n-1}$, $v_n$) where $v_i\neq v_j~and~e_i\neq e_j (i\neq j)$. Length of $p$ is denoted as $L(p) = \sum\limits_{i = 1}^{n-1}w(e_i)$. This path starts from vertex $v_1$ to $v_n$. In a GeoSocial graph $G$, given a source vertex $u$ and destination vertex $v$, there can be multiple paths between them. $Paths(u,v) = \{p|p = (u,e_1,..., v)\}$ is to represent the set of all paths that start from $u$ and end at $v$. Then we can have the shortest path between $u$ and $v$ defined as follows. $ShortestPath(u,v)$ is a path that has the shortest $L(p)$ where $p\in Paths(u,v)$.
 
-\textbf{Socially k-Nearest Neighbors with GeoSpatial Range Filter({\query}). } Based on GeoSpatial range filter and social distance, we can define such a new meaningful query:
+\textbf{Socially k-Nearest Neighbors with GeoSpatial Range Filter({\query}).} Based on GeoSpatial range filter and social distance, we can define such a new meaningful query:
 \begin{defn}
 	{\query}(v,R,k) = $\widetilde{V}$ where $\widetilde{V}\subset V_{\sqsubset R}$, $\widetilde{V}$ has n elements, $V_{\sqsubset R} = \{u~|~u_{\sqsubset R}\}$ and $\forall w_1\in \widetilde{V}$, $\forall w_2$ $\in$ $V_{\sqsubset R}$ $-$ $V_{\sqsubset R}$, $ShortestPath(v,w_1)$ $\leqslant ShortestPath(v,w_2)$.
 	%For a set $V_{\sqsubset R}$ consists of all the spatial venues that are located in $R$, {\query}(v,R,k) = \{$u_1$,..., $u_k$\} where $u_i\sqsubset R$ and 
@@ -59,9 +56,13 @@ See Figure \ref{fig:begin-example} to understand the problem better. When a quer
 
 %See Figure \ref{fig:begin-example} to understand the problem better. Let `Bob' be the source vertex, v and R be the region of interest. A, B, ... K vertices have spatial attributes like latitude and longitude information. \{A, B, C, D, E, J\} vertices fall outside the region and so are not returned by {\rrp}. Vertex K falls inside R but cannot be reached from v, so are not returned by {\rrp}. \{F, H, G, I\} vertices satisfy both these conditions as they fall inside the region and are also reachable from v. Therefore, {\rrp} may return shortest paths to them. These paths with rich social information about the relationship with v, can be fed into a recommendation system which can rank them. \textit{RangeReachPaths in a geospatial graph produces K venues in a region ranked by the social distances to the source vertex.}
 
-{\rrp} is compared to state of the art existing solutions namely SocialFirst and SpatialFirst which take a disjointed approach filtering first by social and then spatial or spatial and then social constraints respectively. \textbf{SocialFirst algorithm}, uses the social constraint of K shortest distances first and then checks for spatial predicate. State of the art single source shortest path algorithm traverses the graph greedily from the source vertex until K closest vertices to source in the query region are found. During traversal, every vertex is checked if it falls in the region and the algorithm stops once K vertices are found. As this is a greedy approach which finds vertices in the increasing order of their distances to the source, the first K vertices found in the region are the closest ones.
+There are two state of the art solutions namely {\socialfirst} and {\spatialfirst}, which take a disjointed approach filtering first by social and then spatial or spatial and then social constraints respectively. 
 
-In the \textbf{SpatialFirst algorithm}, vertices in the given region R are first filterted and shortest distances to each are found. After sorting them in ascending by distance from the source, first K are picked. For filtering the vertices in R, state of the art spatial index, r-tree, is used and for finding the shortest distance from the source vertex to each vertex in the region, state of the art A* with landmark algorithm~\cite{AC2005} is used. This algorithm finds the shortest path between two vertices using precomputed landmarks like explained in algorithm \ref{alg2}. The closest K vertices based on distances returned by A* with landmark algorithm are picked. 
+\textbf{SocialFirst algorithm.} Such approach uses the social constraint of K shortest distances first and then checks for spatial predicate. State of the art single source shortest path algorithm traverses the graph greedily from the source vertex until K closest vertices to source in the query region are found. During traversal, every vertex is checked if it falls in the region and the algorithm stops once K vertices are found. As this is a greedy approach which finds vertices in the increasing order of their distances to the source, the first K vertices found in the region are the closest ones.
+
+%{\rrp} is compared to state of the art existing solutions namely SocialFirst and SpatialFirst which take a disjointed approach filtering first by social and then spatial or spatial and then social constraints respectively. \textbf{SocialFirst algorithm}, uses the social constraint of K shortest distances first and then checks for spatial predicate. State of the art single source shortest path algorithm traverses the graph greedily from the source vertex until K closest vertices to source in the query region are found. During traversal, every vertex is checked if it falls in the region and the algorithm stops once K vertices are found. As this is a greedy approach which finds vertices in the increasing order of their distances to the source, the first K vertices found in the region are the closest ones.
+
+\textbf{SpatialFirst algorithm. } Vertices in the given region R are first filterted and shortest distances to each are found. After sorting them in ascending by distance from the source, first K are picked. For filtering the vertices in R, state of the art spatial index, r-tree, is used and for finding the shortest distance from the source vertex to each vertex in the region, state of the art A* with landmark algorithm~\cite{AC2005} is used. This algorithm finds the shortest path between two vertices using precomputed landmarks like explained in algorithm \ref{alg2}. The closest K vertices based on distances returned by A* with landmark algorithm are picked. 
 
 % In the preprocessing stage for this algorithm:
 % \begin{itemize}
