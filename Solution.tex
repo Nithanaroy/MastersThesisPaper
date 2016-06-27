@@ -137,12 +137,12 @@ If $C$ in condensed graph $G'$ can reach a set of regions $R$, then any vertex o
 Therefore, meta information of $C =$ meta information of $\forall v \in C$
 \end{proof}
 
-Then a R-Tree is also constructed using the spatial nodes in the graph. This will later be used at query time to filter the exact nodes in a region and will be discussed in more details in section \ref{querying}. These are the two indices created on the spatial component of the graph. For clarity, spatial index always means GeoReachPaths-spatial in the rest of the paper as discussed in algorithm \ref{alg1} next.
+Then a R-Tree is also constructed using the spatial nodes in the graph. This will later be used at query time to filter the exact nodes in a region and will be discussed in more details in section \ref{querying}. These are the two indices created on the spatial component of the graph. For clarity, spatial index always means {\grpspatial} in the rest of the paper as discussed in algorithm \ref{alg1} next.
 
-Algorithm \ref{alg1} shows how the index, GeoReachPaths-spatial is created. In the first phase block numbers of all spatial vertices are added as the meta information of the vertices they are connected from. Then a modified DFS is used to construct multi hop reachability. The REGION() method returns the block number for any spatial vertex. The REPARTITION() method ensures the M constraint by recursively increasing the resolution by a factor of RF. In the DFS() method meta information is recursively appended to the head vertex from the tail vertex.
+Algorithm \ref{alg1} shows how the index, {\grpspatial} is created. In the first phase block numbers of all spatial vertices are added as the meta information of the vertices they are connected from. Then a modified DFS is used to construct multi hop reachability. The REGION() method returns the block number for any spatial vertex. The REPARTITION() method ensures the M constraint by recursively increasing the resolution by a factor of RF. In the DFS() method meta information is recursively appended to the head vertex from the tail vertex.
 
 % \begin{algorithm*}[h]
-% \caption{GeoReachPaths - spatial}
+% \caption{{\grpspatial}}
 % \label{alg1}
 % \begin{multicols}{2}
 % \begin{algorithmic}[1]
@@ -153,7 +153,7 @@ Algorithm \ref{alg1} shows how the index, GeoReachPaths-spatial is created. In t
 % \State $DEFAULT\_RES \gets 10$ \Comment{Can be any positive integer}
 % \State $AVAILABLE\_RES \gets [DEFAULT\_RES]$
 % \State
-% \Function{GeoReachPaths-Spatial}{$G, RF, M$}
+% \Function{{\grpspatial}}{$G, RF, M$}
 %   \State $G' \gets DAG(G)$
 %   \For{$v \gets G'.v:$}
 %   	\State $v.meta \gets Set([])$   	\Comment{Initialize an empty set}
@@ -212,11 +212,11 @@ Algorithm \ref{alg1} shows how the index, GeoReachPaths-spatial is created. In t
 % \end{algorithm*}
 
 \begin{algorithm}[t]
-\caption{GeoReachPaths - spatial}
+\caption{{\grpspatial}}
 \begin{scriptsize}
 \label{alg1}
 \begin{algorithmic}[1]
-\Function{GeoReachPaths-Spatial}{$G, RF, M$}
+\Function{{\grpspatial}}{$G, RF, M$}
   \State G' $\gets$ G.condense() \label{alg:condense}
   \For{v $\gets$ G.V} \Comment{1\-hop spatial reachability} \label{alg:onehopstart}
 	  \For{u $\gets$ spatial(G'.Adj(v))}	 
@@ -268,7 +268,7 @@ To compute the asymptotic run time and space complexities for algorithm \ref{alg
   And repartition function is called exactly twice for each vertex, once during 1-hop reachability and once during DFS. Therefore, the time complexity due to this function would be $O(V \times {\log_{\dfrac{1}{RF}} (\dfrac{M}{c})})$. This fraction is very small compared to sum of vertices and edges in the graph.
 \end{itemize}
 
-All the other lines in the algorithm can be computed in constant time. The runtime of GeoReachPaths - spatial would hence be $O(V + E)$.
+All the other lines in the algorithm can be computed in constant time. The runtime of {\grpspatial} would hence be $O(V + E)$.
 
 Space complexity would be amount of memory required to store the multi-hop reachability table. Each index entry has an upper bound of $M$. Hence memory consumption in the worst case would be, $O(V \times M)$.
 
@@ -279,15 +279,15 @@ The main idea is to select a few nodes in the graph and call them landmarks. The
 
 The quality of the landmarks determine the pruning power of the index. Choosing the right landmarks requires some domain knowledge of the graph. Once that is picked the process remains the same no matter what the graph represents. \cite{AC2005} talks about multiple ideas on how to find high quality landmarks quickly. The ideal case would be to find as minimum number of landmarks as possible such that every vertex in the graph is connected to at least one of the landmarks.  However leaving out a few vertices that do not reach any landmarks will not hamper the correctness of the algorithm. Therefore finding a sweet spot of number of landmarks which gives the best query performance is crucial and is the main goal of \cite{AC2005}. The main contribution from our side is to use this social index and propose a new heuristic for A* algorithm that finds topK venues satisfying a spatial predicate.
 
-Algorithm \ref{alg2}, GeoReachPaths-Social, describes how to create an index using landmarks. Landmark selection function on line 2 can be any of the functions described in \cite{AC2005}. Then for each landmark the shortest distances is computed using any well-known single source shortest path algorithms like Dijkstra's or Bellman Ford to every vertex reachable from that landmark. Please note that distances from the landmark to every vertex are saved and not the other way around. The direction is important as directed graphs are only dealt here.
+Algorithm \ref{alg2}, {\grpsocial}, describes how to create an index using landmarks. Landmark selection function on line 2 can be any of the functions described in \cite{AC2005}. Then for each landmark the shortest distances is computed using any well-known single source shortest path algorithms like Dijkstra's or Bellman Ford to every vertex reachable from that landmark. Please note that distances from the landmark to every vertex are saved and not the other way around. The direction is important as directed graphs are only dealt here.
 
 \begin{algorithm}[t]
-\caption{GeoReachPaths - social}
+\caption{{\grpsocial}}
 \begin{scriptsize}
 \label{alg2}
 \begin{algorithmic}[1]
 
-\Function{GeoReachPaths-Social}{$G$}
+\Function{{\grpsocial}}{$G$}
   \State L $\gets$ FIND\_LANDMARKS(G) \Comment{Domain based}
   \State social\_index $\gets$ []
   \For{l $\gets$ L}
@@ -314,11 +314,11 @@ Space complexity would be memory taken to store the shortest distances to each r
 
 \subsection{Query Processing} \label{querying}
 
-A modified A* with landmark~\cite{AC2005} algorithm is proposed for answering {\rrp} queries using the GeoReachPaths index. The main goal is to prune as much graph as possible using the spatial index and move in a goal oriented manner towards the region during traversal. The algorithm takes a graph G, a starting vertex s and a query rectangle R as input and returns the top-K vertices by social distance in R in an iterative manner. Being iterative helps pipeline the {\rrp} with other database functions.
+A modified A* with landmark~\cite{AC2005} algorithm is proposed for answering {\rrp} queries using the {\grp} index. The main goal is to prune as much graph as possible using the spatial index and move in a goal oriented manner towards the region during traversal. The algorithm takes a graph G, a starting vertex s and a query rectangle R as input and returns the top-K vertices by social distance in R in an iterative manner. Being iterative helps pipeline the {\rrp} with other database functions.
 
-The crux of A* algorithm is the heuristic function. Our heuristic function takes a vertex and a region and returns the heuristic distance which will be used by A* to decide which path to traverse. In order to design such heuristic function GeoReachPaths-social index is used explained in algorithm \ref{alg3}. For this the triangle inequality property is used to get a lower bound on the distance between any two vertices.
+The crux of A* algorithm is the heuristic function. Our heuristic function takes a vertex and a region and returns the heuristic distance which will be used by A* to decide which path to traverse. In order to design such heuristic function {\grpsocial} index is used explained in algorithm \ref{alg3}. For this the triangle inequality property is used to get a lower bound on the distance between any two vertices.
 
-In Figure \ref{fig:tri-ine}, say $H$ and $R$ vertices need a lower bound on the distance between them. For this, the distances saved w.r.t. each landmark, here $G$ as part of social GeoReachPaths index is used. So in the figure using the index the distances \textbf{u} and \textbf{v} are known. In order to find \textbf{x} which is the distance between $H$ and $X$ \textbf{u} is subtracted from \textbf{v}. Therefor the value of \textbf{x} shown in the figure would be $\textbf{v} - \textbf{u}$ which directly follows from vector addition. This is only a lower bound on the distance from $H$ to $X$ and is proved in \cite{AC2005}.
+In Figure \ref{fig:tri-ine}, say $H$ and $R$ vertices need a lower bound on the distance between them. For this, the distances saved w.r.t. each landmark, here $G$ as part of social {\grp} index is used. So in the figure using the index the distances \textbf{u} and \textbf{v} are known. In order to find \textbf{x} which is the distance between $H$ and $X$ \textbf{u} is subtracted from \textbf{v}. Therefor the value of \textbf{x} shown in the figure would be $\textbf{v} - \textbf{u}$ which directly follows from vector addition. This is only a lower bound on the distance from $H$ to $X$ and is proved in \cite{AC2005}.
 
 In our case a lower bound from a vertex to a region is needed. In order to understand how this is done, recap the problem definition - find top-k closest vertices (w.r.t social distances) in a region from a vertex in a graph. To understand better, set K = 1, i.e. say the nearest vertex in the R from a source vertex is needed and say only one landmark is present. Now, for A* to work efficiently, a lower bound as tight as possible is needed, else the traversal would touch as many vertices as Dijkstra's. Let the source vertex be $H$, landmark be $G$ and region exactly enclosing blocks 5 and 6 in the Figure \ref{fig:tri-ine}. The problem now becomes finding the closest vertex to $H$ in the region. To get a lower bound for $\textbf{x}$, the triangle inequality formula devised above, $\textbf{v} - \textbf{u}$ is used. In order to keep $\textbf{x}$ minimum, $\textbf{v}$ should be as small as possible. Therefore the closest vertex in R to $G$ is picked. Similarly for the second closest vertex the second nearest vertex to $G$ in R is chosen. The algorithm proceeds this way till the nearest K vertices in R are found. If multiple landmarks are present, a value of \textbf{x} for each landmark is produced. The maximum value of \textbf{x} is picked to get the tightest bound possible and this follows from efficiency of A* algorithm.
 
