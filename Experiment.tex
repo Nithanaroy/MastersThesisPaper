@@ -252,7 +252,7 @@ Though using either of the indices beat SocialFirst and of course SpatialFirst a
   \item Graph is very dense that most of the vertices can reach the region, making spatial index only an overhead
 \end{itemize}
 
-However, as the value of K increases, using both the indices certainly helps as un-necessary graph traversals are further reduced by spatial index. This is clearer in a later experiment when the quality of the landmark is not as good as this case. A very low resolution of 25 by 25 was used above. So how the runtimes change when we increase it by 125 times is studied next.
+However, as the value of K increases, using both the indices certainly helps as un-necessary graph traversals are further reduced by spatial index. This is clearer in a later experiment when the quality of the landmark is not as good as this case. A very low resolution of 25 by 25 was used above. So how the runtimes change when it is increased by 125 times is studied next.
 
 Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} and {\rrpsocial} indices further increases when resolution (RZ) is set to 3125. The function LIES\_IN which checks whether a vertex can reach a region using spatial index takes longer when size of the index entry increases for a given vertex. To totally confirm that this is the case, LIES\_IN was implemented in two more ways which were equivalent w.r.t. runtime but cash on \textit{tiny} advantages based on the size of R and size of spatial index. This is exactly the same parameter VertexReachesAlgo in Table \ref{tab:default-param}. This is how each algorithm is implemented:
 \begin{itemize}
@@ -681,4 +681,4 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 	\label{fig:plot1011}
 \end{figure}
 
-Figure \ref{fig:plot-10} shows how in every algorithm the time taken linearly increase w.r.t. the size of the region. In Figure \ref{fig:plot1011}, in both the cases users near the source vertex have many check-ins in the given regions and so the spatial index performs worse initially due to its overhead but gradually performs better. The gap further reduces when we a user whose social neighbors do not have many check-ins in the query regions was chosen. Due to this algorithm has to traverse the social graph further down to find the result as shown in Figure \ref{fig:plot-11}.
+Figure \ref{fig:plot-10} shows how in every algorithm the time taken linearly increase w.r.t. the size of the region. In Figure \ref{fig:plot1011}, in both the cases users near the source vertex have many check-ins in the given regions and so the spatial index performs worse initially due to its overhead but gradually performs better. The gap further reduces when a user whose social neighbors do not have many check-ins in the query regions was chosen. Due to this algorithm has to traverse the social graph further down to find the result as shown in Figure \ref{fig:plot-11}.
