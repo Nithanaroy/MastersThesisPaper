@@ -12,7 +12,7 @@ The closest vertices returned by {\rrp} are fed into a web application which vis
     \label{fig:web-app}
 \end{figure}
 
-Unless specified each run uses the default parameter values as shown in Table \ref{tab:default-param}. Parameter K is the shorthand for top-k, i.e. any query requests 100 closest vertices by default. RZ is the shorthand for resolution which determines the number of blocks the world is divided into. RZ $\gets$ 125 implies that the world is equally into 125 by 125 blocks along latitudes and longitudes. \textit{VertexReachesAlgo} parameter defines how line~\ref{alg:liesin} of algorithm \ref{alg4} is implemented. Throughout this section, it is referred as LIES\_IN. Three implementations which check whether the query region R overlaps with regions reachable from a vertex were used and will be described near those experiments. M and RF are the same parameters described before as the maximum allowed size of a GeoReachSpatial-index entry for a vertex and reduction factor between levels of the GeoReachSpatial-index respectively.
+Unless specified each run uses the default parameter values as shown in Table \ref{tab:default-param}. Parameter K is the shorthand for top-k, i.e. any query requests 100 closest vertices by default. RZ is the shorthand for resolution which determines the number of blocks the world is divided into. RZ $\gets$ 125 implies that the world is equally into 125 by 125 blocks along latitudes and longitudes. \textit{{\vra}} parameter defines how line~\ref{alg:liesin} of algorithm \ref{alg4} is implemented. Throughout this section, it is referred as LIES\_IN. Three implementations which check whether the query region R overlaps with regions reachable from a vertex were used and will be described near those experiments. M and RF are the same parameters described before as the maximum allowed size of a GeoReachSpatial-index entry for a vertex and reduction factor between levels of the GeoReachSpatial-index respectively.
 
 \begin{table}[h]
 	\caption{Default parameter values}
@@ -27,7 +27,7 @@ Unless specified each run uses the default parameter values as shown in Table \r
 			K & 100 & 10, 100, 1000, 10000 \\
 			% RZ & 100 & 10, 100, 500, 1000, 5000 \\
 			RZ & 125 & 25, 125, 625, 3125 \\
-			VertexReachesAlgo & Type 3 & Type 1, Type 2, Type 3 \\
+			{\vra} & Type 3 & Type 1, Type 2, Type 3 \\
 			M & 10K & - \\
 			RF & 4 & - \\
 			\hline
@@ -264,7 +264,7 @@ Though using either of the indices beat SocialFirst and of course SpatialFirst a
 
 However, as the value of K increases, using both the indices certainly helps as un-necessary graph traversals are further reduced by spatial index. This is clearer in a later experiment when the quality of the landmark is not as good as this case. A very low resolution of 25 by 25 was used above. So how the runtimes change when we increase it by 125 times is studied next.
 
-Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} and {\rrpsocial} indices further increases when resolution (RZ) is set to 3125. The function LIES\_IN which checks whether a vertex can reach a region using spatial index takes longer when size of the index entry increases for a given vertex. To totally confirm that this is the case, LIES\_IN was implemented in two more ways which were equivalent w.r.t. runtime but cash on \textit{tiny} advantages based on the size of R and size of spatial index. This is exactly the same parameter VertexReachesAlgo in Table \ref{tab:default-param}. This is how each algorithm is implemented:
+Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} and {\rrpsocial} indices further increases when resolution (RZ) is set to 3125. The function LIES\_IN which checks whether a vertex can reach a region using spatial index takes longer when size of the index entry increases for a given vertex. To totally confirm that this is the case, LIES\_IN was implemented in two more ways which were equivalent w.r.t. runtime but cash on \textit{tiny} advantages based on the size of R and size of spatial index. This is exactly the same parameter {\vra} in Table \ref{tab:default-param}. This is how each algorithm is implemented:
 \begin{itemize}
   \item \textbf{Type 1}: In this axes transformation technique was used to check if a vertex reaches a region. The axes were transformed such that the southwest corner of the region in the query, is set as origin (0,0). Then for checking if a vertex reaches this region, spatial index entry for the vertex is queried. Then each block number, that the vertex can reach as per spatial index, is transformed into the new co-ordinate system. Then using this transformed 2D block number, a simple comparison of the block with all four corners of the region was used.
   \item \textbf{Type 2}: In this, region (R) in the query is enumerated to block numbers for as many levels as there in the spatial index. Then to check if a vertex reaches this region, each block number from the spatial index for the vertex, are probed with the enumerated region (R). This probing can be done in constant time if blocks reachable by a vertex are stored in a HashSet. This approach performs better than Type 1 if region is really small as the overhead of transforming into a new co-ordinate system is avoided.
@@ -323,7 +323,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			 
 			\end{axis}
 		\end{tikzpicture}
-		\caption{VertexReachAlgo Type 1}
+		\caption{{\vra} Type 1}
 		\label{fig:plot-04}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -377,8 +377,8 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			 
 			\end{axis}
 		\end{tikzpicture}
-		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms using VertexReachAlgo Type 2 and RZ = 100}
-		\caption{VertexReachAlgo Type 2}
+		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms using {\vra} Type 2 and RZ = 100}
+		\caption{{\vra} Type 2}
 		\label{fig:plot-05}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -432,11 +432,11 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			 
 			\end{axis}
 		\end{tikzpicture}
-		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms using VertexReachAlgo Type 3 and RZ = 100}
-		\caption{VertexReachAlgo Type 3}
+		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms using {\vra} Type 3 and RZ = 100}
+		\caption{{\vra} Type 3}
 		\label{fig:plot-06}
 	\end{subfigure}
-	\caption{Runtime comparison between the types of {\rrp} algorithms for RZ = 625 and various VertexReachAlgo Types}
+	\caption{Runtime comparison between the types of {\rrp} algorithms for RZ = 625 and various {\vra} Types}
 \end{figure*}
 
 That is how each of the three LIES\_IN algorithms are implemented. Figures \ref{fig:plot-04}, \ref{fig:plot-05}, \ref{fig:plot-06} clearly show that all perform the same way. However, if on mashing the plots together keeping the K constant, Algorithm of Type 3 outperforms in majority of the cases. This confirms the previous doubt that if the resolution is too high like 3125 by 3125 the overhead in LIES\_IN function overcomes the advantage gained by graph pruning in a dense graph. Now to figure out the sweet spot for right value of RZ, experiments comparing K VS Resolution VS Time for each variant of {\rrp} were studied. 
