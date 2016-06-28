@@ -12,9 +12,9 @@
 
 \textbf{Path and Shortest Path.} A path is a sequence of vertices and edges that are distinct from one another. A path is denoted as $p =$ ($v_1$, $e_1$,..., $v_{n-1}$, $e_{n-1}$, $v_n$) where $v_i\neq v_j~and~e_i\neq e_j (i\neq j)$. Length of $p$ is denoted as $L(p) = \sum\limits_{i = 1}^{n-1}w(e_i)$. This path starts from vertex $v_1$ to $v_n$. In a GeoSocial graph $G$, given a source vertex $u$ and destination vertex $v$, there can be multiple paths between them. $Paths(u,v) = \{p|p = (u,e_1,..., v)\}$ is to represent the set of all paths that start from $u$ and end at $v$. Then we can have the shortest path between $u$ and $v$ defined as follows. $ShortestPath(u,v)$ is a path that has the shortest $L(p)$ where $p\in Paths(u,v)$.
 
-\textbf{Socially k-Nearest Neighbors with GeoSpatial Range Filter({\query}).} Based on GeoSpatial range filter and social distance, we can define such a new meaningful query:
+\textbf{Socially k-Nearest Neighbors with GeoSpatial Range Filter({\query}).} Based on GeoSpatial range filter and social distance, we can define such a new meaningful query(we use $v\sqsubset R$ if a vertex $v$ is located in a region $R$):
 \begin{defn}
-	{\query}(v,R,k) = $\widetilde{V}$ where $\widetilde{V}\subset V_{\sqsubset R}$, $\widetilde{V}$ has n elements, $V_{\sqsubset R} = \{u~|~u_{\sqsubset R}\}$ and $\forall w_1\in \widetilde{V}$, $\forall w_2$ $\in$ $V_{\sqsubset R}$ $-$ $V_{\sqsubset R}$, $ShortestPath(v,w_1)$ $\leqslant ShortestPath(v,w_2)$.
+	{\query}(v,R,k) = $\widetilde{V}$ where $\widetilde{V}\subset V_{\sqsubset R}$, $\widetilde{V}$ has n elements, $V_{\sqsubset R} = \{u~|~u\sqsubset R\}$ and $\forall w_1\in \widetilde{V}$, $\forall w_2$ $\in$ $V_{\sqsubset R}$ $-$ $\widetilde{V}$, $ShortestPath(v,w_1)$ $\leqslant ShortestPath(v,w_2)$.
 	%For a set $V_{\sqsubset R}$ consists of all the spatial venues that are located in $R$, {\query}(v,R,k) = \{$u_1$,..., $u_k$\} where $u_i\sqsubset R$ and 
 \end{defn}
 

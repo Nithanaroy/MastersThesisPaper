@@ -27,7 +27,7 @@ Social meta information/index is created using the social distances (edge weight
     \label{fig:space-partitioned}
 \end{figure}
 
-A complete picture of equally space partitioned world would be as shown in the Figure \ref{fig:space-partitioned}. Here the resolution of the division is 10 by 10. That means the entire world is divided into 10 equal sized blocks horizontally and 10 equal sized blocks vertically. In the running example, the entire region is divided into equal sized blocks from 1 to 16 as shown in Figure \ref{fig:running-example-solution}. Then for vertex D, meta information would be [8] as the user checked-in at a venue which falls in block number 8. Similarly for vertex G, the meta information would be [5, 6, 7]. Continuing like this, a meta information table for each vertex which are directly connected to a spatial node is populated.
+A complete picture of equally space partitioned world would be as shown in the Figure~\ref{fig:space-partitioned}. Here the resolution of the division is 10 by 10. That means the entire world is divided into 10 equal sized blocks horizontally and 10 equal sized blocks vertically. In the running example, the entire region is divided into equal sized blocks from 1 to 16 as shown in Figure \ref{fig:running-example-solution}. Then for vertex D, meta information would be [8] as the user checked-in at a venue which falls in block number 8. Similarly for vertex G, the meta information would be [5, 6, 7]. Continuing like this, a meta information table for each vertex which are directly connected to a spatial node is populated.
 
 % \begin{table}[h]
 % 	\caption{1-hop reachability meta table}
@@ -137,7 +137,7 @@ If $C$ in condensed graph $G'$ can reach a set of regions $R$, then any vertex o
 Therefore, meta information of $C =$ meta information of $\forall v \in C$
 \end{proof}
 
-Then a R-Tree is also constructed using the spatial nodes in the graph. This will later be used at query time to filter the exact nodes in a region and will be discussed in more details in section \ref{querying}. These are the two indices created on the spatial component of the graph. For clarity, spatial index always means {\grpspatial} in the rest of the paper as discussed in algorithm \ref{alg1} next.
+Then a R-Tree is also constructed using the spatial nodes in the graph. This will later be used at query time to filter the exact nodes in a region and will be discussed in more details in section \ref{querying}. These are the two indices created on the spatial component of the graph. For clarity, spatial index always means {\grpspatial} in the rest of the paper as discussed in Algorithm \ref{alg1} next.
 
 Algorithm \ref{alg1} shows how the index, {\grpspatial} is created. In the first phase block numbers of all spatial vertices are added as the meta information of the vertices they are connected from. Then a modified DFS is used to construct multi hop reachability. The REGION() method returns the block number for any spatial vertex. The REPARTITION() method ensures the M constraint by recursively increasing the resolution by a factor of RF. In the DFS() method meta information is recursively appended to the head vertex from the tail vertex.
 
@@ -250,7 +250,7 @@ Algorithm \ref{alg1} shows how the index, {\grpspatial} is created. In the first
 \end{scriptsize}
 \end{algorithm}
 
-To compute the asymptotic run time and space complexities for algorithm \ref{alg1}, it is divided into four pieces - graph condensation, reachability and repartition function. The runtime for each would be as follows,
+To compute the asymptotic run time and space complexities for Algorithm \ref{alg1}, it is divided into four pieces - graph condensation, reachability and repartition function. The runtime for each would be as follows,
 \begin{itemize}
 
   \item \textbf{Graph Condensation}: On line~\ref{alg:condense}, the input graph is condensed into its strongly connected components. Using a popular algorithm like Targan's Algorithm, the runtime would be $O(V + E)$~\cite{R1972}.
@@ -507,11 +507,11 @@ Algorithm \ref{alg3} shows {\rrp} in detail. All vertices are labelled as unvisi
 \end{scriptsize}
 \end{algorithm}
 
-Algorithm \ref{alg3} answers socio-spatial queries using modified A* with landmark algorithm and its complexity depends on the quality of the heuristic function. So rather than one value for asymptotic runtime two extremes are obtained. The algorithm can be divided into three pieces - the Q, heuristic function and vertex visit (which is written as a subroutine as algorithm \ref{alg4}). The runtime for each is as follows,
+Algorithm \ref{alg3} answers socio-spatial queries using modified A* with landmark algorithm and its complexity depends on the quality of the heuristic function. So rather than one value for asymptotic runtime two extremes are obtained. The algorithm can be divided into three pieces - the Q, heuristic function and vertex visit (which is written as a subroutine as Algorithm \ref{alg4}). The runtime for each is as follows,
 
 \begin{itemize}
 
-	\item \textbf{the Q and Vertex visit}: Lines~\ref{alg:theqstart} to~\ref{alg:theqend} of algorithm \ref{alg3} detail the priority queue's role (viz. keyed by actual distance + heuristic distance). Algorithm \ref{alg4} details what happens at every vertex that is not yet visited. The number of times the Q loop executes depends on the way heuristic guides the algorithm. In the best case, it is always on the right path to the current shortest distance and so the run time would $O(n)$, where $n$ is the length of the path. As K such paths are needed, the complexity would become, $O(K \times n)$. In the worst case, the heuristic always picks the wrong path and the algorithm works like a Dijkstra's or a BFS. In such a case, the complexity would be $O(V + E)$ for finding any number of shortest paths since the entire graph is traversed once.
+	\item \textbf{the Q and Vertex visit}: Lines~\ref{alg:theqstart} to~\ref{alg:theqend} of Algorithm \ref{alg3} detail the priority queue's role (viz. keyed by actual distance + heuristic distance). Algorithm \ref{alg4} details what happens at every vertex that is not yet visited. The number of times the Q loop executes depends on the way heuristic guides the algorithm. In the best case, it is always on the right path to the current shortest distance and so the run time would $O(n)$, where $n$ is the length of the path. As K such paths are needed, the complexity would become, $O(K \times n)$. In the worst case, the heuristic always picks the wrong path and the algorithm works like a Dijkstra's or a BFS. In such a case, the complexity would be $O(V + E)$ for finding any number of shortest paths since the entire graph is traversed once.
 
 	\item \textbf{the Heuristic}: Here all vertices that fall in the region of interest, R are filtered. If properly implemented this can be done only once per query. Its complexity would be $O(\log_m (V))$ where $m$ is the number of nodes/vertices per memory page (fan out of a tree). Then the maximum of all closest distances to all landmarks if found. This is nothing but finding the K smallest elements in an array, as the number of landmarks are constant. Its complexity would be $O(K + (V-K)\log K)$. So the total complexity would be $O(\log_m (V)) + O(K + (V-K)\log K)$ where $m$ is the number of nodes/vertices per memory page (fan out of a tree).
 \end{itemize}
