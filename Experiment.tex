@@ -12,7 +12,7 @@ The closest vertices returned by {\rrp} are fed into a web application which vis
     \label{fig:web-app}
 \end{figure}
 
-Unless specified each run uses the default parameter values as shown in Table \ref{tab:default-param}. Parameter K is the shorthand for top-k, i.e. any query requests 100 closest vertices by default. RZ is the shorthand for resolution which determines the number of blocks the world is divided into. RZ $\gets$ 125 implies that the world is equally into 125 by 125 blocks along latitudes and longitudes. \textit{{\vra}} parameter defines how line~\ref{alg:liesin} of algorithm \ref{alg4} is implemented. Throughout this section, it is referred as LIES\_IN. Three implementations which check whether the query region R overlaps with regions reachable from a vertex were used and will be described near those experiments. M and RF are the same parameters described before as the maximum allowed size of a {\rrpspatial} entry for a vertex and reduction factor between levels of the {\rrpspatial} respectively.
+Unless specified each run uses the default parameter values as shown in Table \ref{tab:default-param}. Parameter K is the shorthand for top-k, i.e. any query requests 100 closest vertices by default. RZ is the shorthand for resolution which determines the number of blocks the world is divided into. RZ $\gets$ 125 implies that the world is equally into 125 by 125 blocks along latitudes and longitudes. \textit{{\vra}} parameter defines how Line~\ref{alg:liesin} of Algorithm \ref{alg4} is implemented. Throughout this section, it is referred as LIES\_IN. Three implementations which check whether the query region R overlaps with regions reachable from a vertex were used and will be described near those experiments. M and RF are the same parameters described before as the maximum allowed size of a {\rrpspatial} entry for a vertex and reduction factor between levels of the {\rrpspatial} respectively.
 
 \begin{table}[h]
 	\caption{Default parameter values}
@@ -263,7 +263,7 @@ That is where the SocialFirst algorithm shines. It totally takes a disconnected 
 	\caption{Runtime comparison between the types of {\rrp} algorithms for different resolutions}
 \end{figure*}
 
-So the Figure \ref{fig:plot-02} breaks down the components of {\rrp} into {\rrpspatial}, {\rrpsocial} and Both (marked as {\rrp} in the plot's legend). {\rrpspatial} uses only the Spatial index while traversing the graph. As using only {\rrpspatial} index, a heuristic function cannot be built, modified Dijkstra's is used with one extra condition. In Dijkstra's, before adding any vertex to the priority queue, it is verified whether it can reach the given region R using the spatial index. So the sub graphs which cannot reach the region are pruned early using the index. Similarly, {\rrpsocial} uses only the social index for finding the K closest vertices to the source. For this, the algorithm is exactly like algorithm \ref{alg3} except the condition on line~\ref{alg:liesin} of algorithm \ref{alg4} would always return \textbf{false}. This indirectly means spatial index is never used.
+So the Figure \ref{fig:plot-02} breaks down the components of {\rrp} into {\rrpspatial}, {\rrpsocial} and Both (marked as {\rrp} in the plot's legend). {\rrpspatial} uses only the Spatial index while traversing the graph. As using only {\rrpspatial} index, a heuristic function cannot be built, modified Dijkstra's is used with one extra condition. In Dijkstra's, before adding any vertex to the priority queue, it is verified whether it can reach the given region R using the spatial index. So the sub graphs which cannot reach the region are pruned early using the index. Similarly, {\rrpsocial} uses only the social index for finding the K closest vertices to the source. For this, the algorithm is exactly like Algorithm \ref{alg3} except the condition on Line~\ref{alg:liesin} of Algorithm \ref{alg4} would always return \textbf{false}. This indirectly means spatial index is never used.
 
 Though using either of the indices beat SocialFirst and of course SpatialFirst algorithms, it can be clearly seen that using {\rrpsocial} index outperforms others for smaller K in this case. To understand why it is so, revisit the heuristic algorithm of {\rrp}. The heuristic function uses the Social index with landmark(s). Combined with triangle inequality a lower bound on the distance between the source vertex and a destination vertex in the region is computed. Higher the lower bound, better is the pruning power of {\rrp}. As discussed the quality of landmark(s) plays an important role in the performance. So here using the spatial index only adds the overhead by querying that index, therefore the curve using both the indices slightly underperforms initially. But as K increases, the heuristic’s bound weakens as \textbf{v} in Figure \ref{fig:tri-ine} is no longer small compared to \textbf{u}. At the same time, spatial index helps {\rrp} to make better decisions whenever social index fails. The bottom line, using social index gives better results when:
 \begin{itemize}
@@ -532,7 +532,7 @@ That is how each of the three LIES\_IN algorithms are implemented. Figures \ref{
 			 
 			\end{axis}
 		\end{tikzpicture}
-		\caption{For SpatialIndex of {\rrp}}
+		\caption{{\rrpspatial}}
 		\label{fig:plot-07}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.23\textwidth}
@@ -605,7 +605,7 @@ That is how each of the three LIES\_IN algorithms are implemented. Figures \ref{
 			 
 			\end{axis}
 		\end{tikzpicture}
-		\caption{For Social+Spatial indices of {\rrp}}
+		\caption{{\rrp}}
 		\label{fig:plot-08}
 	\end{subfigure}
 	\caption{Runtime comparison between Resolution and K for different types of {\rrp} algorithms}
@@ -674,7 +674,7 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms for changes in region size for a source vertex S1}
-		\caption{For source vertex S1}
+		\caption{source vertex S1}
 		\label{fig:plot-10}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.23\textwidth}
@@ -732,10 +732,10 @@ Figure \ref{fig:plot-09} proves why just having a social index wont help like be
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms for changes in region size for a source vertex S2}
-		\caption{For source vertex S2}
+		\caption{source vertex S2}
 		\label{fig:plot-11}
 	\end{subfigure}
-	\caption{Runtime comparison between the types of {\rrp} algorithms VS region size for different source vertices}
+	\caption{Runtime comparison between the types of {\rrp} algorithms and region size for different source vertices}
 	\label{fig:plot1011}
 \end{figure}
 
