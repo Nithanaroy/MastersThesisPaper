@@ -62,7 +62,7 @@ There are two state of the art solutions namely {\socialfirst} and {\spatialfirs
 
 %{\rrp} is compared to state of the art existing solutions namely SocialFirst and SpatialFirst which take a disjointed approach filtering first by social and then spatial or spatial and then social constraints respectively. \textbf{SocialFirst algorithm}, uses the social constraint of K shortest distances first and then checks for spatial predicate. State of the art single source shortest path algorithm traverses the graph greedily from the source vertex until K closest vertices to source in the query region are found. During traversal, every vertex is checked if it falls in the region and the algorithm stops once K vertices are found. As this is a greedy approach which finds vertices in the increasing order of their distances to the source, the first K vertices found in the region are the closest ones.
 
-\textbf{SpatialFirst algorithm. } Vertices in the given region R are first filtered and shortest distances to each are found. After sorting them in ascending by distance from the source, first K are picked. For filtering the vertices in R, state of the art spatial index, r-tree, is used and for finding the shortest distance from the source vertex to each vertex in the region, state of the art A* with landmark algorithm~\cite{AC2005} is used. This algorithm finds the shortest path between two vertices using precomputed landmarks like explained in algorithm \ref{alg2}. The closest K vertices based on distances returned by A* with landmark algorithm are picked. 
+\textbf{SpatialFirst algorithm. } Vertices in the given region R are first filtered and shortest distances to each are found. After sorting them in ascending by distance from the source, first K are picked. For filtering the vertices in R, state of the art spatial index, r-tree, is used and for finding the shortest distance from the source vertex to each vertex in the region, state of the art A* with landmark algorithm~\cite{AC2005} is used. This algorithm finds the shortest path between two vertices using precomputed landmarks like explained in Algorithm \ref{alg2}. The closest K vertices based on distances returned by A* with landmark algorithm are picked. 
 
 % In the preprocessing stage for this algorithm:
 % \begin{itemize}
@@ -71,7 +71,7 @@ There are two state of the art solutions namely {\socialfirst} and {\spatialfirs
 % \end{itemize}
 
 
-% Algorithm \ref{alg5} outlines SpatialFirst algorithm, where state of the art spatial index, r-tree, to filter vertices in R was used on line~\ref{alg:rtree}. The best K based on distances returned by A* with landmark algorithm are picked.
+% Algorithm \ref{alg5} outlines SpatialFirst algorithm, where state of the art spatial index, r-tree, to filter vertices in R was used on Line~\ref{alg:rtree}. The best K based on distances returned by A* with landmark algorithm are picked.
 
 % \begin{algorithm}[t]
 % \caption{SpatialFirst Algorithm}

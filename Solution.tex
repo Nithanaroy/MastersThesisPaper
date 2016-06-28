@@ -253,11 +253,11 @@ Algorithm \ref{alg1} shows how the index, {\grpspatial} is created. In the first
 To compute the asymptotic run time and space complexities for Algorithm \ref{alg1}, it is divided into four pieces - graph condensation, reachability and repartition function. The runtime for each would be as follows,
 \begin{itemize}
 
-  \item \textbf{Graph Condensation}: On line~\ref{alg:condense}, the input graph is condensed into its strongly connected components. Using a popular algorithm like Targan's Algorithm, the runtime would be $O(V + E)$~\cite{R1972}.
+  \item \textbf{Graph Condensation}: On Line~\ref{alg:condense}, the input graph is condensed into its strongly connected components. Using a popular algorithm like Targan's Algorithm, the runtime would be $O(V + E)$~\cite{R1972}.
 
   \item \textbf{Reachability calculation}: From lines~\ref{alg:onehopstart} to~\ref{alg:dfs}, reachability on the condensed graph is computed. In the worst case, every vertex will be a strongly connected component and so the size of the graph remains the same after graph condensation. As the entire graph is traversed once to populate meta data for each vertex, the complexity for this piece also would be $O(V + E)$. Calls to repartition() function are handled separately.
 
-  % \item \textbf{DFS}: For multi-hop reachability, a DFS traversal is performed on the graph on line~\ref{alg:dfs}. As adjacency list is used for managing the graph's edges, the complexity for DFS would be $O(V + E)$ again. Calls to repartition() function are handled separately.
+  % \item \textbf{DFS}: For multi-hop reachability, a DFS traversal is performed on the graph on Line~\ref{alg:dfs}. As adjacency list is used for managing the graph's edges, the complexity for DFS would be $O(V + E)$ again. Calls to repartition() function are handled separately.
 
   \item \textbf{Repartition}: This function is called multiple times to make sure the M constraint is satisfied. The runtime of the function depends on the size of the meta entry for the vertex. For every vertex's index entry, the world is divided with a constant resolution to start with, like 10. The total number of blocks at that default resolution would always be square of it, like 100. Let the total number of blocks in the default resolution be $c$, which would be the worst case size of any vertex's meta information. This happens when a vertex can reach all blocks in the world. And until the size of meta information for that vertex falls below M, the resolution of the division is reduced by $RF$. Therefore the number of times the loop in REPARTITION() function of the algorithm, say $n$ would be,
 
@@ -301,7 +301,7 @@ Algorithm \ref{alg2}, {\grpsocial}, describes how to create an index using landm
 \end{scriptsize}
 \end{algorithm}
 
-To compute asymptotic run time and space complexities, algorithm \ref{alg2} is divided into two pieces - finding the landmarks, finding shortest distances to each reachable vertex from each landmark. The runtime for each is as follows,
+To compute asymptotic run time and space complexities, Algorithm \ref{alg2} is divided into two pieces - finding the landmarks, finding shortest distances to each reachable vertex from each landmark. The runtime for each is as follows,
 \begin{itemize}
 	\item \textbf{Finding Landmarks}: There are various ways of picking the landmarks and is totally left to user. In our case we used an approach which finds landmarks in constant number of scans of the entire graph. Therefore, the complexity of this piece is $O(V + E)$.
 
@@ -314,9 +314,9 @@ Space complexity would be memory taken to store the shortest distances to each r
 
 \subsection{Query Processing} \label{querying}
 
-A modified A* with landmark~\cite{AC2005} algorithm is proposed for answering {\rrp} queries using the {\grp} index. The main goal is to prune as much graph as possible using the spatial index and move in a goal oriented manner towards the region during traversal. The algorithm takes a graph G, a starting vertex s and a query rectangle R as input and returns the top-K vertices by social distance in R in an iterative manner. Being iterative helps pipeline the {\rrp} with other database functions.
+A modified A* with landmark~\cite{AC2005} algorithm is proposed for answering {\query} queries using the {\grp} index. The main goal is to prune as much graph as possible using the spatial index and move in a goal oriented manner towards the region during traversal. The algorithm takes a graph G, a starting vertex s and a query rectangle R as input and returns the top-K vertices by social distance in R in an iterative manner. Being iterative helps pipeline the {\rrp} with other database functions.
 
-The crux of A* algorithm is the heuristic function. Our heuristic function takes a vertex and a region and returns the heuristic distance which will be used by A* to decide which path to traverse. In order to design such heuristic function {\grpsocial} index is used explained in algorithm \ref{alg3}. For this the triangle inequality property is used to get a lower bound on the distance between any two vertices.
+The crux of A* algorithm is the heuristic function. Our heuristic function takes a vertex and a region and returns the heuristic distance which will be used by A* to decide which path to traverse. In order to design such heuristic function {\grpsocial} index is used explained in Algorithm \ref{alg3}. For this the triangle inequality property is used to get a lower bound on the distance between any two vertices.
 
 In Figure \ref{fig:tri-ine}, say $H$ and $R$ vertices need a lower bound on the distance between them. For this, the distances saved w.r.t. each landmark, here $G$ as part of social {\grp} index is used. So in the figure using the index the distances \textbf{u} and \textbf{v} are known. In order to find \textbf{x} which is the distance between $H$ and $X$ \textbf{u} is subtracted from \textbf{v}. Therefor the value of \textbf{x} shown in the figure would be $\textbf{v} - \textbf{u}$ which directly follows from vector addition. This is only a lower bound on the distance from $H$ to $X$ and is proved in \cite{AC2005}.
 
