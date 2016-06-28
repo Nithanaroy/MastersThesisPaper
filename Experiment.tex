@@ -42,7 +42,7 @@ Unless specified each run uses the default parameter values as shown in Table \r
 	    ylabel={Time (s)},
 	    xmode = log,
 	    ymode = log,
-	    legend style={at={(0.03,0.5)},anchor=west},
+	    legend style={at={(0.03,0.55)},anchor=west},
 	    y label style={at={(axis description cs:0.05,.5)}},
 		legend style={draw=none},
 	    % legend pos=south east,
@@ -94,19 +94,22 @@ That is where the SocialFirst algorithm shines. It totally takes a disconnected 
 
 \begin{figure*}[t]
 	\begin{subfigure}[t]{0.33\textwidth}\centering
-		\begin{tikzpicture}[every plot/.append style={}, scale=0.7]
-			\begin{axis}[
-			    xlabel={K},
-			    ylabel={Time (s)},
-			    y label style={at={(axis description cs:0.05,.5)}},
-			    legend pos=north west,
-			    legend style={draw=none},
-			    xmode = log,
-			    %xmajorgrids=true,
-			    %ymajorgrids=true,
-			    %grid style=dashed,
-			   	mark size=4pt
-			]
+		\begin{tikzpicture}[every plot/.append style={semithick}]
+		\begin{axis}[
+		every axis/.append style = {font = \scriptsize},
+		scale only axis,
+		width = 0.8\textwidth, height = 0.6\textwidth,
+		xlabel={\scriptsize K},
+		ylabel={\scriptsize Time (s)},
+		y label style={at={(axis description cs:0.12,0.5)}},
+		legend pos=north west,
+		legend style={draw=none, fill=none,font=\scriptsize},
+		xmode = log,
+		%xmajorgrids=true,
+		%ymajorgrids=true,
+		%grid style=dashed,
+		mark size=3pt
+		]
 			 
 			%\addplot[
 			%    color=blue,
@@ -150,19 +153,22 @@ That is where the SocialFirst algorithm shines. It totally takes a disconnected 
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
 		\centering
-		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.7]
-			\begin{axis}[
-			    xlabel={K},
-			    ylabel={Time (s)},
-			    y label style={at={(axis description cs:0.05,.5)}},
-			    legend pos=north west,
-			    legend style={draw=none},
-			    xmode = log,
-			    %xmajorgrids=true,
-			    %ymajorgrids=true,
-			    %grid style=dashed,
-			    mark size=4pt
-			]
+		\begin{tikzpicture}[every plot/.append style={semithick}]
+		\begin{axis}[
+		every axis/.append style = {font = \scriptsize},
+		scale only axis,
+		width = 0.8\textwidth, height = 0.6\textwidth,
+		xlabel={\scriptsize K},
+		ylabel={\scriptsize Time (s)},
+		y label style={at={(axis description cs:0.12,0.5)}},
+		legend pos=north west,
+		legend style={draw=none, fill=none,font=\scriptsize},
+		xmode = log,
+		%xmajorgrids=true,
+		%ymajorgrids=true,
+		%grid style=dashed,
+		mark size=3pt
+		]
 			 
 			% \addplot[
 			%     color=blue,
@@ -206,19 +212,22 @@ That is where the SocialFirst algorithm shines. It totally takes a disconnected 
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
 		\centering
-		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.7]
-			\begin{axis}[
-			    xlabel={K},
-			    ylabel={Time (s)},
-			    y label style={at={(axis description cs:0.05,.5)}},
-			    legend pos=north west,
-			    legend style={draw=none},
-			    xmode = log,
-			    %xmajorgrids=true,
-			    %ymajorgrids=true,
-			    %grid style=dashed,
-			    mark size=4pt
-			]
+		\begin{tikzpicture}[every plot/.append style={semithick}]
+		\begin{axis}[
+		every axis/.append style = {font = \scriptsize},
+		scale only axis,
+		width = 0.8\textwidth, height = 0.6\textwidth,
+		xlabel={\scriptsize K},
+		ylabel={\scriptsize Time (s)},
+		y label style={at={(axis description cs:0.12,0.5)}},
+		legend pos=north west,
+		legend style={draw=none, fill=none,font=\scriptsize},
+		xmode = log,
+		%xmajorgrids=true,
+		%ymajorgrids=true,
+		%grid style=dashed,
+		mark size=3pt
+		]
 			 
 			\addplot[
 			    color=blue,
@@ -273,19 +282,22 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 
 \begin{figure*}[t]
 	\begin{subfigure}[t]{0.33\textwidth}
-		\begin{tikzpicture}[every plot/.append style={thick}, scale=0.70]
-			\begin{axis}[
-			    xlabel={K},
-			    ylabel={Time (s)},
-			    legend pos=north west,
-			    xmode = log,
-			    y label style={at={(axis description cs:0.05,.5)}},
-				legend style={draw=none},
-			    %xmajorgrids=true,
-			    %ymajorgrids=true,
-			    %grid style=dashed,
-			    mark size=4pt
-			]
+		\begin{tikzpicture}[every plot/.append style={semithick}]
+		\begin{axis}[
+		every axis/.append style = {font = \scriptsize},
+		scale only axis,
+		width = 0.8\textwidth, height = 0.6\textwidth,
+		xlabel={\scriptsize K},
+		ylabel={\scriptsize Time (s)},
+		y label style={at={(axis description cs:0.12,0.5)}},
+		legend pos=north west,
+		legend style={draw=none, fill=none,font=\scriptsize},
+		xmode = log,
+		%xmajorgrids=true,
+		%ymajorgrids=true,
+		%grid style=dashed,
+		mark size=3pt
+		]
 			 
 			% \addplot[
 			%     color=blue,
@@ -327,19 +339,22 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 		\label{fig:plot-04}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
-		\begin{tikzpicture}[every plot/.append style={thick}, scale=0.70]
-			\begin{axis}[
-			    xlabel={K},
-			    ylabel={Time (s)},
-			    legend pos=north west,
-			    xmode = log,
-			    y label style={at={(axis description cs:0.05,.5)}},
-				legend style={draw=none},
-			    %xmajorgrids=true,
-			    %ymajorgrids=true,
-			    %grid style=dashed,
-			    mark size=4pt
-			]
+		\begin{tikzpicture}[every plot/.append style={semithick}]
+		\begin{axis}[
+		every axis/.append style = {font = \scriptsize},
+		scale only axis,
+		width = 0.8\textwidth, height = 0.6\textwidth,
+		xlabel={\scriptsize K},
+		ylabel={\scriptsize Time (s)},
+		y label style={at={(axis description cs:0.12,0.5)}},
+		legend pos=north west,
+		legend style={draw=none, fill=none,font=\scriptsize},
+		xmode = log,
+		%xmajorgrids=true,
+		%ymajorgrids=true,
+		%grid style=dashed,
+		mark size=3pt
+		]
 			 
 			% \addplot[
 			%     color=blue,
@@ -382,19 +397,22 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 		\label{fig:plot-05}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
-		\begin{tikzpicture}[every plot/.append style={thick}, scale=0.70]
-			\begin{axis}[
-			    xlabel={K},
-			    ylabel={Time (s)},
-			    legend pos=north west,
-			    xmode = log,
-			    y label style={at={(axis description cs:0.05,.5)}},
-				legend style={draw=none},
-			    %xmajorgrids=true,
-			    %ymajorgrids=true,
-			    %grid style=dashed,
-			    mark size=4pt
-			]
+		\begin{tikzpicture}[every plot/.append style={semithick}]
+		\begin{axis}[
+		every axis/.append style = {font = \scriptsize},
+		scale only axis,
+		width = 0.8\textwidth, height = 0.6\textwidth,
+		xlabel={\scriptsize K},
+		ylabel={\scriptsize Time (s)},
+		y label style={at={(axis description cs:0.12,0.5)}},
+		legend pos=north west,
+		legend style={draw=none, fill=none,font=\scriptsize},
+		xmode = log,
+		%xmajorgrids=true,
+		%ymajorgrids=true,
+		%grid style=dashed,
+		mark size=3pt
+		]
 			 
 			% \addplot[
 			%     color=blue,
