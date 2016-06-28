@@ -137,7 +137,7 @@ If $C$ in condensed graph $G'$ can reach a set of regions $R$, then any vertex o
 Therefore, meta information of $C =$ meta information of $\forall v \in C$
 \end{proof}
 
-Then a R-Tree is also constructed using the spatial nodes in the graph. This will later be used at query time to filter the exact nodes in a region and will be discussed in more details in section \ref{querying}. R-Tree index and reachable blocks table are the two indices created on the spatial component of the graph.
+Then a R-Tree is also constructed using the spatial nodes in the graph. This will later be used at query time to filter the exact nodes in a region and will be discussed in more details in Section \ref{querying}. R-Tree index and reachable blocks table are the two indices created on the spatial component of the graph.
 
 Algorithm \ref{alg1} shows how the index, {\rrpspatial} is created. In the first phase block numbers of all spatial vertices are added as the meta information of the vertices they are connected from. Then a modified DFS is used to construct multi hop reachability. The REGION() method returns the block number for any spatial vertex. The REPARTITION() method ensures the M constraint by recursively increasing the resolution by a factor of RF. In the DFS() method meta information is recursively appended to the head vertex from the tail vertex.
 
