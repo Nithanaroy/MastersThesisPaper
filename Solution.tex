@@ -329,7 +329,7 @@ In our case a lower bound from a vertex to a region is needed. In order to under
     \label{fig:tri-ine}
 \end{figure}
 
-Algorithm \ref{alg3} shows RangeReachPaths in detail. All vertices are labelled as unvisited initially. The visited flag is used to prevent traversing the same node multiple times. The priority queue $Q$ in keyed by sum of actual distance from source and a heuristic distance to current closest vertex to a landmark. For each vertex popped from the queue, it is tested if it lies in R and returned if K vertices are found. If not, keys for all existing vertices in Q are updated with the new heuristic. All unvisited neighbors of the popped vertex are enqueued only if they can reach the region R as per {grpspatial} index. If a neighbor can reach R, and if it not already in $Q$, its heuristic distance is computed and summed with the distance from the source and inserted into the $Q$. If the vertex is already in the $Q$, its key is updated if the new distance is smaller. The algorithm proceeds this way till all vertices in the Q are exhausted or K closest vertices in R are found whichever is earlier. This way, it is an iterative algorithm which doesn't traverse the entire graph to return the top-K results.
+Algorithm \ref{alg3} shows {\rrp} in detail. All vertices are labelled as unvisited initially. The visited flag is used to prevent traversing the same node multiple times. The priority queue $Q$ in keyed by sum of actual distance from source and a heuristic distance to current closest vertex to a landmark. For each vertex popped from the queue, it is tested if it lies in R and returned if K vertices are found. If not, keys for all existing vertices in Q are updated with the new heuristic. All unvisited neighbors of the popped vertex are enqueued only if they can reach the region R as per {\grpspatial} index. If a neighbor can reach R, and if it not already in $Q$, its heuristic distance is computed and summed with the distance from the source and inserted into the $Q$. If the vertex is already in the $Q$, its key is updated if the new distance is smaller. The algorithm proceeds this way till all vertices in the Q are exhausted or K closest vertices in R are found whichever is earlier. This way, it is an iterative algorithm which doesn't traverse the entire graph to return the top-K results.
 
 % \begin{algorithm*}[h]
 % \caption{RangeReachPaths}
@@ -517,4 +517,4 @@ Algorithm \ref{alg3} answers socio-spatial queries using modified A* with landma
 \end{itemize}
 
 
-Therefore the runtime of RangeReachPaths would be in between $O(K \times n) + O(\log_m (V)) + O(K + (V-K)\log K)$ and $O(V + E) + O(\log_m (V)) + O(K + (V-K)\log K)$, where $m$ is the number of nodes/vertices per memory page.
+Therefore the runtime of {\rrp} would be in between $O(K \times n) + O(\log_m (V)) + O(K + (V-K)\log K)$ and $O(V + E) + O(\log_m (V)) + O(K + (V-K)\log K)$, where $m$ is the number of nodes/vertices per memory page.
