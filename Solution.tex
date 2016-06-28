@@ -212,7 +212,7 @@ Algorithm \ref{alg1} shows how the index, {\grpspatial} is created. In the first
 % \end{algorithm*}
 
 \begin{algorithm}[t]
-\caption{{\grpspatial}}
+\caption{{\grpspatial} Initialization}
 \begin{scriptsize}
 \label{alg1}
 \begin{algorithmic}[1]
@@ -282,7 +282,7 @@ The quality of the landmarks determine the pruning power of the index. Choosing 
 Algorithm \ref{alg2}, {\grpsocial}, describes how to create an index using landmarks. Landmark selection function on line 2 can be any of the functions described in \cite{AC2005}. Then for each landmark the shortest distances is computed using any well-known single source shortest path algorithms like Dijkstra's or Bellman Ford to every vertex reachable from that landmark. Please note that distances from the landmark to every vertex are saved and not the other way around. The direction is important as directed graphs are only dealt here.
 
 \begin{algorithm}[t]
-\caption{{\grpsocial}}
+\caption{{\grpsocial}  Initialization}
 \begin{scriptsize}
 \label{alg2}
 \begin{algorithmic}[1]
@@ -428,7 +428,7 @@ Algorithm \ref{alg3} shows RangeReachPaths in detail. All vertices are labelled 
 % \end{algorithm*}
 
 \begin{algorithm}[t]
-\caption{RangeReachPaths}
+\caption{{\rrp} Query}
 \begin{scriptsize}
 \label{alg3}
 \begin{algorithmic}[1]
