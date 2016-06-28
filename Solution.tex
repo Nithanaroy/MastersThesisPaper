@@ -329,7 +329,7 @@ In our case a lower bound from a vertex to a region is needed. In order to under
     \label{fig:tri-ine}
 \end{figure}
 
-Algorithm \ref{alg3} shows {\rrp} in detail. All vertices are labelled as unvisited initially. The visited flag is used to prevent traversing the same node multiple times. The priority queue $Q$ in keyed by sum of actual distance from source and a heuristic distance to current closest vertex to a landmark. For each vertex popped from the queue, it is tested if it lies in R and returned if K vertices are found. If not, keys for all existing vertices in Q are updated with the new heuristic. All unvisited neighbors of the popped vertex are enqueued only if they can reach the region R as per {\grpspatial} index. If a neighbor can reach R, and if it not already in $Q$, its heuristic distance is computed and summed with the distance from the source and inserted into the $Q$. If the vertex is already in the $Q$, its key is updated if the new distance is smaller. The algorithm proceeds this way till all vertices in the Q are exhausted or K closest vertices in R are found whichever is earlier. This way, it is an iterative algorithm which doesn't traverse the entire graph to return the top-K results.
+Algorithm \ref{alg3} shows how to solve {\query} by using {\rrp} in detail. All vertices are labelled as unvisited initially. The visited flag is used to prevent traversing the same node multiple times. The priority queue $Q$ in keyed by sum of actual distance from source and a heuristic distance to current closest vertex to a landmark. For each vertex popped from the queue, it is tested if it lies in R and returned if K vertices are found. If not, keys for all existing vertices in Q are updated with the new heuristic. All unvisited neighbors of the popped vertex are enqueued only if they can reach the region R as per {\grpspatial} index. If a neighbor can reach R, and if it not already in $Q$, its heuristic distance is computed and summed with the distance from the source and inserted into the $Q$. If the vertex is already in the $Q$, its key is updated if the new distance is smaller. The algorithm proceeds this way till all vertices in the Q are exhausted or K closest vertices in R are found whichever is earlier. This way, it is an iterative algorithm which doesn't traverse the entire graph to return the top-K results.
 
 % \begin{algorithm*}[h]
 % \caption{RangeReachPaths}
@@ -428,19 +428,19 @@ Algorithm \ref{alg3} shows {\rrp} in detail. All vertices are labelled as unvisi
 % \end{algorithm*}
 
 \begin{algorithm}[t]
-\caption{{\rrp} Query}
+\caption{{\query} Query}
 \begin{scriptsize}
 \label{alg3}
 \begin{algorithmic}[1]
-\Function{{\rrp}}{G, s, R, K}
+\Function{{\query}}{G, s, R, K}
 	\State $nearest\_vertices \gets []$
 	\State $Q \gets [s]$
 	\State $best\_index \gets 0$
-	\While{Q is not empty}  \label{alg:theqstart}
+	\While{$Q$ is not empty}  \label{alg:theqstart}
 		\State $v \gets \Call{EXTRACT\_MIN}{Q}$
 		
-		\If{v lies in R}
-			\State nearest\_vertices $<<$ v \Comment{add v to set}
+		\If{$v\sqsubset R$}
+			\State $nearest\_vertices.add(v)$
 			\State best\_index $\gets$ best\_index + 1
 			\If{nearest\_vertices.length = K}
 				\State \Return nearest\_vertices
