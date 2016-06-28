@@ -1,6 +1,6 @@
 \section{Our approach: {\rrp}} \label{sec:solution}
 
-The solution is two fold, first data is preprocessed to create an index. Then a modified A* algorithm traverses the graph using the index to answer query of type mentioned in section \ref{sec:preliminary}.
+The solution is two fold, first data is preprocessed to create an index. Then a modified A* algorithm traverses the graph using the index to answer query of type mentioned in Section \ref{sec:preliminary}.
 
 % Throughout the section, a running example is used to explain the main idea followed by a formal algorithm. Consider Figure \ref{fig:running-example-solution} which has a social graph of friends and their check-ins at various venues. In Figure \ref{fig:running-example-solution}, each vertex symbolizes a person and two nodes are connected if there is a social relationship between them. The number on the edge indicates their social distance, lesser implies stronger bond. Forest green edges from the nodes to the map are all check-ins made by people at various venues (nodes not shown), which are our spatial vertices. Forest green edges are also weighted but are not shown as they are not important for explanation purposes.
 
@@ -48,7 +48,7 @@ A complete picture of equally space partitioned world would be as shown in the F
 % 	\end{center}
 % \end{table}
 
-% This is the reachability to venues by 1-hop which can answer 1-hop queries. For example, did vertex G check-in at venue L1 or did vertex E visit any venue in a region L2. The first can be answered by finding its block number using its location and cross-reference it with the list of blocks G can reach from the meta table. More details on answering queries are in section \ref{querying}.
+% This is the reachability to venues by 1-hop which can answer 1-hop queries. For example, did vertex G check-in at venue L1 or did vertex E visit any venue in a region L2. The first can be answered by finding its block number using its location and cross-reference it with the list of blocks G can reach from the meta table. More details on answering queries are in Section \ref{querying}.
 
 % If idea of 1-hop reachability is extended to any number of hops, it is multi-hop reachability or simply reachability. These values denote all blocks that are reachable from a vertex in any number of hops/steps. 
 
@@ -76,7 +76,7 @@ Now to complete building the reachable block table, direction of all the edges a
 	\end{center}
 \end{table}
 
-Using this table any region reachability query can be answered and will be described in section \ref{querying}. Now it can seen that vertex A can reach whatever B, C and D can reach. Similarly B can reach whatever H and F can reach and so on. However, as you can see the size of the meta table (a.k.a index table) can grow really large as vertices like B and A which are highly connected can reach many blocks.
+Using this table any region reachability query can be answered and will be described in Section \ref{querying}. Now it can seen that vertex A can reach whatever B, C and D can reach. Similarly B can reach whatever H and F can reach and so on. However, as you can see the size of the meta table (a.k.a index table) can grow really large as vertices like B and A which are highly connected can reach many blocks.
 
 In order to compress the entries in the meta table for highly reachable nodes, a new layer of blocks with higher resolution is added.
 
