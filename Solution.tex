@@ -78,9 +78,7 @@ Now to complete building the reachable block table, transpose of the graph is cr
 	\end{center}
 \end{table}
 
-Using this table any region reachability query can be answered and will be described in Section \ref{querying}. Now it can seen that vertex A can reach whatever B, C and D can reach. Similarly B can reach whatever H and F can reach and so on. However, as you can see the size of the meta table (a.k.a index table) can grow really large as vertices like B and A which are highly connected can reach many blocks.
-
-In order to compress the entries in the meta table for highly reachable nodes, a new layer of blocks with higher resolution is added.
+Using this table any region reachability query can be answered and will be described in Section \ref{querying}. It can be seen that vertex A can reach whatever B, C and D can reach. Similarly B can reach whatever H and F can reach and so on. However, size of the meta table (a.k.a index table) can grow really large as vertices like B and A which are highly connected can reach many blocks. In order to compress the entries in the meta table for highly reachable nodes, a new layer of blocks with higher resolution is added.
 
 % \begin{figure}[h]
 %     \centering
@@ -126,9 +124,7 @@ The discussion began by condensing G to a DAG (G'). Now each node in a strongly 
 
 \begin{lemma}
 \label{vertex-component-meta}
-Let v be a vertex in a strongly connected component C of a directed graph G(V, E). Then,
-
-{\{$\forall v \in C$: Meta information of v = Meta information of C\}}\\
+Let v be a vertex in a strongly connected component C of a directed graph G(V, E). Then, $\forall v \in C$: Meta information of v = Meta information of C.
 \end{lemma}
 
 \begin{proof}
