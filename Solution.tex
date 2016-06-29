@@ -1,6 +1,6 @@
 \section{Our approach: {\orirrp}} \label{sec:solution}
-
-The solution is two fold, first data is preprocessed to create an index. Then a modified A* algorithm traverses the graph using the index to answer query of type mentioned in Section \ref{sec:preliminary}.
+{\rrp} is an modified A* algorithm with additional graph pruning power. {\rrp} consists of two main components, spatial and social components. Spatial components includes a grid-based index for pruning graph branches while the social components use landmark techniques to generate distance heuristic for guiding graph traversal. In the following, we explain the two components of {\rrp} in details.
+%The solution is two fold, first data is preprocessed to create an index. Then a modified A* algorithm traverses the graph using the index to answer query of type mentioned in Section \ref{sec:preliminary}.
 
 % Throughout the section, a running example is used to explain the main idea followed by a formal algorithm. Consider Figure \ref{fig:running-example-solution} which has a social graph of friends and their check-ins at various venues. In Figure \ref{fig:running-example-solution}, each vertex symbolizes a person and two nodes are connected if there is a social relationship between them. The number on the edge indicates their social distance, lesser implies stronger bond. Forest green edges from the nodes to the map are all check-ins made by people at various venues (nodes not shown), which are our spatial vertices. Forest green edges are also weighted but are not shown as they are not important for explanation purposes.
 
@@ -10,14 +10,14 @@ The solution is two fold, first data is preprocessed to create an index. Then a 
     \label{fig:running-example-solution}
 \end{figure}
 
-\subsection{Index Structure}
-Goal of the index is to quickly prune the graph for any range predicate, starting at any source vertex. Therefore for every vertex, spatial and social meta information is added. Using this meta information, the traversal algorithm at query time can decide whether to visit a sub-graph starting at that node or not or more generally, this guides the traversal algorithm at query time.
+%\subsection{Index Structure}
+%Goal of the index is to quickly prune the graph for any range predicate, starting at any source vertex. Therefore for every vertex, spatial and social meta information is added. Using this meta information, the traversal algorithm at query time can decide whether to visit a sub-graph starting at that node or not or more generally, this guides the traversal algorithm at query time.
 
-Spatial meta information is created using the spatial attributes of the vertices. The world is divided into a fixed number of blocks in space and are numbered in increasing order. Then for each venue (i.e. spatial node) the meta information for all the people nodes (other vertices) who have directly and indirectly checked-in there is updated with the block number where the venue belongs. 
+%Spatial meta information is created using the spatial attributes of the vertices. The world is divided into a fixed number of blocks in space and are numbered in increasing order. Then for each venue (i.e. spatial node) the meta information for all the people nodes (other vertices) who have directly and indirectly checked-in there is updated with the block number where the venue belongs. 
 
 % If the world is divided into very fine blocks, each meta entry can be really huge. To compress the index entry, the world is divided again but this time into more coarser blocks and are also numbered like before. For all the index entries which cross a threshold, block numbers from the coarser division are used. This is done recursively until the threshold is satisfied for that index entry. Once this is in place, at query time, while traversing the graph for finding a closest vertex, sub-graphs starting at a vertex which does not reach the region of interest are straight away pruned.
 
-Social meta information/index is created using the social distances (edge weights). A few vertices are picked from the graph and the shortest distances from each to all vertices it can reach are stored. Using these vertices and triangle inequality an estimate of the shortest distance from any vertex to any other vertex in the graph is obtained.
+%Social meta information/index is created using the social distances (edge weights). A few vertices are picked from the graph and the shortest distances from each to all vertices it can reach are stored. Using these vertices and triangle inequality an estimate of the shortest distance from any vertex to any other vertex in the graph is obtained.
 
 \subsection{Spatial Component}
 
