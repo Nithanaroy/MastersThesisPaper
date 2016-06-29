@@ -345,7 +345,7 @@ Algorithm \ref{alg3} shows how to solve {\query} by using {\rrp} in detail. All 
 % 	\While{Q is not empty}
 % 		\State $v \gets \Call{EXTRACT\_MIN}{Q}$
 		
-% 		\If{\Call{LIES\_IN}{v, R}}
+% 		\If{\Call{OVERLAPS}{v, R}}
 % 			\State $nearest\_vertices << v$ \Comment{add v to set}
 % 			\State $best\_index \gets best\_index + 1$
 % 			\If{nearest\_vertices.length = K}
@@ -359,7 +359,7 @@ Algorithm \ref{alg3} shows how to solve {\query} by using {\rrp} in detail. All 
 % 		\If{v.color = WHITE}
 % 			\State $v.color \gets$ BLACK
 % 			\For{$u \gets G.Adj(v)$}
-% 				\If{\textbf{not} \Call{LIES\_IN}{R, GRP-SPATIAL(u)}}
+% 				\If{\textbf{not} \Call{OVERLAPS}{R, GRP-SPATIAL(u)}}
 % 					\State \textbf{continue}
 % 				\EndIf
 % 				\If{u.color = WHITE}
@@ -399,7 +399,7 @@ Algorithm \ref{alg3} shows how to solve {\query} by using {\rrp} in detail. All 
 % \EndFunction
 % \State
 
-% \Function{LIES\_IN}{x, y}
+% \Function{OVERLAPS}{x, y}
 % 	\If{x is a region}
 % 		\If{x overlaps or completely falls in y}
 % 			\State \Return true
@@ -462,7 +462,7 @@ Algorithm \ref{alg3} shows how to solve {\query} by using {\rrp} in detail. All 
 	\State \Return MAX( MIN$_i$(GRP-SOCIAL(l, u) $\forall u \in v) \forall l \in$ L)
 \EndFunction
 
-% \Function{LIES\_IN}{x, y}
+% \Function{OVERLAPS}{x, y}
 % 	\If{x is a region \textbf{and} x overlaps or completely falls in y}
 % 		\State \Return true
 % 	\EndIf
