@@ -16,12 +16,13 @@ Unless specified each run uses the default parameter values as shown in Table \r
 
 \begin{table}[h]
 	\caption{Default parameter values}
+	\small
 	\label{tab:default-param}
 	\begin{center}
 		\renewcommand{\arraystretch}{1.25}
-		\begin{tabular}{ l | l | l }
+		\begin{tabular}{ c | c | c }
 			\hline
-			Parameter & Value & Range \\ \hline
+			Parameter & Default Value & Range \\ \hline
 			\hline
 			% K & 160 & 10, 20, 40, 80, 160, 320, 640, 1280 \\
 			K & 100 & 10, 100, 1000, 10000 \\
@@ -338,7 +339,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			 
 			\end{axis}
 		\end{tikzpicture}
-		\caption{{\vra} Type 1}
+		\caption{Type 1}
 		\label{fig:plot-04}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -397,7 +398,7 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms using {\vra} Type 2 and RZ = 100}
-		\caption{{\vra} Type 2}
+		\caption{Type 2}
 		\label{fig:plot-05}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.33\textwidth}
@@ -456,10 +457,10 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 			\end{axis}
 		\end{tikzpicture}
 		% \caption{Runtime comparison between SocialFirst and types of {\rrp} algorithms using {\vra} Type 3 and RZ = 100}
-		\caption{{\vra} Type 3}
+		\caption{Type 3}
 		\label{fig:plot-06}
 	\end{subfigure}
-	\caption{Query time of different {\rrp} approaches }
+	\caption{Query time of the three {\rrp} approaches with different {\vra} type}
 	%\caption{Runtime comparison between the types of {\rrp} algorithms for RZ = 625 and various {\vra} Types}
 \end{figure*}
 
@@ -622,7 +623,7 @@ From Figure \ref{fig:plot-07} it is evident that as resolution increases for a f
 
 So after these experiments, it can be concluded that when the graph is really dense using the {\rrpsocial} with a high quality landmark is sufficient. Things change when the quality of landmark(s) is not as good. For the next query, the region is even more densely connected and the source vertex is the same, however a lower quality landmark was used. This region has 21,239 spatial nodes which is almost 10 times the count of the previous one.
 
-Figure \ref{fig:plot-09} proves why just having a {\rrpsocial} wont help like before. For this region, purposefully a lower quality landmark was chosen. In such cases {\rrpspatial} prunes majority of the graph as a good resolution of 625 by 625 found earlier was used. Though {\rrpsocial} equally performed {\rrp} initially, it lost soon as the landmark quality further degraded for higher K for the same reason explained before. The correctness is never compromised, it is only that {\rrp} tends to Dijkstra's search if landmark quality is not good. Now that when to use each type of index is understood, how each of the algorithms perform with change in region size is studied next.
+Figure \ref{fig:plot-09} proves why just having a {\rrpsocial} does not help like before. For this region, purposefully a lower quality landmark was chosen. In such cases {\rrpspatial} prunes majority of the graph as a good resolution of 625 by 625 found earlier was used. Though {\rrpsocial} equally performed {\rrp} initially, it lost soon as the landmark quality further degraded for higher K for the same reason explained before. The correctness is never compromised, it is only that {\rrp} tends to Dijkstra's search if landmark quality is not good. Now that when to use each type of index is understood, how each of the algorithms perform with change in region size is studied next.
 
 \begin{figure}[t]
 	\begin{subfigure}[t]{0.23\textwidth}
@@ -747,4 +748,4 @@ Figure \ref{fig:plot-09} proves why just having a {\rrpsocial} wont help like be
 	\label{fig:plot1011}
 \end{figure}
 
-Figure \ref{fig:plot-10} shows how in every algorithm the time taken linearly increase w.r.t. the size of the region. In Figure \ref{fig:plot1011}, in both the cases users near the source vertex have many check-ins in the given regions and so the {\rrpspatial} performs worse initially due to its overhead but gradually performs better. The gap further reduces when we a user whose social neighbors do not have many check-ins in the query regions was chosen. Due to this algorithm has to traverse the social graph further down to find the result as shown in Figure \ref{fig:plot-11}.
+In Figure \ref{fig:plot1011}, in both the cases users near the source vertex have many check-ins in the given regions and so the {\rrpspatial} performs worse initially due to its overhead but gradually performs better. The gap further reduces when we a user whose social neighbors do not have many check-ins in the query regions was chosen. Due to this the algorithm has to traverse the social graph further down to find the result as shown in Figure \ref{fig:plot-11}.
