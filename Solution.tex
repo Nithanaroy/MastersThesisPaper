@@ -484,7 +484,7 @@ Algorithm \ref{alg3} shows how to solve {\query} by using {\rrp} in detail. All 
 \begin{algorithmic}[1]
 \Function{VISIT}{G, u, v, Q}
 	\For{u $\gets$ G.Adj(v)}
-		\If{R does \textbf{not} lie in GRP-SPATIAL(u)} \label{alg:liesin}
+		\If{R does \textbf{not} lie in {\rrpspatial}(u)} \label{alg:liesin}
 			\State \textbf{continue}
 		\EndIf
 		\If{u is not visited}
