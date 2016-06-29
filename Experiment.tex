@@ -454,7 +454,8 @@ Just as expected as shown in Figure \ref{fig:plot-03}, the gap between {\rrp} an
 		\caption{{\vra} Type 3}
 		\label{fig:plot-06}
 	\end{subfigure}
-	\caption{Runtime comparison between the types of {\rrp} algorithms for RZ = 625 and various {\vra} Types}
+	\caption{Query time of different {\rrp} approaches }
+	%\caption{Runtime comparison between the types of {\rrp} algorithms for RZ = 625 and various {\vra} Types}
 \end{figure*}
 
 That is how each of the three LIES\_IN algorithms are implemented. Figures \ref{fig:plot-04}, \ref{fig:plot-05}, \ref{fig:plot-06} clearly show that all perform the same way. However, if on mashing the plots together keeping the K constant, Algorithm of Type 3 outperforms in majority of the cases. This confirms the previous doubt that if the resolution is too high like 3125 by 3125 the overhead in LIES\_IN function overcomes the advantage gained by graph pruning in a dense graph. Now to figure out the sweet spot for right value of RZ, experiments comparing K VS Resolution VS Time for each variant of {\rrp} were studied. 
@@ -622,7 +623,7 @@ Figure \ref{fig:plot-09} proves why just having a {\rrpsocial} wont help like be
 	\begin{subfigure}[t]{0.23\textwidth}
 		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.43]
 			\begin{axis}[
-			    xlabel={Region Size},
+			    xlabel={Query Region Size},
 			    ylabel={Time (s)},
 			    % legend pos=south west,
 			    legend style={at={(0.03,0.5)},anchor=west},
@@ -681,7 +682,7 @@ Figure \ref{fig:plot-09} proves why just having a {\rrpsocial} wont help like be
 	\begin{subfigure}[t]{0.23\textwidth}
 		\begin{tikzpicture}[every plot/.append style={very thick}, scale=0.43]
 			\begin{axis}[
-			    xlabel={Region Size},
+			    xlabel={Query Region Size},
 			    ylabel={Time (s)},
 			    legend pos=north east,
 			    %xmajorgrids=true,
@@ -736,7 +737,7 @@ Figure \ref{fig:plot-09} proves why just having a {\rrpsocial} wont help like be
 		\caption{Source = S2}
 		\label{fig:plot-11}
 	\end{subfigure}
-	\caption{Query time }
+	\caption{Query time of different {\rrp} approaches with different source vertex varying size of query region}
 	%\caption{Runtime comparison between the types of {\rrp} algorithms VS region size for different source vertices}
 	\label{fig:plot1011}
 \end{figure}
