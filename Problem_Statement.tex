@@ -18,7 +18,7 @@
 	%For a set $V_{\sqsubset R}$ consists of all the spatial venues that are located in $R$, {\query}(v,R,k) = \{$u_1$,..., $u_k$\} where $u_i\sqsubset R$ and 
 \end{defn}
 
-{\query} gets as input a source vertex $v$, a spatial region $R$ and number of returned venues $K$ and returns a set that consists of $K$ venues that are located in $R$ and can be reachable from $v$ through $k$ shortest path among all located venues.
+{\query} gets as input a source vertex $v$, a spatial region $R$ and number of returned venues $K$ and returns a set that consists of $K$ venues that are located in $R$ and can be reachable from $v$ through $K$ shortest path among all located venues.
 %\textbf{Shortest Path or Socially closest.} In $G$, there can be multiple paths between two vertices $u$ and $v$. $Paths(u,v) = \{p|p = (u,e_1,..., v)\}$ is to represent the set of all paths that start from $u$ and end at $v$. Shortest path between $u$ and $v$ is a path that has the shortest $L(p)$ where $p\in Paths(u,v)$, denoted as $ShortestPath(u,v)$. As we are in a geospatial graph world, shortest path between two people nodes is an objective way to indicate the strength of their relationship. Similarly shortest path between a person node and a spatial node (generally a venue) is a numerical way to represent the person's preference strength of that venue.
 
 %\textbf{Shortest path between vertex and spatial region.} Given a vertex $v$ and a spatial region $R$, there exist many shortest paths from $v$ to $U$, where $U$ is the set of all vertices in $R$. RangeReachPaths($G$, $v$, $R$, $K$) returns $K$ shortest paths among all shortest paths 

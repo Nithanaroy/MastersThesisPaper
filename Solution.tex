@@ -1,4 +1,4 @@
-\section{Our approach: {\rrp}} \label{sec:solution}
+\section{Our approach: {\orirrp}} \label{sec:solution}
 
 The solution is two fold, first data is preprocessed to create an index. Then a modified A* algorithm traverses the graph using the index to answer query of type mentioned in Section \ref{sec:preliminary}.
 
@@ -273,7 +273,7 @@ All the other lines in the algorithm can be computed in constant time. The runti
 Space complexity would be amount of memory required to store the multi-hop reachability table. Each index entry has an upper bound of $M$. Hence memory consumption in the worst case would be, $O(V \times M)$.
 
 \subsection{Social component}
-Social distances between nodes are used to create an additional index to prune the graph even better. This will take care of the cases when the graph is very dense and the spatial index created before may not be of much use for pruning at query time. More details on querying the graph are described in the next section.
+Social distances between nodes are used to create an additional index to prune the graph even better. This will take care of the cases when the graph is very dense and the spatial reachable blocks table created before may not be of much use for pruning at query time. More details on querying the graph are described in the next section.
 
 The main idea is to select a few nodes in the graph and call them landmarks. Then for each vertex shortest distances to each landmark is stored. Then at query time these precomputed distances and triangle inequality are used to guide as a heuristic in the A* search algorithm. The inspiration is from \cite{AC2005} which introduces a class of algorithms called ALT. The main challenge here however is to find top-k closest vertices to a given vertex in a region and not finding the shortest path from a given source to a given destination unlike in \cite{AC2005}.
 
@@ -314,7 +314,7 @@ Space complexity would be memory taken to store the shortest distances to each r
 
 \subsection{Query Processing} \label{querying}
 
-A modified A* with landmark~\cite{AC2005} algorithm is proposed for answering {\query} queries using the {\grp} index ({\rrp}). The main goal is to prune as much graph as possible using the spatial index and move in a goal oriented manner towards the region during traversal. The algorithm takes a graph G, a starting vertex s and a query rectangle R as input and returns the top-K vertices by social distance in R in an iterative manner. Being iterative helps pipeline the {\rrp} with other database functions.
+A modified A* with landmark~\cite{AC2005} algorithm is proposed for answering {\query} queries using the {\grp} index ({\rrp}). The main goal is to prune as much graph as possible using the spatial reachable blocks table and move in a goal oriented manner towards the region during traversal. The algorithm takes a graph G, a starting vertex s and a query rectangle R as input and returns the top-K vertices by social distance in R in an iterative manner. Being iterative helps pipeline the {\rrp} with other database functions.
 
 The crux of A* algorithm is the heuristic function. Our heuristic function takes a vertex and a region and returns the heuristic distance which will be used by A* to decide which path to traverse. In order to design such heuristic function {\rrpsocial} index is used explained in Algorithm \ref{alg3}. For this the triangle inequality property is used to get a lower bound on the distance between any two vertices.
 
