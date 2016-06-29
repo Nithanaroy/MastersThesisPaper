@@ -233,7 +233,7 @@ Algorithm \ref{alg1} shows how the index, {\rrpspatial} is created. In the first
 \EndFunction
 \Function{REPARTITION}{$v, RF, M$}
 	\While{$v.meta.size() \leq M$}
-		\State \Call{TRANSLATE\_TO\_RES}{v.meta, CURRENT\_RES(v) $\div$ RF}
+		\State {CURRENT\_RES(v)} $\div=$ RF
 	\EndWhile
 \EndFunction
 \Function{DO\_DFS}{G, RF, M}
@@ -326,7 +326,7 @@ In our case a lower bound from a vertex to a region is needed. In order to under
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.88\linewidth]{images/triangle_inequality.eps}
+    \includegraphics[width=0.85\linewidth]{images/triangle_inequality.eps}
     \caption{Triangle Inequality}
     \label{fig:tri-ine}
 \end{figure}
@@ -485,7 +485,7 @@ Algorithm \ref{alg3} shows how to solve {\query} by using {\rrp} in detail. All 
 \begin{algorithmic}[1]
 \Function{VISIT}{G, u, v, Q}
 	\For{u $\gets$ G.Adj(v)}
-		\If{R does \textbf{not} lie in {\rrpspatial}(u)} \label{alg:liesin}
+		\If{R does \textbf{not} overlap with {\rrpspatial}(u)} \label{alg:liesin}
 			\State \textbf{continue}
 		\EndIf
 		\If{u is not visited}
